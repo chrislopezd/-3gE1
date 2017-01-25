@@ -1,0 +1,29 @@
+IMG{behavior: url(iepngfix.htc);}
+/*FANCY CAPTCHA STARTS*/
+.ajax-fc-container{width: 282px;background: #C0C0C0;color: #FFF;margin: 0 0 10px 0px;}
+.ajax-fc-rtop, .ajax-fc-rbottom{display: block;background: trasparent;}
+.ajax-fc-rtop *, .ajax-fc-rbottom *{display: block;height: 1px;overflow: hidden;background: #C0C0C0;}
+/*describes left and right boxes*/
+DIV#ajax-fc-content{	position: absolute;margin-top: -3px;margin-left: 3px;width: 276px;height: 105px;background: url(../imgs/bg-content-div.png);}
+DIV#ajax-fc-content DIV#ajax-fc-left{width: 175px;height: 100px;float: left;}
+DIV#ajax-fc-content DIV#ajax-fc-right{width: 98px;height: 100px;float: right;}
+P#ajax-fc-task{line-height: 16px;margin: 0;padding: 11px 0 0 11px;font-size: 10px;font-family: Verdana, Tahoma, Arial;color: #18779D;}
+P#ajax-fc-task SPAN{color: #66A70B;font-weight: bold;}
+UL#ajax-fc-task{width: 190px;height: 18px;list-style-type: none;background: url(../imgs/bg-items.png) -4px 0px;background-repeat: no-repeat;margin: 6px 0 0;padding: 5px 0 0 2px;}
+/*block right: cycle and backlink*/
+UL#ajax-fc-task LI{float: left;margin-right: 1px;margin-top: 6px;}
+P#ajax-fc-circle{position: absolute;margin: 20px 0 0 17px;width: 79px;height: 79px;background: url(../imgs/circle.png);background-repeat: no-repeat;}
+IMG#ajax-fc-backlink{position: absolute;margin-top: 1px;margin-left: 6px;border: 1px solid #EF2424;z-index: 101;display: none;}
+/*left and right png borders*/
+DIV#ajax-fc-corner-spacer{height: 99px;}
+IMG.ajax-fc-border{position: absolute;margin-top: -3px;}
+IMG.ajax-fc-border#ajax-fc-left{margin-left: 2px;}
+IMG.ajax-fc-border#ajax-fc-right{margin-left: 273px;}
+/*items*/
+.ajax-fc-highlighted{cursor: pointer;z-index: 102;}
+/*rounded corners*/
+.ajax-fc-r1{margin: 0 5px;}
+.ajax-fc-r2{margin: 0 3px;}
+.ajax-fc-r3{margin: 0 2px;}
+.ajax-fc-r4{margin: 0 1px;height: 2px;}
+UL#ajax-fc-task IMG{padding:0px;}
