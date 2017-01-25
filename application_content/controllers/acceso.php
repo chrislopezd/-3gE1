@@ -81,6 +81,7 @@ class Acceso extends CI_Controller {
 		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
 		$d['st_tipo'] = $this->session->userdata('sep_tipo');
 		$d['st_programa'] = $this->session->userdata('sep_programa');
+		$d['st_fechaAcceso'] = $this->session->userdata('sep_UltimoAcceso');
 		$d['active'] = 'inicio';
 		$this->smarty->assign("title", 'Inicio');
 		$this->smarty->view("inicio.tpl",$d);

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-25 07:53:26
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-25 08:00:36
          compiled from "application_content/views/templates/design/footer.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:16346187925751c9f01755c2-16116650%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '55c7a7cf9d9f5b23109656143eaeafdaaa8daacf' => 
     array (
       0 => 'application_content/views/templates/design/footer.tpl',
-      1 => 1485327202,
+      1 => 1485327634,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	        <p class="copyright text-center">
 	            &copy;
 	            2017
-	            <a href="http://www.educacion.yucatan.gob.mx/" style="color:#e91e63;" target="_blank">Secretaría de Educación del Gobierno del Estado de Yucatán</a>
+	            <a href="http://www.educacion.yucatan.gob.mx/" style="color:#f44336;" target="_blank">Secretaría de Educación del Gobierno del Estado de Yucatán</a>
 	        </p>
 	    </div>
 	</footer>

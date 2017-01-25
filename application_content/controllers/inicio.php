@@ -75,7 +75,7 @@ class Inicio extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Inicio";
 		$d['active'] = "Inicio";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "<br/>Último acceso:<br/> <i class='fa fa-clock-o'></i> ".$this->FormatoFechaHoraFrase($this->session->userdata('sys_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Inicio');
 		$this->smarty->view("inicio.tpl",$d);

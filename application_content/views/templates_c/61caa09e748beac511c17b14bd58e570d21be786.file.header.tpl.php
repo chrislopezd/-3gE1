@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-25 07:55:29
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-25 08:16:34
          compiled from "application_content/views/templates/design/header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:21466727565751c9f00ef634-47657442%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '61caa09e748beac511c17b14bd58e570d21be786' => 
     array (
       0 => 'application_content/views/templates/design/header.tpl',
-      1 => 1485327328,
+      1 => 1485328588,
       2 => 'file',
     ),
   ),
@@ -22,6 +22,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'title' => 0,
     'raiz' => 0,
     'st_programa' => 0,
+    'st_fechaUA' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -91,13 +92,13 @@ resources/theme/img/faces/logo.png"  />
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="active">
+                    <li class="Active">
                         <a href="inicio">
                             <i class="material-icons">home</i>
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="cerrarSession">
                             <i class="material-icons">exit_to_app</i>
                             <p>Salir</p>
@@ -105,4 +106,48 @@ resources/theme/img/faces/logo.png"  />
                     </li>
                 </ul>
             </div>
-        </div><?php }} ?>
+        </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-minimize">
+                    <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+                        <i class="material-icons visible-on-sidebar-regular">more_vert</i>
+                        <i class="material-icons visible-on-sidebar-mini">view_list</i>
+                    </button>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="inicio" class="dropdown-toggle">
+                                <i class="material-icons">access_time</i> Último acceso: <?php echo $_smarty_tpl->tpl_vars['st_fechaUA']->value;?>
+
+                                <p class="hidden-lg hidden-md"></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="inicio" class="dropdown-toggle" data-toggle="tooltip" title="Inicio">
+                                <i class="material-icons">home</i>
+                                <p class="hidden-lg hidden-md">Inicio</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="cerrarSession" class="dropdown-toggle" data-toggle="tooltip" title="Salir" data-toggle="dropdown">
+                                <i class="material-icons">exit_to_app</i>
+                                <p class="hidden-lg hidden-md">Salir</p>
+                            </a>
+                        </li>
+                        <li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav><?php }} ?>

@@ -3,7 +3,7 @@
 	        <p class="copyright text-center">
 	            &copy;
 	            2017
-	            <a href="http://www.educacion.yucatan.gob.mx/" style="color:#e91e63;" target="_blank">Secretaría de Educación del Gobierno del Estado de Yucatán</a>
+	            <a href="http://www.educacion.yucatan.gob.mx/" style="color:#f44336;" target="_blank">Secretaría de Educación del Gobierno del Estado de Yucatán</a>
 	        </p>
 	    </div>
 	</footer>
