@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-26 03:45:48
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-26 07:07:28
          compiled from "application_content/views/templates/design/header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:21466727565751c9f00ef634-47657442%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '61caa09e748beac511c17b14bd58e570d21be786' => 
     array (
       0 => 'application_content/views/templates/design/header.tpl',
-      1 => 1485398747,
+      1 => 1485410845,
       2 => 'file',
     ),
   ),
@@ -23,6 +23,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'raiz' => 0,
     'st_programa' => 0,
     'active' => 0,
+    'st_idPerfil' => 0,
     'st_fechaUA' => 0,
   ),
   'has_nocache_code' => false,
@@ -101,36 +102,21 @@ resources/theme/img/faces/logo.png" />
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='usuarios'||$_smarty_tpl->tpl_vars['active']->value=='beneficiados'||$_smarty_tpl->tpl_vars['active']->value=='ciclos'){?>active<?php }?>">
-                        <a data-toggle="collapse" href="#catalogos" aria-expanded="true">
-                            <i class="material-icons">list</i>
-                            <p>Catálogos
-                                <b class="caret"></b>
-                            </p>
+                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='programas'){?>active<?php }?>">
+                        <a href="inicio">
+                            <i class="material-icons">assignment</i>
+                            <p>Programas</p>
                         </a>
-                        <div class="collapse" id="catalogos">
-                            <ul class="nav">
-                                <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='beneficiados'){?>active<?php }?>">
-                                    <a href="beneficiados">
-                                        <i class="material-icons">supervisor_account</i>
-                                        Beneficiados
-                                    </a>
-                                </li>
-                                <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='usuarios'){?>active<?php }?>">
-                                    <a href="usuarios">
-                                        <i class="material-icons">account_box</i>
-                                        Usuarios
-                                    </a>
-                                </li>
-                                <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='ciclos'){?>active<?php }?>">
-                                    <a href="ciclos">
-                                        <i class="material-icons">access_time</i>
-                                        Ciclos
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
+                    <?php if ($_smarty_tpl->tpl_vars['st_idPerfil']->value==2){?>
+                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='usuarios'){?>active<?php }?>">
+                        <a href="usuarios">
+                            <i class="material-icons">account_box</i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                    <?php }?>
+                    
                     <li class="">
                         <a href="cerrarSession">
                             <i class="material-icons">exit_to_app</i>

@@ -62,6 +62,21 @@
                             <p>Inicio</p>
                         </a>
                     </li>
+                    <li class="{if $active == 'programas'}active{/if}">
+                        <a href="inicio">
+                            <i class="material-icons">assignment</i>
+                            <p>Programas</p>
+                        </a>
+                    </li>
+                    {if $st_idPerfil eq 2}
+                    <li class="{if $active == 'usuarios'}active{/if}">
+                        <a href="usuarios">
+                            <i class="material-icons">account_box</i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                    {/if}
+                    {*
                     <li class="{if $active == 'usuarios' || $active == 'beneficiados' || $active == 'ciclos'}active{/if}">
                         <a data-toggle="collapse" href="#catalogos" aria-expanded="true">
                             <i class="material-icons">list</i>
@@ -91,7 +106,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li>*}
                     <li class="">
                         <a href="cerrarSession">
                             <i class="material-icons">exit_to_app</i>
