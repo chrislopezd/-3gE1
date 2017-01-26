@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-25 08:16:34
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-26 01:16:01
          compiled from "application_content/views/templates/design/header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:21466727565751c9f00ef634-47657442%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '61caa09e748beac511c17b14bd58e570d21be786' => 
     array (
       0 => 'application_content/views/templates/design/header.tpl',
-      1 => 1485328588,
+      1 => 1485389757,
       2 => 'file',
     ),
   ),
@@ -92,7 +92,7 @@ resources/theme/img/faces/logo.png"  />
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="Active">
+                    <li class="active">
                         <a href="inicio">
                             <i class="material-icons">home</i>
                             <p>Inicio</p>

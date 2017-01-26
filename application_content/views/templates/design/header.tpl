@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="Active">
+                    <li class="active">
                         <a href="inicio">
                             <i class="material-icons">home</i>
                             <p>Inicio</p>
