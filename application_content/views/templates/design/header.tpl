@@ -37,28 +37,60 @@
             <div class="sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="{$raiz}resources/theme/img/faces/logo.png"  />
+                        <img src="{$raiz}resources/theme/img/faces/logo.png" />
                     </div>
                     <div class="info">
-                        <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                             {$st_programa}
                             <b class="caret"></b>
                         </a>
                         <div class="collapse" id="collapseExample">
                             <ul class="nav">
-                                <li>
-                                    <a href="#">Perfil</a>
+                                <li class="">
+                                    <a href="#">
+                                        Perfil
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="active">
+                    <li class="{if $active == 'inicio'}active{/if}">
                         <a href="inicio">
                             <i class="material-icons">home</i>
                             <p>Inicio</p>
                         </a>
+                    </li>
+                    <li class="{if $active == 'usuarios' || $active == 'beneficiados' || $active == 'ciclos'}active{/if}">
+                        <a data-toggle="collapse" href="#catalogos" aria-expanded="true">
+                            <i class="material-icons">list</i>
+                            <p>Catálogos
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="catalogos">
+                            <ul class="nav">
+                                <li class="{if $active == 'beneficiados'}active{/if}">
+                                    <a href="beneficiados">
+                                        <i class="material-icons">supervisor_account</i>
+                                        Beneficiados
+                                    </a>
+                                </li>
+                                <li class="{if $active == 'usuarios'}active{/if}">
+                                    <a href="usuarios">
+                                        <i class="material-icons">account_box</i>
+                                        Usuarios
+                                    </a>
+                                </li>
+                                <li class="{if $active == 'ciclos'}active{/if}">
+                                    <a href="ciclos">
+                                        <i class="material-icons">access_time</i>
+                                        Ciclos
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="">
                         <a href="cerrarSession">

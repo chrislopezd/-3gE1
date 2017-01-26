@@ -132,6 +132,7 @@ $().ready(function(){
     });
 
     $('.switch-sidebar-mini input').change(function(){
+       console.log(3);
         $body = $('body');
 
         $input = $(this);

@@ -74,11 +74,81 @@ class Inicio extends CI_Controller {
 		$d['st_programa'] = $this->session->userdata('sep_programa');
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Inicio";
-		$d['active'] = "Inicio";
+		$d['active'] = "inicio";
 		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Inicio');
 		$this->smarty->view("inicio.tpl",$d);
+	}
+	public function listUsuarios(){
+		$d['token'] = $this->utilidades->generaToken();
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		//echo $d['st_idPerfil'];die();
+		$d['bread'] = "Catálogo usuarios";
+		$d['active'] = "usuarios";
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$info = $this->minicio->getUsuariosListado();
+		$d['LISTADO'] = $info['DATOS'];
+		//echo "<pre>"; print_r($d);die();
+		$this->smarty->assign("title", 'Catálogo usuarios');
+		$this->smarty->view("usuarios.tpl",$d);
+	}
+	public function newUsuario(){
+		$d['token'] = $this->utilidades->generaToken();
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		$d['edit'] = 0;
+		$d['idUsuario'] = 0;
+		$d['idPerfil'] = 2;
+		$d['idTipo'] = 0;
+
+		$d['bread'] = "Nuevo usuario";
+		$d['active'] = "usuarios";
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$info = $this->minicio->getCatPerfiles();
+		$d['PERFILES'] = $info['DATOS'];
+		$info = $this->minicio->getCatBeneficiados();
+		$d['BENEFICIADOS'] = $info['DATOS'];
+		//echo "<pre>"; print_r($d);die();
+		$this->smarty->assign("title", 'Nuevo usuario');
+		$this->smarty->view("forms/usuarios.tpl",$d);
+	}
+	public function listBeneficiados(){
+		$d['token'] = $this->utilidades->generaToken();
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		//echo $d['st_idPerfil'];die();
+		$d['bread'] = "Catálogo beneficiados";
+		$d['active'] = "beneficiados";
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		//echo "<pre>"; print_r($d);die();
+		$this->smarty->assign("title", 'Catálogo beneficiados');
+		$this->smarty->view("beneficiados.tpl",$d);
+	}
+	public function listCiclos(){
+		$d['token'] = $this->utilidades->generaToken();
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		//echo $d['st_idPerfil'];die();
+		$d['bread'] = "Catálogo ciclos";
+		$d['active'] = "ciclos";
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		//echo "<pre>"; print_r($d);die();
+		$this->smarty->assign("title", 'Catálogo ciclos');
+		$this->smarty->view("ciclos.tpl",$d);
 	}
 
 }
