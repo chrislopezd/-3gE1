@@ -11,7 +11,7 @@
  Target Server Version : 100113
  File Encoding         : utf-8
 
- Date: 01/25/2017 23:58:52 PM
+ Date: 01/26/2017 14:03:17 PM
 */
 
 SET NAMES utf8mb4;
@@ -26,22 +26,16 @@ CREATE TABLE `s_beneficiados` (
   `idUsuario` int(11) NOT NULL,
   `idTipo` int(11) NOT NULL,
   `idCiclo` int(11) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  `curp` char(18) DEFAULT NULL,
-  `telefono` varchar(40) DEFAULT NULL,
-  `correo` varchar(60) DEFAULT NULL,
-  `direccion` varchar(255) DEFAULT NULL,
-  `clavecct` char(10) DEFAULT NULL,
-  `nombrect` varchar(200) DEFAULT NULL,
-  `turno` tinyint(1) DEFAULT NULL,
+  `idPersona` int(11) DEFAULT NULL,
+  `tipoBene` tinyint(1) DEFAULT NULL COMMENT '1=> Escuela 2 =>Persona',
+  `clavecct` varchar(10) DEFAULT NULL,
   `fechaRegistro` datetime DEFAULT NULL,
   `fechaModificacion` timestamp NULL DEFAULT NULL,
   `estatus` tinyint(1) DEFAULT NULL COMMENT '1 = >Activo 0=> Inactivo',
   PRIMARY KEY (`idSol`),
-  UNIQUE KEY `key` (`idTipo`,`nombre`,`idCiclo`) USING BTREE,
+  UNIQUE KEY `key` (`idTipo`,`idCiclo`) USING BTREE,
   KEY `idUsuario` (`idUsuario`),
-  KEY `idTipo` (`idTipo`),
-  KEY `turno` (`turno`)
+  KEY `idTipo` (`idTipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -119,7 +113,7 @@ CREATE TABLE `s_ci_sessions` (
 --  Records of `s_ci_sessions`
 -- ----------------------------
 BEGIN;
-INSERT INTO `s_ci_sessions` VALUES ('39cfdcd54d2951452f03685c678e094c', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36', '1485409600', 'a:8:{s:9:\"user_data\";s:0:\"\";s:13:\"sep_idUsuario\";s:1:\"1\";s:19:\"sep_idPerfilUsuario\";s:1:\"2\";s:10:\"sep_idTipo\";s:1:\"3\";s:8:\"sep_tipo\";s:8:\"Escuelas\";s:12:\"sep_programa\";s:14:\"TIEMPOCOMPLETO\";s:16:\"sep_UltimoAcceso\";s:19:\"2017-01-25 01:00:01\";s:13:\"sep_logged_in\";b:1;}');
+INSERT INTO `s_ci_sessions` VALUES ('972000ed70eee5f9eddbd458bd8bee49', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36', '1485459891', 'a:8:{s:9:\"user_data\";s:0:\"\";s:13:\"sep_idUsuario\";s:1:\"1\";s:19:\"sep_idPerfilUsuario\";s:1:\"2\";s:10:\"sep_idTipo\";s:1:\"3\";s:8:\"sep_tipo\";s:8:\"Escuelas\";s:12:\"sep_programa\";s:14:\"TIEMPOCOMPLETO\";s:16:\"sep_UltimoAcceso\";s:19:\"2017-01-25 18:15:00\";s:13:\"sep_logged_in\";b:1;}');
 COMMIT;
 
 -- ----------------------------
@@ -142,6 +136,24 @@ CREATE TABLE `s_perfiles` (
 BEGIN;
 INSERT INTO `s_perfiles` VALUES ('1', 'Administrador sistema', 'Administrador del sistema', '2016-05-20 11:08:25', '1'), ('2', 'Programa', 'Usuario del sistema', '2016-05-20 11:08:25', '1');
 COMMIT;
+
+-- ----------------------------
+--  Table structure for `s_personas`
+-- ----------------------------
+DROP TABLE IF EXISTS `s_personas`;
+CREATE TABLE `s_personas` (
+  `idPersona` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` enum('Alumno','Docente','PadreDeFamilia') DEFAULT NULL,
+  `curp` char(18) DEFAULT NULL,
+  `nombre` varchar(120) DEFAULT NULL,
+  `apellidop` varchar(60) DEFAULT NULL,
+  `apellidom` varchar(60) DEFAULT NULL,
+  `correo` varchar(60) DEFAULT NULL,
+  `telefono` varchar(60) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `estatus` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idPersona`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `s_usuarios`
@@ -171,7 +183,7 @@ CREATE TABLE `s_usuarios` (
 --  Records of `s_usuarios`
 -- ----------------------------
 BEGIN;
-INSERT INTO `s_usuarios` VALUES ('1', '2', '3', 'TIEMPOCOMPLETO', 'e10adc3949ba59abbe56e057f20f883e', 'PROGRAMA DE TIEMPO COMPLETO EN LAS ESCUELAS', '2017-01-22 00:03:00', '2017-01-25 18:15:00', '2017-01-25 21:15:40', '1'), ('2', '2', '1', 'BIENESTARESCOLAR', 'e10adc3949ba59abbe56e057f20f883e ', 'ENTREGA DE UTILES', '2016-05-21 00:00:00', '2016-09-29 15:54:04', '2017-01-24 23:10:17', '1');
+INSERT INTO `s_usuarios` VALUES ('1', '2', '3', 'TIEMPOCOMPLETO', 'e10adc3949ba59abbe56e057f20f883e', 'PROGRAMA DE TIEMPO COMPLETO EN LAS ESCUELAS', '2017-01-22 00:03:00', '2017-01-26 13:45:10', '2017-01-26 13:45:10', '1'), ('2', '2', '1', 'BIENESTARESCOLAR', 'e10adc3949ba59abbe56e057f20f883e ', 'ENTREGA DE UTILES', '2016-05-21 00:00:00', '2016-09-29 15:54:04', '2017-01-24 23:10:17', '1');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
