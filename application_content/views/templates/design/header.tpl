@@ -63,9 +63,9 @@
                         </a>
                     </li>
                     <li class="{if $active == 'programas'}active{/if}">
-                        <a href="inicio">
+                        <a href="beneficiados">
                             <i class="material-icons">assignment</i>
-                            <p>Programas</p>
+                            <p>Beneficiados</p>
                         </a>
                     </li>
                     {if $st_idPerfil eq 2}

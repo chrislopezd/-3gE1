@@ -46,11 +46,12 @@ $route['inicio'] = 'inicio';
 $route['usuarios'] = 'inicio/listUsuarios';
 $route['nuevoUsuario'] = 'inicio/newUsuario';
 
-$route['beneficiados'] = 'inicio/listBeneficiados';
+//$route['beneficiados'] = 'inicio/listBeneficiados';
 $route['ciclos'] = 'inicio/listCiclos';
 
-
-
+########PROGRAMAS
+$route['beneficiados'] = 'beneficiados';
+########END PROGRAMAS
 
 ########LOGIN
 $route['captcha'] = 'acceso/verCaptcha';

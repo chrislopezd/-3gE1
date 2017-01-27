@@ -2,74 +2,166 @@
 
 
 <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-icon" data-background-color="rose">
-                                    <i class="material-icons">assignment</i>
-                                </div>
-                                <div class="card-content">
-                                    <h4 class="card-title">Listado de usuarios</h4>
-                                    <div class="toolbar">
-                                       <a href="#" class="btn btn-round btn-success">
-                                            <i class="material-icons">add_box</i>
-                                            Nuevo usuario
-                                        </a>
-                                    </div>
-                                    <div class="material-datatables">
-                                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Tipo perfil</th>
-                                                    <th>Tipo beneficiado</th>
-                                                    <th>Programa</th>
-                                                    <th>Estatus</th>
-                                                    <th class="disabled-sorting text-right">Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                   <th>#</th>
-                                                    <th>Tipo perfil</th>
-                                                    <th>Tipo beneficiado</th>
-                                                    <th>Programa</th>
-                                                    <th>Estatus</th>
-                                                    <th class="disabled-sorting text-right">Acciones</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                {foreach from=$LISTADO key=key item=res}
-                                                <tr>
-                                                    <td>{$key +1}</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" class="btn btn-success btn-round edit">
-                                                            <i class="material-icons">edit</i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                {/foreach}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- end content-->
-                            </div>
-                            <!--  end card  -->
-                        </div>
-                        <!-- end col-md-12 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
                     </div>
-                    <!-- end row -->
+                    <div class="card-content">
+                        <h4 class="card-title">Listado de beneficiarios</h4>
+                        <div class="toolbar">
+                           <a href="#" class="btn btn-round btn-success">
+                                <i class="material-icons">add_box</i>
+                                Nuevo beneficiario
+                            </a>
+                        </div>
+                        <div class="material-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                {if $st_idTipo == 1}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                {if $st_idTipo == 2}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                {if $st_idTipo == 3}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CLAVE CT</th>
+                                        <th>NOMBRE CT</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                {if $st_idTipo == 4}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+
+                                </thead>
+                                <tfoot>
+                                    {if $st_idTipo == 1}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                {if $st_idTipo == 2}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                {if $st_idTipo == 3}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CLAVE CT</th>
+                                        <th>NOMBRE CT</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                {if $st_idTipo == 4}
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CURP</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                {/if}
+                                </tfoot>
+                                <tbody>
+                                    {foreach from=$LISTADO key=key item=arrList}
+                                    {if $st_idTipo == 1}
+                                        <tr>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['curp']}</td>
+                                            <td>{$arrList['nombreCompleto']}</td>
+                                            <td>{$arrList['correo']}</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {/if}
+                                    {if $st_idTipo == 2}
+                                        <tr>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['curp']}</td>
+                                            <td>{$arrList['nombreCompleto']}</td>
+                                            <td>{$arrList['correo']}</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {/if}
+                                    {if $st_idTipo == 3}
+                                        <tr>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['CLAVECCT']}</td>
+                                            <td>{$arrList['NOMBRECT']}</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {/if}
+                                    {if $st_idTipo == 4}
+                                        <tr>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['curp']}</td>
+                                            <td>{$arrList['nombreCompleto']}</td>
+                                            <td>{$arrList['correo']}</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {/if}
+
+                                    {/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- end content-->
                 </div>
+                <!--  end card  -->
             </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+</div>
 
 
 {include file="design/footer.tpl"}

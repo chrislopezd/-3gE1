@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2016-06-22 20:20:47
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 02:41:03
          compiled from "application_content\views\templates\design\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18903573f4d18d5ba53-90262891%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '273dd499bcaa7e8d7cfb1543a9f3f0075ce89f64' => 
     array (
       0 => 'application_content\\views\\templates\\design\\header.tpl',
-      1 => 1466644844,
+      1 => 1485481257,
       2 => 'file',
     ),
   ),
@@ -21,89 +21,152 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   array (
     'title' => 0,
     'raiz' => 0,
-    '_isUV' => 0,
-    'st_usuario' => 0,
-    'perfil' => 0,
-    'isActive' => 0,
+    'st_programa' => 0,
+    'active' => 0,
+    'st_idPerfil' => 0,
+    'st_fechaUA' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_573f4d18d869d0_20453954')) {function content_573f4d18d869d0_20453954($_smarty_tpl) {?><!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="es"> <!--<![endif]-->
-    <head>
-    	<meta http-equiv="Content-type" value="text/html; charset=utf-8">
-    	<meta charset="utf-8">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<title><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-type" value="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <title><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
 </title>
-		<link rel="shortcut icon" media="all" type="image/x-icon" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" media="all" type="image/x-icon" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
 resources/favicon/favicon.ico" />
-   		<link rel="apple-touch-icon" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+    <link rel="apple-touch-icon" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
 resources/favicon/apple-touch-icon.png" />
-    	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
 resources/favicon/apple-touch-icon-72x72.png" />
-    	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
 resources/favicon/apple-touch-icon-114x114.png" />
-		<link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/css/bootstrap.min.css" rel="stylesheet">
-		<link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/css/admin.min.css" rel="stylesheet">
-		<link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/css/prettify-tomorrow.css" rel="stylesheet" />
-		<link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/css/animate.css" rel="stylesheet">
-		<link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/js/jquery-ui.min.css" rel="stylesheet">
-		<link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/css/mcss.css" rel="stylesheet">		
-		<script type="text/javascript">var _raizS = '<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-';var _isUV = '<?php echo $_smarty_tpl->tpl_vars['_isUV']->value;?>
-';</script>
-	</head>
-<body class="container-fluid">
-	<div id="page-wrapper">
-		<section id="right-content">
-			<header class="header-container">
-				<div class="header-wrapper">
-					<div id="header-toolbar" style="width: 100%">
-						<ul class="toolbar toolbar-left">
-							<li style="padding:5px;margin-top: -5px;">
-								<a href="inicio">
-								<img src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
-resources/images/logoSegey.png" width="120px" title="SEGEY">
-								</a>
-							</li>
-						</ul>
-						<div id="searchbox">
-							<div class="mTitle">
-								<h3 class="txtHeader">Sistema de validación para la Cancelación / Creación / Conversión de claves presupuestales</h3>
-							</div>
-						</div>
-						<ul class="toolbar toolbar-right">
-							
-							<li id="user-profile" class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<div class="avatar">
-										<img src="resources/img/avatar.png" class="img-circle img-responsive" />
-									</div>
-									<div class="user">
-										<span class="username"><?php echo $_smarty_tpl->tpl_vars['st_usuario']->value;?>
-</span>
-									</div>
-									<span class="expand-ico"><i class="material-icons">expand_more</i></span>
-								</a>
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li><a href="inicio"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-									<?php if ($_smarty_tpl->tpl_vars['perfil']->value==1&&$_smarty_tpl->tpl_vars['isActive']->value){?>
-									<li><a href="nuevoRegistro"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo registro</a></li>
-									<?php }?>
-									<li><a href="cerrarSession" id="cloedSession"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar sesión</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</header><?php }} ?>
+    <link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/css/material-dashboard.css" rel="stylesheet" />
+    <link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/css/estilo.css" rel="stylesheet" />
+    <link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/plugs/captcha.css" rel="stylesheet" />
+    <link href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/css/css.css?family=Roboto:300,400,500,700|Material+Icons" />
+</head>
+<body class="sidebar-mini">
+<div class="wrapper">
+        <div class="sidebar" data-active-color="green" data-background-color="black" data-image="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/img/sidebar-3.jpg">
+           
+            <div class="logo">
+                <a href="javascript:void(0);" class="simple-text">
+                  SEGEY
+                </a>
+            </div>
+            <div class="logo logo-mini">
+                <a href="javascript:void(0);" class="simple-text">
+                    SEGEY
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <div class="user">
+                    <div class="photo">
+                        <img src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/img/faces/logo.png" />
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <?php echo $_smarty_tpl->tpl_vars['st_programa']->value;?>
+
+                            <b class="caret"></b>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <ul class="nav">
+                                <li class="">
+                                    <a href="#">
+                                        Perfil
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='inicio'){?>active<?php }?>">
+                        <a href="inicio">
+                            <i class="material-icons">home</i>
+                            <p>Inicio</p>
+                        </a>
+                    </li>
+                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='programas'){?>active<?php }?>">
+                        <a href="beneficiados">
+                            <i class="material-icons">assignment</i>
+                            <p>Beneficiados</p>
+                        </a>
+                    </li>
+                    <?php if ($_smarty_tpl->tpl_vars['st_idPerfil']->value==2){?>
+                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='usuarios'){?>active<?php }?>">
+                        <a href="usuarios">
+                            <i class="material-icons">account_box</i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                    <?php }?>
+                    
+                    <li class="">
+                        <a href="cerrarSession">
+                            <i class="material-icons">exit_to_app</i>
+                            <p>Salir</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-minimize">
+                    <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+                        <i class="material-icons visible-on-sidebar-regular">more_vert</i>
+                        <i class="material-icons visible-on-sidebar-mini">view_list</i>
+                    </button>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="inicio" class="dropdown-toggle">
+                                <i class="material-icons">access_time</i> Último acceso: <?php echo $_smarty_tpl->tpl_vars['st_fechaUA']->value;?>
+
+                                <p class="hidden-lg hidden-md"></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="inicio" class="dropdown-toggle" data-toggle="tooltip" title="Inicio">
+                                <i class="material-icons">home</i>
+                                <p class="hidden-lg hidden-md">Inicio</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="cerrarSession" class="dropdown-toggle" data-toggle="tooltip" title="Salir" data-toggle="dropdown">
+                                <i class="material-icons">exit_to_app</i>
+                                <p class="hidden-lg hidden-md">Salir</p>
+                            </a>
+                        </li>
+                        <li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav><?php }} ?>
