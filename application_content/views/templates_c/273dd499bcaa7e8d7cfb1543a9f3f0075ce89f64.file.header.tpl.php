@@ -1,30 +1,20 @@
-<<<<<<< HEAD
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 02:41:03
-=======
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-26 22:00:40
->>>>>>> a449db5ca80c0ee1c9c2cc2a63898b011fa312bd
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 04:57:18
          compiled from "application_content\views\templates\design\header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:18903573f4d18d5ba53-90262891%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20832588ac51e154d71-03379426%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '273dd499bcaa7e8d7cfb1543a9f3f0075ce89f64' => 
     array (
       0 => 'application_content\\views\\templates\\design\\header.tpl',
-<<<<<<< HEAD
-      1 => 1485481257,
-=======
-      1 => 1485444777,
->>>>>>> a449db5ca80c0ee1c9c2cc2a63898b011fa312bd
+      1 => 1485489415,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18903573f4d18d5ba53-90262891',
+  'nocache_hash' => '20832588ac51e154d71-03379426',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_573f4d18d869d0_20453954',
   'variables' => 
   array (
     'title' => 0,
@@ -35,8 +25,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'st_fechaUA' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_588ac51e19c559_25594241',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_573f4d18d869d0_20453954')) {function content_573f4d18d869d0_20453954($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_588ac51e19c559_25594241')) {function content_588ac51e19c559_25594241($_smarty_tpl) {?><!DOCTYPE html>
 <html lang="es">
 <head>
     <meta http-equiv="Content-type" value="text/html; charset=utf-8">
@@ -111,15 +103,9 @@ resources/theme/img/faces/logo.png" />
                         </a>
                     </li>
                     <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='programas'){?>active<?php }?>">
-<<<<<<< HEAD
                         <a href="beneficiados">
                             <i class="material-icons">assignment</i>
                             <p>Beneficiados</p>
-=======
-                        <a href="inicio">
-                            <i class="material-icons">assignment</i>
-                            <p>Programas</p>
->>>>>>> a449db5ca80c0ee1c9c2cc2a63898b011fa312bd
                         </a>
                     </li>
                     <?php if ($_smarty_tpl->tpl_vars['st_idPerfil']->value==2){?>

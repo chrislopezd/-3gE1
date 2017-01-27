@@ -1,33 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 04:57:17
-         compiled from "application_content\views\templates\beneficiados.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:24931588ac51dd8e097-66083694%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
-$_valid = $_smarty_tpl->decodeProperties(array (
-  'file_dependency' => 
-  array (
-    '9b318e61ae24f1164227a419a035d5edf9ab2c8f' => 
-    array (
-      0 => 'application_content\\views\\templates\\beneficiados.tpl',
-      1 => 1485489386,
-      2 => 'file',
-    ),
-  ),
-  'nocache_hash' => '24931588ac51dd8e097-66083694',
-  'function' => 
-  array (
-  ),
-  'variables' => 
-  array (
-    'st_idTipo' => 0,
-    'LISTADO' => 0,
-    'key' => 0,
-    'arrList' => 0,
-  ),
-  'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_588ac51de85e26_75602059',
-),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_588ac51de85e26_75602059')) {function content_588ac51de85e26_75602059($_smarty_tpl) {?><?php echo $_smarty_tpl->getSubTemplate ("design/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
-
+{include file="design/header.tpl"}
 
 
 <div class="content">
@@ -49,7 +20,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                         <div class="material-datatables">
                             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==1){?>
+                                {if $st_idTipo == 1}
                                     <tr>
                                         <th>#</th>
                                         <th>CURP</th>
@@ -57,8 +28,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                         <th>Correo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==2){?>
+                                {/if}
+                                {if $st_idTipo == 2}
                                     <tr>
                                         <th>#</th>
                                         <th>CURP</th>
@@ -66,16 +37,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                         <th>Correo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==3){?>
+                                {/if}
+                                {if $st_idTipo == 3}
                                     <tr>
                                         <th>#</th>
                                         <th>CLAVE CT</th>
                                         <th>NOMBRE CT</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==4){?>
+                                {/if}
+                                {if $st_idTipo == 4}
                                     <tr>
                                         <th>#</th>
                                         <th>CURP</th>
@@ -83,11 +54,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                         <th>Correo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
+                                {/if}
 
                                 </thead>
                                 <tfoot>
-                                    <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==1){?>
+                                    {if $st_idTipo == 1}
                                     <tr>
                                         <th>#</th>
                                         <th>CURP</th>
@@ -95,8 +66,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                         <th>Correo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==2){?>
+                                {/if}
+                                {if $st_idTipo == 2}
                                     <tr>
                                         <th>#</th>
                                         <th>CURP</th>
@@ -104,16 +75,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                         <th>Correo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==3){?>
+                                {/if}
+                                {if $st_idTipo == 3}
                                     <tr>
                                         <th>#</th>
                                         <th>CLAVE CT</th>
                                         <th>NOMBRE CT</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
-                                <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==4){?>
+                                {/if}
+                                {if $st_idTipo == 4}
                                     <tr>
                                         <th>#</th>
                                         <th>CURP</th>
@@ -121,84 +92,63 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                         <th>Correo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                <?php }?>
+                                {/if}
                                 </tfoot>
                                 <tbody>
-                                    <?php  $_smarty_tpl->tpl_vars['arrList'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['arrList']->_loop = false;
- $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
- $_from = $_smarty_tpl->tpl_vars['LISTADO']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['arrList']->key => $_smarty_tpl->tpl_vars['arrList']->value){
-$_smarty_tpl->tpl_vars['arrList']->_loop = true;
- $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['arrList']->key;
-?>
-                                    <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==1){?>
+                                    {foreach from=$LISTADO key=key item=arrList}
+                                    {if $st_idTipo == 1}
                                         <tr>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['key']->value+1;?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['curp'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['nombreCompleto'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['correo'];?>
-</td>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['curp']}</td>
+                                            <td>{$arrList['nombreCompleto']}</td>
+                                            <td>{$arrList['correo']}</td>
                                             <td class="td-actions text-right">
                                                 <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                             </td>
                                         </tr>
-                                    <?php }?>
-                                    <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==2){?>
+                                    {/if}
+                                    {if $st_idTipo == 2}
                                         <tr>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['key']->value+1;?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['curp'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['nombreCompleto'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['correo'];?>
-</td>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['curp']}</td>
+                                            <td>{$arrList['nombreCompleto']}</td>
+                                            <td>{$arrList['correo']}</td>
                                             <td class="td-actions text-right">
                                                 <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                             </td>
                                         </tr>
-                                    <?php }?>
-                                    <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==3){?>
+                                    {/if}
+                                    {if $st_idTipo == 3}
                                         <tr>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['key']->value+1;?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['CLAVECCT'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['NOMBRECT'];?>
-</td>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['CLAVECCT']}</td>
+                                            <td>{$arrList['NOMBRECT']}</td>
                                             <td class="td-actions text-right">
                                                 <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                             </td>
                                         </tr>
-                                    <?php }?>
-                                    <?php if ($_smarty_tpl->tpl_vars['st_idTipo']->value==4){?>
+                                    {/if}
+                                    {if $st_idTipo == 4}
                                         <tr>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['key']->value+1;?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['curp'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['nombreCompleto'];?>
-</td>
-                                            <td><?php echo $_smarty_tpl->tpl_vars['arrList']->value['correo'];?>
-</td>
+                                            <td>{$key +1}</td>
+                                            <td>{$arrList['curp']}</td>
+                                            <td>{$arrList['nombreCompleto']}</td>
+                                            <td>{$arrList['correo']}</td>
                                             <td class="td-actions text-right">
                                                 <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                             </td>
                                         </tr>
-                                    <?php }?>
+                                    {/if}
 
-                                    <?php } ?>
+                                    {/foreach}
                                 </tbody>
                             </table>
                         </div>
@@ -214,9 +164,8 @@ $_smarty_tpl->tpl_vars['arrList']->_loop = true;
 </div>
 
 
-<?php echo $_smarty_tpl->getSubTemplate ("design/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
-
-
+{include file="design/footer.tpl"}
+{literal}
 <script type="text/javascript">
     $(document).ready(function() {
         $('#datatables').DataTable({
@@ -269,4 +218,4 @@ $_smarty_tpl->tpl_vars['arrList']->_loop = true;
         $('.card .material-datatables label').addClass('form-group');
     });
 </script>
-<?php }} ?>
+{/literal}
