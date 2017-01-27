@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 02:41:03
+=======
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-26 22:00:40
+>>>>>>> a449db5ca80c0ee1c9c2cc2a63898b011fa312bd
          compiled from "application_content\views\templates\design\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18903573f4d18d5ba53-90262891%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +11,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '273dd499bcaa7e8d7cfb1543a9f3f0075ce89f64' => 
     array (
       0 => 'application_content\\views\\templates\\design\\header.tpl',
+<<<<<<< HEAD
       1 => 1485481257,
+=======
+      1 => 1485444777,
+>>>>>>> a449db5ca80c0ee1c9c2cc2a63898b011fa312bd
       2 => 'file',
     ),
   ),
@@ -103,9 +111,15 @@ resources/theme/img/faces/logo.png" />
                         </a>
                     </li>
                     <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='programas'){?>active<?php }?>">
+<<<<<<< HEAD
                         <a href="beneficiados">
                             <i class="material-icons">assignment</i>
                             <p>Beneficiados</p>
+=======
+                        <a href="inicio">
+                            <i class="material-icons">assignment</i>
+                            <p>Programas</p>
+>>>>>>> a449db5ca80c0ee1c9c2cc2a63898b011fa312bd
                         </a>
                     </li>
                     <?php if ($_smarty_tpl->tpl_vars['st_idPerfil']->value==2){?>
