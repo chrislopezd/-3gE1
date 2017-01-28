@@ -10099,7 +10099,7 @@ footer .btn {
 .dropdown-menu li a:hover,
 .dropdown-menu li a:focus,
 .dropdown-menu li a:active {
-  background-color: #9c27b0;
+  background-color:#4caf50; /*#9c27b0;*/
   color: #FFFFFF;
 }
 .dropdown-menu .divider {

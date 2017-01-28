@@ -1,9 +1,5 @@
 {include file="design/header.tpl"}
-<style type="text/css">
-    .moving-tab{
-        width: 100%;
-    }
-</style>
+
 <div class="content">
     <div class="container-fluid">
         <div class="col-sm-8 col-sm-offset-2">
@@ -26,7 +22,8 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Tipo de perfil</label>
-                                                 <select name="perfil" id="perfil" class="form-control" data-style="select-with-transition" data-size="10">
+                                                 <select name="perfil" id="perfil" class="selectpicker" data-style="select-with-transition btn" data-size="10">
+                                                 <option disabled {if $ifPerfil eq 0}selected{/if}>Elija el perfil</option>
                                                   {foreach from=$PERFILES key=k item=res}
                                                       <option value="{$res['idPerfilUsuario']}" {if $res['idPerfilUsuario'] eq $idPerfil}selected{/if}>{$res['nombrePerfilUsuario']}</option>
                                                     {/foreach}
@@ -112,3 +109,8 @@
         demo.initMaterialWizard();
     });
 </script>
+<style type="text/css">
+    .moving-tab{
+        width: 100% !important;
+    }
+</style>

@@ -106,7 +106,7 @@ class Inicio extends CI_Controller {
 		$d['st_programa'] = $this->session->userdata('sep_programa');
 		$d['edit'] = 0;
 		$d['idUsuario'] = 0;
-		$d['idPerfil'] = 2;
+		$d['idPerfil'] = 0;
 		$d['idTipo'] = 0;
 
 		$d['bread'] = "Nuevo usuario";
