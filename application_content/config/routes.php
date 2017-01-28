@@ -51,6 +51,10 @@ $route['ciclos'] = 'inicio/listCiclos';
 
 ########PROGRAMAS
 $route['beneficiados'] = 'beneficiados';
+$route['ajax/autocomplete/beneficiadoSearch'] = 'beneficiados/autocomplete/beneficiados';
+$route['ajax/listadoBeneficiados'] = 'beneficiados/listBeneficiados';
+$route['ajax/guardarBeneficiario'] = 'beneficiados/saveBeneficiados';
+$route['ajax/eliminarBeneficiario'] = 'beneficiados/deleteBeneficiado';
 ########END PROGRAMAS
 
 ########LOGIN

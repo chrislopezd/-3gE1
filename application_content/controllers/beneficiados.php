@@ -68,6 +68,7 @@ class Beneficiados extends CI_Controller {
 
 	public function index(){
 		$d['token'] = $this->utilidades->generaToken();
+		//print_r($d['token']);die;
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
 		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
 		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
@@ -83,6 +84,47 @@ class Beneficiados extends CI_Controller {
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Catálogo beneficiados');
 		$this->smarty->view("beneficiados.tpl",$d);
+	}
+	public function listBeneficiados(){
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+
+		$info = $this->mbeneficiados->getBeneficiadosListado($d['st_idTipo']);
+		$d['LISTADO'] = $info['DATOS'];
+
+		echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("beneficiadosList.tpl",$d,TRUE)));
+	}
+	public function autocomplete($tipoBusqueda){
+		switch ($tipoBusqueda) {
+			case 'beneficiados':
+				$termino = $this->input->get('q');
+				if(empty($termino)){echo json_encode(FALSE);}
+				$resMod = $this->mbeneficiados->autocomplete($tipoBusqueda, $termino);
+				echo json_encode( $resMod );
+				break;
+
+			default:
+				echo json_encode( array() );
+				break;
+		}
+	}
+
+	public function saveBeneficiados(){
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		$datos = $this->input->post();
+		echo json_encode($this->mbeneficiados->saveBeneficiados($d, $datos));
+	}
+
+	public function deleteBeneficiado(){
+		$datos = $this->input->post();
+		echo json_encode($this->mbeneficiados->deleteBeneficiado($datos));
 	}
 }
 ?>
