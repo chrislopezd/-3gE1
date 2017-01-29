@@ -66,7 +66,8 @@ class Inicio extends CI_Controller {
  	/*END FUNCIONES*/
  	/*TPL'S*/
  	public function index(){
-		$d['token'] = $this->utilidades->generaToken();
+		$token = $this->utilidades->generaToken();
+		$d['token'] = $token['token'];
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
 		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
 		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
@@ -80,8 +81,9 @@ class Inicio extends CI_Controller {
 		$this->smarty->assign("title", 'Inicio');
 		$this->smarty->view("inicio.tpl",$d);
 	}
-	public function listUsuarios(){
-		$d['token'] = $this->utilidades->generaToken();
+	public function users(){
+		$token = $this->utilidades->generaToken();
+		$d['token'] = $token['token'];
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
 		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
 		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
@@ -91,14 +93,13 @@ class Inicio extends CI_Controller {
 		$d['bread'] = "Catálogo usuarios";
 		$d['active'] = "usuarios";
 		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
-		$info = $this->minicio->getUsuariosListado();
-		$d['LISTADO'] = $info['DATOS'];
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Catálogo usuarios');
 		$this->smarty->view("usuarios.tpl",$d);
 	}
 	public function newUsuario(){
-		$d['token'] = $this->utilidades->generaToken();
+		$token = $this->utilidades->generaToken();
+		$d['token'] = $token['token'];
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
 		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
 		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
@@ -108,7 +109,9 @@ class Inicio extends CI_Controller {
 		$d['idUsuario'] = 0;
 		$d['idPerfil'] = 0;
 		$d['idTipo'] = 0;
-
+		$d['usuario'] = '';
+		$d['observaciones'] = '';
+		$d['url'] = 'guardarUsuario';
 		$d['bread'] = "Nuevo usuario";
 		$d['active'] = "usuarios";
 		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
@@ -119,6 +122,38 @@ class Inicio extends CI_Controller {
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Nuevo usuario');
 		$this->smarty->view("forms/usuarios.tpl",$d);
+	}
+	public function editUsuario(){
+		//echo "<pre>";print_r($_POST);die();
+		if(!isset($_POST['id'])){redirect('usuarios','');}
+		$id = (int) $this->input->post("id");
+		if($id > 0){
+			$token = $this->utilidades->generaToken();
+			$d['token'] = $token['token'];
+			$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+			$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+			$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+			$d['st_tipo'] = $this->session->userdata('sep_tipo');
+			$d['st_programa'] = $this->session->userdata('sep_programa');
+			$d['DATA'] = $this->minicio->editaUsuario($id);
+			$d['edit'] = 1;
+			$d['idUsuario'] = $d['DATA']->idUsuario;
+			$d['idPerfil'] = $d['DATA']->idPerfilUsuario;
+			$d['idTipo'] = $d['DATA']->idTipo;
+			$d['usuario'] = $d['DATA']->programa;
+			$d['observaciones'] = $d['DATA']->observaciones;
+			$d['url'] = 'editarUsuario';
+			$d['bread'] = "Edita usuario";
+			$d['active'] = "usuarios";
+			$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+			$info = $this->minicio->getCatPerfiles();
+			$d['PERFILES'] = $info['DATOS'];
+			$info = $this->minicio->getCatBeneficiados();
+			$d['BENEFICIADOS'] = $info['DATOS'];
+			//echo "<pre>"; print_r($d);die();
+			$this->smarty->assign("title", 'Edita usuario');
+			$this->smarty->view("forms/usuarios.tpl",$d);
+		}
 	}
 	public function listBeneficiados(){
 		$d['token'] = $this->utilidades->generaToken();
@@ -150,6 +185,49 @@ class Inicio extends CI_Controller {
 		$this->smarty->assign("title", 'Catálogo ciclos');
 		$this->smarty->view("ciclos.tpl",$d);
 	}
-
+	public function listUsuarios(){
+		$info = $this->minicio->getUsuariosListado();
+		$d['LISTADO'] = $info['DATOS'];
+		echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoUsuarios.tpl",$d,TRUE)));
+	}
+	public function validUsuario(){
+		if($this->input->is_ajax_request()){
+			$user = trim($this->input->post("user"));
+			if(isset($_POST['user']) and strlen($user) > 2){
+				echo $this->minicio->getUSerName($user);
+			}
+		}
+	}
+	public function saveUsuarioData(){
+	    if($this->input->is_ajax_request()){
+	      $id = $this->minicio->saveUsuarioData($_POST,0);
+	      echo $id;
+	    }
+  	}
+  	public function editUsuarioData(){
+		if($this->input->is_ajax_request()){
+		  $id = (int)$this->input->post("id");
+		  //echo "<pre>";print_r($_POST);die();
+		  $id = $this->minicio->saveUsuarioData($_POST,$id);
+		  echo $id;
+		}
+  	}
+  	public function delUpUsuario(){
+  		if($this->input->is_ajax_request()){
+			$id = (int)$this->input->post("id");
+			if($id > 0){
+				$estatus = $this->input->post("estatus");
+				echo json_encode($this->minicio->delUpUsuario($id,$estatus));
+			}
+		}
+	}
+	public function changeContrasena(){
+  		if($this->input->is_ajax_request()){
+			$pass = $this->input->post("pass");
+			if($pass != ""){
+				echo json_encode($this->minicio->changePass($pass));
+			}
+		}
+	}
 }
 ?>

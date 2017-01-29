@@ -43,8 +43,19 @@ $route['(:any)'] = 'acceso';
 #CONTROLLER INICIO
 $route['inicio'] = 'inicio';
 
-$route['usuarios'] = 'inicio/listUsuarios';
+####USUARIOS
+$route['usuarios'] = 'inicio/users';
 $route['nuevoUsuario'] = 'inicio/newUsuario';
+$route['editaUsuario'] = 'inicio/editUsuario';
+$route['ajax/valiUsuario'] = 'inicio/validUsuario';
+$route['ajax/guardarUsuario'] = 'inicio/saveUsuarioData';
+$route['ajax/editarUsuario'] = 'inicio/editUsuarioData';
+$route['ajax/listadoUsuarios'] = 'inicio/listUsuarios';
+$route['ajax/cambiarEstatusUsuario'] = 'inicio/delUpUsuario';
+$route['ajax/cambiarContrasena'] = 'inicio/changeContrasena';
+
+
+
 
 //$route['beneficiados'] = 'inicio/listBeneficiados';
 $route['ciclos'] = 'inicio/listCiclos';

@@ -37,7 +37,7 @@
 <script src="{$raiz}resources/theme/js/jquery.select-bootstrap.js"></script>
 {*<!--  DataTables.net Plugin    -->*}
 <script src="{$raiz}resources/theme/js/jquery.datatables.js"></script>
-{*<!-- Sweet Alert 2 plugin -->
+{*<!-- Sweet Alert 2 plugin -->*}
 <script src="{$raiz}resources/theme/js/sweetalert2.js"></script>
 {*<!--    Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->*}
 <script src="{$raiz}resources/theme/js/jasny-bootstrap.min.js"></script>
@@ -48,5 +48,11 @@
 {*<!-- Material Dashboard DEMO methods, don't include it in your project! -->*}
 <script src="{$raiz}resources/theme/js/js.js"></script>
 <script src="{$raiz}resources/plugs/pace/pace.min.js"></script>
+<script src="{$raiz}resources/js/jquery.blockUI.js"></script>
+<style type="text/css">
+	[data-notify="container"]{
+        z-index: 999999 !important;
+    }
+</style>
 </body>
 </html>

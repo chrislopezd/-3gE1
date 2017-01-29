@@ -3892,7 +3892,7 @@ be a descendant of the grid when it is being dragged.
   width: 100%;
 }
 .wizard-card .tab-content {
-  min-height: 340px;
+  min-height: 275px;
   padding: 20px 15px;
 }
 .wizard-card .wizard-footer {

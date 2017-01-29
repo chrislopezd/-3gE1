@@ -47,8 +47,8 @@
                         <div class="collapse" id="collapseExample">
                             <ul class="nav">
                                 <li class="">
-                                    <a href="#">
-                                        Perfil
+                                    <a href="javascript:void(0)" class="editPass">
+                                        Cambiar contraseña
                                     </a>
                                 </li>
                             </ul>

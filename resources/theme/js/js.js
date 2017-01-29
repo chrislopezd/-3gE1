@@ -1,4 +1,84 @@
 $().ready(function(){
+
+    $(".editPass").click( function(){
+        swal({
+          title: 'Cambiar contraseña',
+          text: '<div class="row" data-color="rose"><div class="input-group">'
+                                           +' <span class="input-group-addon"></span>'
+                                            +' <div class="form-group label-floating is-empty">'
+                                              +'  <label class="control-label">Nueva contraseña'
+                                                +'    <small style="color:red">*</small>'
+                                                +'</label>'
+                                               +' <input name="mpass" style="background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);" id="mpass" maxlength="20" type="password" class="form-control">'
+                                            +'<span class="material-input"></span><span class="material-input"></span></div>'
+                                           +'</div> <div class="input-group">'
+                                           +' <span class="input-group-addon"></span>'
+                                            +' <div class="form-group label-floating is-empty">'
+                                              +'  <label class="control-label">Repetir contraseña'
+                                                +'    <small style="color:red">*</small>'
+                                                +'</label>'
+                                               +' <input name="mpass2" id="mpass2" style="background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);" maxlength="20" type="password" class="form-control">'
+                                            +'<span class="material-input"></span><span class="material-input"></span></div>'
+                                        +'</div></div>',
+          allowEscapeKey: false,
+          showCancelButton: true,
+          confirmButtonText: 'Cambiar',
+          confirmButtonColor:'#4caf50',
+          cancelButtonText: 'Cancelar',
+          confirmButtonClass: "btn btn-success",
+          showLoaderOnConfirm: false,
+          preConfirm: function (mpass) {
+            return new Promise(function (resolve, reject) {
+                var _mp1 = $.trim($("#mpass").val());
+                var _mp2 = $.trim($("#mpass2").val());
+               if($.trim($("#mpass").val()).length == 0){
+                    demo.showNotificacion('top','center','error','danger','El campo <strong>Contraseña</strong> es obligatorio');
+                    $("#mpass").parent().parent().find(".label-floating").addClass("has-error");
+                    return false;
+                }
+                if($.trim($("#mpass").val()).length < 3){
+                    demo.showNotificacion('top','center','error','danger','El campo <strong>Contraseña</strong> debe contener al menos 3 caracteres');
+                    $("#mpass").parent().parent().find(".label-floating").addClass("has-error");
+                    return false;
+                }
+                if(_mp1 != _mp2){
+                    demo.showNotificacion('top','center','error','danger','Las contraseñas no coinciden.');
+                    $("#mpass").parent().parent().find(".label-floating").addClass("has-error");
+                    return false;
+                }
+                var _mdata = new FormData();
+                _mdata.append('csrf_segey_tok_name', $("#token").val());
+                _mdata.append('pass', _mp1);
+                $.ajax({
+                url: 'ajax/cambiarContrasena',type: 'POST',data: _mdata,cache: false,contentType: false,processData: false,
+                success: function(data){
+                    resolve();
+                    swal({
+                        type: 'success',
+                        title: '',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonClass: "btn btn-success",
+                        html: 'La contraseña se ha cambiado correctamente'
+                      });
+
+                },
+                error: function(d){
+                    swal({
+                        type: 'error',
+                        title: 'Error',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonClass: "btn btn-danger",
+                        html: 'Intente más tarde'
+                      });
+                }
+                });
+
+            })
+          },
+          allowOutsideClick: false
+        }).catch(swal.noop);
+    });
+
     $sidebar = $('.sidebar');
     $sidebar_img_container = $sidebar.find('.sidebar-background');
 
@@ -132,7 +212,7 @@ $().ready(function(){
     });
 
     $('.switch-sidebar-mini input').change(function(){
-       console.log(3);
+
         $body = $('body');
 
         $input = $(this);
