@@ -137,7 +137,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="inicio" class="dropdown-toggle">
+                            <a href="javascript:void(0);" class="dropdown-toggle">
                                 <i class="material-icons">access_time</i> Último acceso: {$st_fechaUA}
                                 <p class="hidden-lg hidden-md"></p>
                             </a>
