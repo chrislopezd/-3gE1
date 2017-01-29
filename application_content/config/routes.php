@@ -55,6 +55,8 @@ $route['ajax/autocomplete/beneficiadoSearch'] = 'beneficiados/autocomplete/benef
 $route['ajax/listadoBeneficiados'] = 'beneficiados/listBeneficiados';
 $route['ajax/guardarBeneficiario'] = 'beneficiados/saveBeneficiados';
 $route['ajax/eliminarBeneficiario'] = 'beneficiados/deleteBeneficiado';
+$route['ajax/importarBeneficiarios'] = 'beneficiados/importBeneficiarios';
+
 ########END PROGRAMAS
 
 ########LOGIN

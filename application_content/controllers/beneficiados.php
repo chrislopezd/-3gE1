@@ -126,5 +126,99 @@ class Beneficiados extends CI_Controller {
 		$datos = $this->input->post();
 		echo json_encode($this->mbeneficiados->deleteBeneficiado($datos));
 	}
+
+	public function importBeneficiarios(){
+		$idTipoBene = $this->session->userdata('sep_idTipo');
+
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+
+		$mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		$HTML = $nombre = $ext = "";
+
+		if(in_array($_FILES['fileCSV']['type'],$mimes)){
+			if ($_FILES["fileCSV"]["error"] > 0) {
+			} else {
+				$nombre = explode('.', $_FILES["fileCSV"]["name"]);
+				$ext = strtolower( end($nombre) );
+			}
+		} else {
+			echo json_encode(array('error' => true, 'HTML' =>'El formato del archivo no es correcto.'));
+			die();
+		}
+
+		$file = $_FILES["fileCSV"]["tmp_name"];
+		if(empty($file)){return FALSE;}
+
+		$estructura = array('CLAVECCT', 'TURNO', 'GRADO', 'GRUPO', 'TIPO DE GRUPO');
+		$cct = $turno = $nivelGrado = $lastInsert = '';
+		switch ($ext) {
+			case 'csv':
+			case "xls":
+				echo json_encode(array('error' => true, 'HTML' =>'<h2>Por el momento este tipo de archivo no se acepta , guarde en version Office 2007 en adelante \'XLSX\'</h2>'));
+				die();
+				break;
+			case 'xlsx':
+				//include 'simplexlsx.class.php';
+				$this->load->library('SimpleExcel');
+				$xlsx = new SimpleXLSX($file);
+
+				$arrayData = array();
+				$c = 0;
+				foreach ($xlsx->rows() as $key => $value) {
+					if ($key > 0){
+						switch ($idTipoBene) {
+				            case '1'://ALUMNOS
+				            case '2'://DOCENTES
+				            case '4'://PADRES DE FAMILIA
+								$curp = trim($value[0]);
+								$nombres = trim($value[1]);
+								$apellidoPaterno = trim($value[2]);
+								$apellidoMaterno = trim($value[3]);
+								$correo = trim($value[4]);
+								$telefono = trim($value[5]);
+								$direccion = trim($value[6]);
+								$municipio = trim($value[7]);
+								$localidad = trim($value[8]);
+
+								$arrayData[$c]['CURP'] = $curp;
+								$arrayData[$c]['NOMBRES'] = $nombres;
+								$arrayData[$c]['APEPAT'] = $apellidoPaterno;
+								$arrayData[$c]['APEMAT'] = $apellidoMaterno;
+								$arrayData[$c]['CORREO'] = $correo;
+								$arrayData[$c]['TELEFONO'] = $telefono;
+								$arrayData[$c]['DIRECCION'] = $direccion;
+								$arrayData[$c]['MUN'] = $municipio;
+								$arrayData[$c]['LOCA'] = $localidad;
+				            break;
+				            case '3'://ESCUELAS
+								$claveCT = trim($value[0]);
+								$nombreCT = trim($value[1]);
+								$municipio = trim($value[2]);
+								$localidad = trim($value[3]);
+
+								$arrayData[$c]['CLAVECT'] = $claveCT;
+								$arrayData[$c]['NOMBRECT'] = $nombreCT;
+								$arrayData[$c]['MUN'] = $municipio;
+								$arrayData[$c]['LOCA'] = $localidad;
+				            break;
+					    }
+						$c++;
+					}
+				}
+
+				//echo "<pre>";print_r($arrayData);
+				echo json_encode($this->mbeneficiados->importBeneficiarios($d , $arrayData));
+
+				break;
+			default:
+				echo json_encode(array('error' => true, 'HTML' =>'<h2>Por el momento este tipo de archivo no se acepta , guarde en version Office 2007 en adelante \'XLSX\'</h2>'));
+				break;
+		}
+
+	}
 }
 ?>

@@ -18,8 +18,10 @@
                                 <input type="hidden" name="beneCT" id="beneCT">
                                 <input type="hidden" name="beneIdPersona" id="beneIdPersona">
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-6">
                                 <button type="button" id="beneficiadoBtn" class="btn btn-round btn-success"><i class="material-icons">add_box</i> Agregar Beneficiado</button>
+
+                                <button type="button" id="importBene" class="btn btn-round btn-warning" data-toggle="modal" data-target="#importarExcel"><i class="material-icons">add_box</i> Importar Excel</button>
                             </div>
                            {*<a href="#" class="btn btn-round btn-success">
                                 <i class="material-icons">add_box</i>
@@ -42,7 +44,7 @@
 </div>
 
 <div class="modal fade" id="eliminarBeneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<input type="hidden" name="idSol" id="idSol" value="0">
+    <input type="hidden" name="idSol" id="idSol" value="0">
     <div class="modal-dialog modal-small ">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,10 +61,155 @@
     </div>
 </div>
 
+<div class="modal fade" id="importarExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                                        <i class="material-icons">file_upload</i>
+                                    </div>
+            <div class="modal-header" style="margin-top: -10px;margin-bottom: 10px;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Seleccione el archivo. </h5>
+                <span class="">Tiene que ser un archivo de Excel (.xlsx)</span><br>
+
+                <span class="btn btn-rose btn-round btn-file">
+                    <span class="fileinput-new">Selecionar Archivo</span>
+                    <span class="fileinput-exists"></span>
+                    <input type="hidden" value="" name="..."><input type="file" name="" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileImport">
+                <div class="ripple-container"></div></span><br>
+                <b>El primer registro debe de contener los titulos de cada columna. El archivo debe de tener la siguiente estructura:</b>
+                <table class="tablaEstructura table table-striped table-hover" cellspacing="0" width="100%" style="width:100%">
+                    <tbody>
+                    {if $st_idTipo == 1}
+                        <tr>
+                            <th>CURP</th>
+                            <th>Nombres</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Correo Electronico</th>
+                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Municipio</th>
+                            <th>Localidad</th>
+                        </tr>
+                    {/if}
+                    {if $st_idTipo == 2}
+                        <tr>
+                            <th>CURP</th>
+                            <th>Nombres</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Correo Electronico</th>
+                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Municipio</th>
+                            <th>Localidad</th>
+                        </tr>
+                    {/if}
+                    {if $st_idTipo == 3}
+                        <tr>
+                            <th>CLAVE CT</th>
+                            <th>Nombre CT</th>
+                            <th>Municipio</th>
+                            <th>Localidad</th>
+                        </tr>
+                    {/if}
+                    {if $st_idTipo == 4}
+                        <tr>
+                            <th>CURP</th>
+                            <th>Nombres</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Correo Electronico</th>
+                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Municipio</th>
+                            <th>Localidad</th>
+                        </tr>
+                    {/if}
+                    </thead>
+                </table>
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" onclick="importar();">Importar Benficiarios</button>
+                <button type="button" class="btn btn-simple" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button style="display: none" id="mostrarResultados" data-toggle="modal" data-target="#resultadosImport"></button>
+<div class="modal fade" id="resultadosImport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                                        <i class="material-icons">file_upload</i>
+                                    </div>
+            <div class="modal-header" style="margin-top: -10px;margin-bottom: 10px;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Resultados: </h5>
+                <div id="resultadosINFO"></div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-simple" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
+$("#fileImport").change(function(e){
+    var _totalImg = $("#fileImport")[0].files.length;
+    if(_totalImg > 0){
+        $('.fileinput-new').html(e.target.files[0].name);
+    }else{$('.fileinput-new').html("Selecionar Archivo");}
+
+
+});
+
+function importar(){
+    var dataForm = new FormData();
+    var _totalImg = $("#fileImport")[0].files.length;
+    if(_totalImg == 1){
+        dataForm.append('fileCSV', $('#fileImport')[0].files[0]);
+    }else{
+        return false;
+    }
+
+    dataForm.append($("#token").attr('name'), $("#token").val());
+    $("#fileImport").val(null);
+    $('.fileinput-new').html("Subiendo archivo...");
+
+    $.ajax({
+        url : "ajax/importarBeneficiarios",
+        data : dataForm,
+        processData: false,
+        contentType: false,
+        cache: false,
+        dataType : "json", type: "POST",
+        beforeSend: function(){$('#loadData').show();},
+        success: function(data){
+            if(data.error){
+                //$('#products').append('Intente mas Tarde.');
+            }
+            else{
+                //mensaje('La Acción se realizo correctamente.');
+                cargarListado();
+                $('.fileinput-new').html("Selecionar Archivo");
+                $('#resultadosINFO').html(data.INFO);
+                $('#mostrarResultados').trigger('click');
+            }
+        },
+        error: function (){/*$(element).next('div').html('Intente mas Tarde.');*/}
+    });
+}
+
     function eliminarBeneficiario(){
         var dataForm = new FormData();
         dataForm.append($("#token").attr('name'), $("#token").val());
@@ -217,6 +364,15 @@
     }
     .ui-menu li:hover{
         background: #f5f5f5;
+    }
+    .tablaEstructura th{
+        font-size: 11px !important;
+        padding: 5px !important;
+        text-align: center;
+    }
+    .tablaEstructura td{
+        font-size: 11px !important;
+        padding: 5px !important;
     }
 </style>
 {/literal}
