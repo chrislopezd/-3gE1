@@ -82,6 +82,9 @@ class Inicio extends CI_Controller {
 		$this->smarty->view("inicio.tpl",$d);
 	}
 	public function users(){
+		if($this->session->userdata('sep_idPerfilUsuario') > 1){
+			redirect('','refresh');
+		}
 		$token = $this->utilidades->generaToken();
 		$d['token'] = $token['token'];
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
@@ -98,6 +101,9 @@ class Inicio extends CI_Controller {
 		$this->smarty->view("usuarios.tpl",$d);
 	}
 	public function newUsuario(){
+		if($this->session->userdata('sep_idPerfilUsuario') > 1){
+			redirect('','refresh');
+		}
 		$token = $this->utilidades->generaToken();
 		$d['token'] = $token['token'];
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');

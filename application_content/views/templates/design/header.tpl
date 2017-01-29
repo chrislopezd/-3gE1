@@ -68,7 +68,7 @@
                             <p>Beneficiados</p>
                         </a>
                     </li>
-                    {if $st_idPerfil eq 2}
+                    {if $st_idPerfil eq 1}
                     <li class="{if $active == 'usuarios'}active{/if}">
                         <a href="usuarios">
                             <i class="material-icons">account_box</i>
