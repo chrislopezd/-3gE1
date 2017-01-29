@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 04:57:18
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-29 16:26:28
          compiled from "application_content\views\templates\design\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:20832588ac51e154d71-03379426%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '273dd499bcaa7e8d7cfb1543a9f3f0075ce89f64' => 
     array (
       0 => 'application_content\\views\\templates\\design\\header.tpl',
-      1 => 1485489415,
+      1 => 1485703401,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_588ac51e19c559_25594241',
   'variables' => 
   array (
     'title' => 0,
@@ -25,8 +27,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'st_fechaUA' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_588ac51e19c559_25594241',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_588ac51e19c559_25594241')) {function content_588ac51e19c559_25594241($_smarty_tpl) {?><!DOCTYPE html>
 <html lang="es">
@@ -87,8 +87,8 @@ resources/theme/img/faces/logo.png" />
                         <div class="collapse" id="collapseExample">
                             <ul class="nav">
                                 <li class="">
-                                    <a href="#">
-                                        Perfil
+                                    <a href="javascript:void(0)" class="editPass">
+                                        Cambiar contraseña
                                     </a>
                                 </li>
                             </ul>

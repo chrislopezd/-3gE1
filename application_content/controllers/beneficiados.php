@@ -81,6 +81,9 @@ class Beneficiados extends CI_Controller {
 
 		$info = $this->mbeneficiados->getBeneficiadosListado($d['st_idTipo']);
 		$d['LISTADO'] = $info['DATOS'];
+
+		$d['MUNICIPIOS'] = $this->mbeneficiados->getCatalogo('MUNICIPIOS','SELECT');
+		$d['LOCALIDADES'] = $this->mbeneficiados->getCatalogo('LOCALIDADES','SELECT');
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Catálogo beneficiados');
 		$this->smarty->view("beneficiados.tpl",$d);
@@ -183,6 +186,7 @@ class Beneficiados extends CI_Controller {
 								$direccion = trim($value[6]);
 								$municipio = trim($value[7]);
 								$localidad = trim($value[8]);
+								$codigoPostal = trim($value[9]);
 
 								$arrayData[$c]['CURP'] = $curp;
 								$arrayData[$c]['NOMBRES'] = $nombres;
@@ -193,6 +197,7 @@ class Beneficiados extends CI_Controller {
 								$arrayData[$c]['DIRECCION'] = $direccion;
 								$arrayData[$c]['MUN'] = $municipio;
 								$arrayData[$c]['LOCA'] = $localidad;
+								$arrayData[$c]['CP'] = $codigoPostal;
 				            break;
 				            case '3'://ESCUELAS
 								$claveCT = trim($value[0]);

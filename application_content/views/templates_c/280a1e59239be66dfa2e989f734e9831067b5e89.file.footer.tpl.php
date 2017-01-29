@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-27 04:57:18
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-29 16:26:29
          compiled from "application_content\views\templates\design\footer.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5657588ac51e462b74-60408465%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '280a1e59239be66dfa2e989f734e9831067b5e89' => 
     array (
       0 => 'application_content\\views\\templates\\design\\footer.tpl',
-      1 => 1485480827,
+      1 => 1485703401,
       2 => 'file',
     ),
   ),
@@ -15,13 +15,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_588ac51e4bba24_37214622',
   'variables' => 
   array (
     'raiz' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_588ac51e4bba24_37214622',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_588ac51e4bba24_37214622')) {function content_588ac51e4bba24_37214622($_smarty_tpl) {?>	<footer class="footer">
 	    <div class="container-fluid">
@@ -80,6 +80,9 @@ resources/theme/js/jquery.select-bootstrap.js"></script>
 resources/theme/js/jquery.datatables.js"></script>
 
 <script src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/theme/js/sweetalert2.js"></script>
+
+<script src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
 resources/theme/js/jasny-bootstrap.min.js"></script>
 
 <script src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
@@ -92,5 +95,12 @@ resources/theme/js/material-dashboard.js"></script>
 resources/theme/js/js.js"></script>
 <script src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
 resources/plugs/pace/pace.min.js"></script>
+<script src="<?php echo $_smarty_tpl->tpl_vars['raiz']->value;?>
+resources/js/jquery.blockUI.js"></script>
+<style type="text/css">
+	[data-notify="container"]{
+        z-index: 999999 !important;
+    }
+</style>
 </body>
 </html><?php }} ?>

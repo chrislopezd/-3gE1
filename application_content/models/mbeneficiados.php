@@ -79,39 +79,71 @@ class Mbeneficiados extends CI_Model{
   public function autocomplete($catalogo , $termino){
     $idTipoPrograma = $this->session->userdata('sep_idTipo');
     $data = array();
+    $x = 0;
     switch ($catalogo) {
       case 'beneficiados':
         switch ($idTipoPrograma) {
           case '1'://ALUMNOS
-            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS value",FALSE);
+            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, '' AS claveCT, p.codpos",FALSE);
             $this->db->from('s_personas AS p');
             $this->db->where('p.tipo',"Alumno");
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $query1 = $this->db->get()->result();
+
+            $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, p.clavect AS claveCT, p.codpos",FALSE);
+            $this->db->from('personas_plantilla AS p');
+            $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $query2 = $this->db->get()->result();
+
+             $data = array_slice(array_merge($query2, $query1),0,15);
+            $x = 1;
+
+            //$this->_reset_select();
           break;
           case '2'://DOCENTES
-            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS value",FALSE);
+            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, '' AS claveCT, p.codpos",FALSE);
             $this->db->from('s_personas AS p');
             $this->db->where('p.tipo',"Docente");
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $query1 = $this->db->get()->result();
+
+            $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, p.clavect AS claveCT, p.codpos",FALSE);
+            $this->db->from('personas_plantilla AS p');
+            $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $query2 = $this->db->get()->result();
+
+            $data = array_slice(array_merge($query2, $query1),0,15);
+            $x = 1;
           break;
           case '3'://ESCUELAS
-            $this->db->select("a.CLAVECCT AS claveCT, CONCAT(a.CLAVECCT, ' - ', a.NOMBRECT) AS value",FALSE);
+            $this->db->select("a.CLAVECCT AS claveCT, CONCAT(a.CLAVECCT, ' - ', a.NOMBRECT) AS value, '' AS correo, '' AS telefono, '' AS direccion, '' AS nombre, '' AS apellidop, '' AS apellidom, '' AS municipio, '' AS localidad, '' AS idPersona, '' AS curp",FALSE);
             $this->db->from('a_ctba AS a');
             $this->db->where("( a.NOMBRECT LIKE '%{$termino}%' OR a.CLAVECCT LIKE '%{$termino}%')");
           break;
           case '4'://PADRES DE FAMILIA
-            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS value",FALSE);
+             $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, '' AS claveCT, p.codpos",FALSE);
             $this->db->from('s_personas AS p');
             $this->db->where('p.tipo',"PadreDeFamilia");
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $query1 = $this->db->get()->result();
+
+            $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, p.clavect AS claveCT, p.codpos",FALSE);
+            $this->db->from('personas_plantilla AS p');
+            $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $query2 = $this->db->get()->result();
+
+             $data = array_slice(array_merge($query2, $query1),0,15);
+            $x = 1;
           break;
         }
         $this->db->limit(15);
 
-        $query = $this->db->get();
-        $res = $query->num_rows();
-        if ($res>0){
-          $data  =  $query->result();
+        if ($x == 0){
+          $query = $this->db->get();
+          $res = $query->num_rows();
+          if ($res>0){
+            $data  =  $query->result();
+          }
         }
         break;
       default:
@@ -124,6 +156,64 @@ class Mbeneficiados extends CI_Model{
   public function saveBeneficiados($session, $datos){
     $this->db->trans_start();
     $idTipoPrograma = $this->session->userdata('sep_idTipo');
+
+    $tipoPersona = "";
+    switch ($session['st_idTipo']) {
+      case '1'://ALUMNOS
+        $tipoPersona = "Alumno";break;
+      case '2'://DOCENTES
+        $tipoPersona = "Docente";break;
+      case '4'://PADRES DE FAMILIA
+        $tipoPersona = "PadreDeFamilia";break;
+    }
+
+    switch ($session['st_idTipo']) {
+      case '1'://ALUMNOS
+      case '2'://DOCENTES
+      case '4'://PADRES DE FAMILIA
+        if(/*($datos['idPersona'] == 0 || $datos['idPersona'] == '') && */$datos['curp'] != ''){
+          $siPersonaCurp = $this->db->query("SELECT IFNULL((SELECT idPersona FROM s_personas WHERE curp = '".$datos['curp']."' AND tipo = '".$tipoPersona."' LIMIT 1),0) AS idPersona")->row()->idPersona;
+
+          if($siPersonaCurp == 0){//NO EXISTE EN PERSONA CON EL MISMO TIPO
+            $dataPersona = array(
+              'tipo'=> $tipoPersona,
+              'curp'=> $datos['curp'],
+              'estatus' => 1,
+              'localidad' => $datos['localidad'],
+              'municipio' => $datos['municipio'],
+              'nombre'=> $datos['nombre'],
+              'apellidop'=> $datos['apellidop'],
+              'apellidom'=> $datos['apellidom'],
+              'correo'=> $datos['correo'],
+              'telefono'=> $datos['telefono'],
+              'direccion'=> $datos['direccion'],
+              'codpos'=> $datos['codpos']);
+            $this->db->insert('s_personas', $dataPersona);
+            $datos['idPersona'] = $this->db->insert_id();
+          }
+          else{
+            $dataPersona = array(
+              'estatus' => 1,
+              'localidad' => $datos['localidad'],
+              'municipio' => $datos['municipio'],
+              'nombre'=> $datos['nombre'],
+              'apellidop'=> $datos['apellidop'],
+              'apellidom'=> $datos['apellidom'],
+              'correo'=> $datos['correo'],
+              'telefono'=> $datos['telefono'],
+              'direccion'=> $datos['direccion'],
+              'codpos'=> $datos['codpos']);
+            $this->db->where('idPersona',$siPersonaCurp);
+            $this->db->update('s_personas', $dataPersona);
+          }
+
+        }
+      break;
+      case '3'://ESCUELAS
+        //$tipoBene = 1;
+      break;
+    }
+
 
     if(($datos['idPersona'] != '' && $datos['idPersona'] != '0') || $datos['claveCT'] != ''){
       $tipoBene = 1;
@@ -242,7 +332,8 @@ class Mbeneficiados extends CI_Model{
                 'apellidom'=> $arrData['APEMAT'],
                 'correo'=> $arrData['CORREO'],
                 'telefono'=> $arrData['TELEFONO'],
-                'direccion'=> $arrData['DIRECCION']);
+                'direccion'=> $arrData['DIRECCION'],
+                'codpos'=> $arrData['CP']);
               $this->db->where('idPersona', $siPersonaCurp);
               $this->db->update('s_personas', $dataActualizar);
 
@@ -292,6 +383,7 @@ class Mbeneficiados extends CI_Model{
                 'municipio'=> $siExisteMunicipio,
                 'localidad'=> $siExisteLocalidad,
                 'estatus'=> 1,
+                'codpos'=> $arrData['CP']
               );
               $this->db->insert('s_personas', $dataPersona);
               $idPersona = $this->db->insert_id();
@@ -642,6 +734,53 @@ class Mbeneficiados extends CI_Model{
       }
       return array('error'=>false,'HTML'=>'Se subio correcctamente la información', 'INFO' =>$INFO);
     }
+
+  }
+
+  public function getCatalogo($catalogo, $tipo){
+    $data = array();
+    switch ($catalogo) {
+      case 'MUNICIPIOS':
+        $this->db->select("m.MUNICIPIO, m.NOM",FALSE);
+        $this->db->from('catmun AS m');
+        $data = $this->db->get();
+        $data = $data->result_array();
+        switch ($tipo) {
+          case 'SELECT':
+            $html = "";
+            foreach ($data as $key => $value) {
+              $html .= '<option value="'.$value['MUNICIPIO'].'" >'.$value['NOM'].'</option>';
+            }
+            return $html;
+            break;
+          default:
+            return $data;
+            break;
+        }
+
+        break;
+      case 'LOCALIDADES':
+        $this->db->select("l.MUNICIPIO, l.LOCALIDAD, l.NOMBRELOC",FALSE);
+        $this->db->from('a_itba AS l');
+        $this->db->order_by('l.MUNICIPIO');
+        $this->db->group_by('l.MUNICIPIO, l.LOCALIDAD');
+        $data = $this->db->get();
+        $data = $data->result_array();
+        switch ($tipo) {
+          case 'SELECT':
+            $html = "";
+            foreach ($data as $key => $value) {
+              $html .= '<option value="'.$value['LOCALIDAD'].'" data-MUN = "'.$value['MUNICIPIO'].'">'.$value['NOMBRELOC'].'</option>';
+            }
+            return $html;
+            break;
+          default:
+            return $data;
+            break;
+        }
+        break;
+    }
+
 
   }
 

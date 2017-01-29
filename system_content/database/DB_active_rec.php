@@ -58,7 +58,7 @@ class CI_DB_active_record extends CI_DB_driver {
 	var $ar_cache_having		= array();
 	var $ar_cache_orderby		= array();
 	var $ar_cache_set			= array();
-	
+
 	var $ar_no_escape 			= array();
 	var $ar_cache_no_escape     = array();
 
@@ -426,7 +426,7 @@ class CI_DB_active_record extends CI_DB_driver {
 
 					$v = ' '.$this->escape($v);
 				}
-				
+
 				if ( ! $this->_has_operator($k))
 				{
 					$k .= ' = ';
@@ -616,9 +616,9 @@ class CI_DB_active_record extends CI_DB_driver {
 	{
 		return $this->_like($field, $match, 'OR ', $side);
 	}
-	
+
 	public function or_like_close($field, $match = '', $side = 'both')
-	{		
+	{
 		return $this->_likeClose($field, $match, 'OR ', $side);
 	}
 
@@ -665,7 +665,7 @@ class CI_DB_active_record extends CI_DB_driver {
 			$prefix = (count($this->ar_like) == 0) ? '' : $type;
 
 			$v = $this->escape_like_str($v);
-			
+
 			if ($side == 'none')
 			{
 				$like_statement = $prefix." $k $not LIKE '{$v}'";
@@ -699,8 +699,8 @@ class CI_DB_active_record extends CI_DB_driver {
 		}
 		return $this;
 	}
-	
-	
+
+
 	protected function _likeClose($field, $match = '', $type = 'AND ', $side = 'both', $not = '')
 	{
 		if ( ! is_array($field))
@@ -715,7 +715,7 @@ class CI_DB_active_record extends CI_DB_driver {
 			$prefix = (count($this->ar_like) == 0) ? '' : $type;
 
 			$v = $this->escape_like_str($v);
-			
+
 			if ($side == 'none')
 			{
 				$like_statement = $prefix." $k $not LIKE '{$v}'";
@@ -749,9 +749,9 @@ class CI_DB_active_record extends CI_DB_driver {
 		}
 		return $this;
 	}
-	
-	
-	
+
+
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -1853,9 +1853,9 @@ class CI_DB_active_record extends CI_DB_driver {
 		if (is_numeric($this->ar_limit))
 		{
 			$sql .= "\n";
-			$sql = $this->_limit($sql, $this->ar_limit, $this->ar_offset);			
+			$sql = $this->_limit($sql, $this->ar_limit, $this->ar_offset);
 		}
-		
+
 		return $sql;
 	}
 

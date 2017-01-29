@@ -1,7 +1,7 @@
 {include file="design/header.tpl"}
 
 <input type="hidden" name="{$token.token_name}" id="token" value="{$token.token}" />
-
+<input type="hidden" name="tipoBene" id="tipoBene" value="{$st_idTipo}" />
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -17,6 +17,16 @@
                                 <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm" placeholder="Buscar Beneficiado">
                                 <input type="hidden" name="beneCT" id="beneCT">
                                 <input type="hidden" name="beneIdPersona" id="beneIdPersona">
+                                <input type="hidden" name="personaCurp" id="personaCurp">
+                                <input type="hidden" name="personaNombre" id="personaNombre">
+                                <input type="hidden" name="personaApePat" id="personaApePat">
+                                <input type="hidden" name="personaApeMat" id="personaApeMat">
+                                <input type="hidden" name="personaCorreo" id="personaCorreo">
+                                <input type="hidden" name="personaTelefono" id="personaTelefono">
+                                <input type="hidden" name="personaDireccion" id="personaDireccion">
+                                <input type="hidden" name="personaLocalidad" id="personaLocalidad">
+                                <input type="hidden" name="personaMunicipio" id="personaMunicipio">
+                                <input type="hidden" name="codpos" id="codpos">
                             </div>
                             <div class="col-md-6">
                                 <button type="button" id="beneficiadoBtn" class="btn btn-round btn-success"><i class="material-icons">add_box</i> Agregar Beneficiado</button>
@@ -93,6 +103,7 @@
                             <th>Dirección</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
+                            <th>Codigo Postal</th>
                         </tr>
                     {/if}
                     {if $st_idTipo == 2}
@@ -106,6 +117,7 @@
                             <th>Dirección</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
+                            <th>Codigo Postal</th>
                         </tr>
                     {/if}
                     {if $st_idTipo == 3}
@@ -127,6 +139,7 @@
                             <th>Dirección</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
+                            <th>Codigo Postal</th>
                         </tr>
                     {/if}
                     </thead>
@@ -161,6 +174,102 @@
     </div>
 </div>
 
+<button style="display: none" id="mostrarAgregarNuevo" data-toggle="modal" data-target="#mostrarAgregarNuevoView"></button>
+<div class="modal fade" id="mostrarAgregarNuevoView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                                        <i class="material-icons">assignment</i>
+                                    </div>
+            <div class="modal-header" style="margin-top: -10px;margin-bottom: 10px;">
+                <button type="button" class="close cerrarNuevo" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Datos: </h5>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <!--label class="control-label" style="width: 100%;left: 0px;">Clve CT</label-->
+                        <select name="centroPersona" id="centroPersona" class="form-control upper" autofocus="" autocomplete="off"></select>
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">CURP</label>
+                        <input type="text" name="curpPersona" id="curpPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Nombre</label>
+                        <input type="text" name="nombrePersona" id="nombrePersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Apellido Paterno</label>
+                        <input type="text" name="apellidoPPersona" id="apellidoPPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Apellido Materno</label>
+                        <input type="text" name="apellidoMPersona" id="apellidoMPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Correo Electronico</label>
+                        <input type="text" name="correoPersona" id="correoPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Telefono</label>
+                        <input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Dirección</label>
+                        <input type="text" name="direccionPersona" id="direccionPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <label class="control-label" style="width: 100%;left: 0px;">Codigo Postal</label>
+                        <input type="text" name="codposPersona" id="codposPersona" class="form-control upper" autofocus="" autocomplete="off">
+                    <span class="material-input"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <!--label class="control-label" style="width: 100%;left: 0px;">Municipio</label-->
+                        <select name="municipioPersona" id="municipioPersona" class="form-control upper" autofocus="" autocomplete="off">
+                            {$MUNICIPIOS}
+                        </select>
+                    <span class="material-input"></span></div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group label-floating has-success is-empty">
+                        <!--label class="control-label" style="width: 100%;left: 0px;">Localidad</label-->
+                        <select name="localidadPersona" id="localidadPersona" class="form-control upper" autofocus="" autocomplete="off">
+                            {$LOCALIDADES}
+                        </select>
+                        <select name="localidadPersonaBACK" id="localidadPersonaBACK" class="form-control upper hidden" autofocus="" autocomplete="off">
+                            {$LOCALIDADES}
+                        </select>
+                    <span class="material-input"></span></div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal">Agregar</button>
+                <button type="button" class="btn btn-warning cerrarNuevo" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
@@ -171,6 +280,33 @@ $("#fileImport").change(function(e){
     }else{$('.fileinput-new').html("Selecionar Archivo");}
 
 
+});
+$('.cerrarNuevo').click(function(){
+    $('#beneficiadoSearch').val('');
+    $('#beneCT').val('');
+    $('#beneIdPersona').val('');
+    $('#personaCurp').val('');
+    $('#personaNombre').val('');
+    $('#personaApePat').val('');
+    $('#personaApeMat').val('');
+    $('#personaCorreo').val('');
+    $('#personaTelefono').val('');
+    $('#personaDireccion').val('');
+    $('#personaMunicipio').val('');
+    $('#personaLocalidad').val('');
+    $('#codpos').val('');
+
+    $('#centroPersona').find('option').remove();
+    $('#curpPersona').val('');
+    $('#nombrePersona').val('');
+    $('#apellidoPPersona').val('');
+    $('#apellidoMPersona').val('');
+    $('#correoPersona').val('');
+    $('#telefonoPersona').val('');
+    $('#direccionPersona').val('');
+    $('#municipioPersona').val('');
+    $('#localidadPersona').val('');
+    $('#codposPersona').val('');
 });
 
 function importar(){
@@ -234,6 +370,16 @@ function importar(){
                     $('#beneficiadoSearch').val('');
                     $('#beneCT').val('');
                     $('#beneIdPersona').val('');
+                    $('#personaCurp').val('');
+                    $('#personaNombre').val('');
+                    $('#personaApePat').val('');
+                    $('#personaApeMat').val('');
+                    $('#personaCorreo').val('');
+                    $('#personaTelefono').val('');
+                    $('#personaDireccion').val('');
+                    $('#personaMunicipio').val('');
+                    $('#personaLocalidad').val('');
+                    $('#codpos').val('');
                     $('.close').trigger('click');
                 }
             },
@@ -256,6 +402,16 @@ function importar(){
                     $('#beneficiadoSearch').val('');
                     $('#beneCT').val('');
                     $('#beneIdPersona').val('');
+                    $('#personaCurp').val('');
+                    $('#personaNombre').val('');
+                    $('#personaApePat').val('');
+                    $('#personaApeMat').val('');
+                    $('#personaCorreo').val('');
+                    $('#personaTelefono').val('');
+                    $('#personaDireccion').val('');
+                    $('#personaMunicipio').val('');
+                    $('#personaLocalidad').val('');
+                    $('#codpos').val('');
                 }
             })
             .autocomplete({
@@ -288,43 +444,149 @@ function importar(){
                     var idPersona = ui.item.idPersona;
                     $('#beneCT').val(claveCT);
                     $('#beneIdPersona').val(idPersona);
+                    $('#personaCurp').val(ui.item.curp);
+                    $('#personaNombre').val(ui.item.nombre);
+                    $('#personaApePat').val(ui.item.apellidop);
+                    $('#personaApeMat').val(ui.item.apellidom);
+                    $('#personaCorreo').val(ui.item.correo);
+                    $('#personaTelefono').val(ui.item.telefono);
+                    $('#personaDireccion').val(ui.item.direccion);
+                    $('#personaMunicipio').val(ui.item.municipio);
+                    $('#personaLocalidad').val(ui.item.localidad);
+                    $('#codpos').val(ui.item.codpos);
+
                     return false;
                 }
         });
         $('#beneficiadoBtn').click(function(){
-            var dataForm = new FormData();
+            if($('#personaCurp').val() != ''){
+                if($('#tipoBene').val() == 1 || $('#tipoBene').val() == 2 || $('#tipoBene').val() == 4){
 
-            dataForm.append($("#token").attr('name'), $("#token").val());
-            dataForm.append('claveCT', $("#beneCT").val());
-            dataForm.append('idPersona', $('#beneIdPersona').val());
+                    $('#localidadPersona').html($('#localidadPersonaBACK').html());
+                    $('#localidadPersona').find('option').each(function(ind, ele){
+                        if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
+                            $(ele).show();
+                        }
+                        else{
+                            $(ele).remove();
+                        }
+                    });
 
-            $.ajax({
-                url : "ajax/guardarBeneficiario",
-                data : dataForm,
-                processData: false,
-                contentType: false,
-                cache: false,
-                dataType : "json", type: "POST",
-                beforeSend: function(){$('#loadData').show();},
-                success: function(data){
-                    if(data.error){
-                        $('#loadData').hide();
+                    centros = $('#beneCT').val().split(',');
+                    if(centros.length > 0){
+                        $('#centroPersona').find('option').remove();
+                        $('#beneCT').val(centros[0]);
+                        $.each(centros, function( index, value ) {
+                            $('#centroPersona').append('<option>'+value+'</option>');
+                        });
                     }
-                    else{
-                        cargarListado();
-                        $('#loadData').hide();
-                        $('#beneficiadoSearch').val('');
-                        $('#beneCT').val('');
-                        $('#beneIdPersona').val('');
-                    }
-                },
-                error: function (){$('#loadData').hide();}
-            });
+                    $('#curpPersona').val($('#personaCurp').val());
+                    $('#nombrePersona').val($('#personaNombre').val());
+                    $('#apellidoPPersona').val($('#personaApePat').val());
+                    $('#apellidoMPersona').val($('#personaApeMat').val());
+                    $('#correoPersona').val($('#personaCorreo').val());
+                    $('#telefonoPersona').val($('#personaTelefono').val());
+                    $('#direccionPersona').val($('#personaDireccion').val());
+                    $('#municipioPersona').val($('#personaMunicipio').val());
+                    $('#localidadPersona').val($('#personaLocalidad').val());
+                    $('#codposPersona').val($('#codpos').val());
+
+                    $('#mostrarAgregarNuevoView').find('div').removeClass('is-empty');
+
+                    $('#mostrarAgregarNuevo').trigger('click');
+                    return false;
+                }
+                funcionAgregar();
+            }
+            else{
+                $('#beneficiadoSearch').focus();
+            }
         });
 
         cargarListado();
     });
+$('#centroPersona').change(function(){
+    $('#beneCT').val($('#centroPersona').val());
+});
+$('#municipioPersona').change(function(){
+    $('#personaMunicipio').val($('#municipioPersona').val());
+    $('#localidadPersona').html($('#localidadPersonaBACK').html());
+        $('#localidadPersona').find('option').each(function(ind, ele){
+            if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
+                $(ele).show();
+            }
+            else{
+                $(ele).remove();
+            }
+    });
+});
+$('#localidadPersona').change(function(){
+    $('#personaLocalidad').val($('#localidadPersona').val());
+});
 
+$('#agregarNuevo').click(function(){
+    $('#personaCurp').val($('#curpPersona').val());
+    $('#personaNombre').val($('#nombrePersona').val());
+    $('#personaApePat').val($('#apellidoPPersona').val());
+    $('#personaApeMat').val($('#apellidoMPersona').val());
+    $('#personaCorreo').val($('#correoPersona').val());
+    $('#personaTelefono').val($('#telefonoPersona').val());
+    $('#personaDireccion').val($('#direccionPersona').val());
+    $('#codpos').val($('#codposPersona').val());
+    funcionAgregar();
+});
+
+function funcionAgregar(){
+    var dataForm = new FormData();
+    dataForm.append($("#token").attr('name'), $("#token").val());
+    dataForm.append('claveCT', $("#beneCT").val());
+    dataForm.append('idPersona', $('#beneIdPersona').val());
+
+    dataForm.append('curp', $('#personaCurp').val());
+    dataForm.append('nombre', $('#personaNombre').val());
+    dataForm.append('apellidop', $('#personaApePat').val());
+    dataForm.append('apellidom', $('#personaApeMat').val());
+    dataForm.append('correo', $('#personaCorreo').val());
+    dataForm.append('telefono', $('#personaTelefono').val());
+    dataForm.append('direccion', $('#personaDireccion').val());
+    dataForm.append('localidad', $('#personaLocalidad').val());
+    dataForm.append('municipio', $('#personaMunicipio').val());
+    dataForm.append('codpos', $('#codpos').val());
+
+    $.ajax({
+        url : "ajax/guardarBeneficiario",
+        data : dataForm,
+        processData: false,
+        contentType: false,
+        cache: false,
+        dataType : "json", type: "POST",
+        beforeSend: function(){$('#loadData').show();},
+        success: function(data){
+            if(data.error){
+                $('#loadData').hide();
+            }
+            else{
+                cargarListado();
+                $('.cerrarNuevo').trigger('click');
+                $('#loadData').hide();
+                $('#beneficiadoSearch').val('');
+                $('#beneCT').val('');
+                $('#beneIdPersona').val('');
+                $('#personaCurp').val('');
+                $('#personaNombre').val('');
+                $('#personaApePat').val('');
+                $('#personaApeMat').val('');
+                $('#personaCorreo').val('');
+                $('#personaTelefono').val('');
+                $('#personaDireccion').val('');
+                $('#personaMunicipio').val('');
+                $('#personaLocalidad').val('');
+                $('#codpos').val('');
+            }
+        },
+        error: function (){$('#loadData').hide();}
+    });
+}
     function cargarListado(){
         var dataForm = new FormData();
         dataForm.append($("#token").attr('name'), $("#token").val());
