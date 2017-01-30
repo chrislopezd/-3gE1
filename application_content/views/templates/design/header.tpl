@@ -62,7 +62,7 @@
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <li class="{if $active == 'programas'}active{/if}">
+                    <li class="{if $active == 'beneficiados'}active{/if}">
                         <a href="beneficiados">
                             <i class="material-icons">assignment</i>
                             <p>Beneficiados</p>
