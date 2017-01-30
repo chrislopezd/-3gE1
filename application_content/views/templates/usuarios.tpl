@@ -49,8 +49,6 @@
         </div>
     </div>
 </div>
-
-
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
@@ -78,8 +76,8 @@ function cargarListadoUsuarios(){
     });
 }
 function cancelarAccion(){
-    $("#id").val();
-    $("#estatus").val();
+    $("#id").val("");
+    $("#estatus").val("");
 }
 function cambiarEstatus(){
         var dataForm = new FormData();
