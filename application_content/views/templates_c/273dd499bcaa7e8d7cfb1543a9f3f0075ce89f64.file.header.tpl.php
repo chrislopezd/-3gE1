@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-29 16:26:28
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-30 15:11:17
          compiled from "application_content\views\templates\design\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:20832588ac51e154d71-03379426%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '273dd499bcaa7e8d7cfb1543a9f3f0075ce89f64' => 
     array (
       0 => 'application_content\\views\\templates\\design\\header.tpl',
-      1 => 1485703401,
+      1 => 1485785414,
       2 => 'file',
     ),
   ),
@@ -102,13 +102,13 @@ resources/theme/img/faces/logo.png" />
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='programas'){?>active<?php }?>">
+                    <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='beneficiados'){?>active<?php }?>">
                         <a href="beneficiados">
                             <i class="material-icons">assignment</i>
                             <p>Beneficiados</p>
                         </a>
                     </li>
-                    <?php if ($_smarty_tpl->tpl_vars['st_idPerfil']->value==2){?>
+                    <?php if ($_smarty_tpl->tpl_vars['st_idPerfil']->value==1){?>
                     <li class="<?php if ($_smarty_tpl->tpl_vars['active']->value=='usuarios'){?>active<?php }?>">
                         <a href="usuarios">
                             <i class="material-icons">account_box</i>
@@ -147,7 +147,7 @@ resources/theme/img/faces/logo.png" />
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="inicio" class="dropdown-toggle">
+                            <a href="javascript:void(0);" class="dropdown-toggle">
                                 <i class="material-icons">access_time</i> Último acceso: <?php echo $_smarty_tpl->tpl_vars['st_fechaUA']->value;?>
 
                                 <p class="hidden-lg hidden-md"></p>

@@ -90,9 +90,9 @@ class Mbeneficiados extends CI_Model{
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
             $query1 = $this->db->get()->result();
 
-            $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, p.clavect AS claveCT, p.codpos",FALSE);
-            $this->db->from('personas_plantilla AS p');
-            $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.ap_paterno, p.ap_materno) AS nombreCompleto, '' AS correo, '' AS telefono, '' AS direccion, p.nombre, p.ap_paterno AS apellidop, p.ap_materno AS apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.ap_paterno, p.ap_materno) AS value, p.municipio, p.localidad, p.clavecct AS claveCT, p.codpos",FALSE);
+            $this->db->from('siceey AS p');
+            $this->db->where("( CONCAT_WS(' ', p.nombre, p.ap_paterno, p.ap_materno) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
             $query2 = $this->db->get()->result();
 
              $data = array_slice(array_merge($query2, $query1),0,15);
