@@ -422,6 +422,7 @@ function importar(){
                     $.ajax({
                         url: "ajax/autocomplete/beneficiadoSearch",
                         dataType: "json",
+                        async: false,
                         data: {
                             q: request.term
                             //q: terms.pop()
