@@ -174,6 +174,7 @@
     </div>
 </div>
 
+
 <button style="display: none" id="mostrarAgregarNuevo" data-toggle="modal" data-target="#mostrarAgregarNuevoView"></button>
 <div class="modal fade" id="mostrarAgregarNuevoView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog  ">
@@ -263,7 +264,7 @@
                 <div style="clear: both;"></div>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal">Agregar</button>
+                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal">Guardar</button>
                 <button type="button" class="btn btn-warning cerrarNuevo" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -511,20 +512,35 @@ $('#centroPersona').change(function(){
 $('#municipioPersona').change(function(){
     $('#personaMunicipio').val($('#municipioPersona').val());
     $('#localidadPersona').html($('#localidadPersonaBACK').html());
-        $('#localidadPersona').find('option').each(function(ind, ele){
-            if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
-                $(ele).show();
-            }
-            else{
-                $(ele).remove();
-            }
+    $('#localidadPersona').find('option').each(function(ind, ele){
+        if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
+            $(ele).show();
+        }
+        else{
+            $(ele).remove();
+        }
     });
+    $('#localidadPersona').val(null);
 });
 $('#localidadPersona').change(function(){
     $('#personaLocalidad').val($('#localidadPersona').val());
 });
 
 $('#agregarNuevo').click(function(){
+    //
+    //console.log($('#municipioPersona').val());
+    if($('#municipioPersona').val() == null){
+        $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar el Municipio");
+        $("#mostrarDialogMensaje").click();
+        return false;
+    }
+    console.log($('#localidadPersona').val());
+    if($('#localidadPersona').val() == null){
+        $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar la Localidad");
+        $("#mostrarDialogMensaje").click();
+        return false;
+    }
+
     $('#personaCurp').val($('#curpPersona').val());
     $('#personaNombre').val($('#nombrePersona').val());
     $('#personaApePat').val($('#apellidoPPersona').val());
@@ -638,3 +654,20 @@ function funcionAgregar(){
     }
 </style>
 {/literal}
+<button style="display: none" id="mostrarDialogMensaje" data-toggle="modal" data-target="#dialogMensaje"></button>
+<div class="modal fade" id="dialogMensaje" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content card" style="box-shadow: 4px 5px 24px">
+            <div class="modal-header" >
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Mensaje: </h5>
+                <div id="textoDialog"></div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-simple" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>

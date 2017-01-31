@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2017-01-30 15:12:23
+<?php /* Smarty version Smarty-3.1.13, created on 2017-01-31 02:50:12
          compiled from "application_content\views\templates\beneficiados.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:24931588ac51dd8e097-66083694%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '9b318e61ae24f1164227a419a035d5edf9ab2c8f' => 
     array (
       0 => 'application_content\\views\\templates\\beneficiados.tpl',
-      1 => 1485785414,
+      1 => 1485827411,
       2 => 'file',
     ),
   ),
@@ -203,6 +203,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     </div>
 </div>
 
+
 <button style="display: none" id="mostrarAgregarNuevo" data-toggle="modal" data-target="#mostrarAgregarNuevoView"></button>
 <div class="modal fade" id="mostrarAgregarNuevoView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog  ">
@@ -295,7 +296,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 <div style="clear: both;"></div>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal">Agregar</button>
+                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal">Guardar</button>
                 <button type="button" class="btn btn-warning cerrarNuevo" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -544,20 +545,35 @@ $('#centroPersona').change(function(){
 $('#municipioPersona').change(function(){
     $('#personaMunicipio').val($('#municipioPersona').val());
     $('#localidadPersona').html($('#localidadPersonaBACK').html());
-        $('#localidadPersona').find('option').each(function(ind, ele){
-            if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
-                $(ele).show();
-            }
-            else{
-                $(ele).remove();
-            }
+    $('#localidadPersona').find('option').each(function(ind, ele){
+        if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
+            $(ele).show();
+        }
+        else{
+            $(ele).remove();
+        }
     });
+    $('#localidadPersona').val(null);
 });
 $('#localidadPersona').change(function(){
     $('#personaLocalidad').val($('#localidadPersona').val());
 });
 
 $('#agregarNuevo').click(function(){
+    //
+    //console.log($('#municipioPersona').val());
+    if($('#municipioPersona').val() == null){
+        $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar el Municipio");
+        $("#mostrarDialogMensaje").click();
+        return false;
+    }
+    console.log($('#localidadPersona').val());
+    if($('#localidadPersona').val() == null){
+        $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar la Localidad");
+        $("#mostrarDialogMensaje").click();
+        return false;
+    }
+
     $('#personaCurp').val($('#curpPersona').val());
     $('#personaNombre').val($('#nombrePersona').val());
     $('#personaApePat').val($('#apellidoPPersona').val());
@@ -670,4 +686,21 @@ function funcionAgregar(){
         padding: 5px !important;
     }
 </style>
-<?php }} ?>
+
+<button style="display: none" id="mostrarDialogMensaje" data-toggle="modal" data-target="#dialogMensaje"></button>
+<div class="modal fade" id="dialogMensaje" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  ">
+        <div class="modal-content card" style="box-shadow: 4px 5px 24px">
+            <div class="modal-header" >
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Mensaje: </h5>
+                <div id="textoDialog"></div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-simple" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div><?php }} ?>

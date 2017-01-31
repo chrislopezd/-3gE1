@@ -33,17 +33,18 @@ class Mbeneficiados extends CI_Model{
 
   public function getBeneficiadosListado($tipoListado){
     $res = array('STATUS' => FALSE, 'DATOS' => array());
+    $idUsuario = $this->session->userdata('sep_idUsuario');
     $this->db->select("b.*",FALSE);
     $this->db->from("s_beneficiados AS b");
     switch ($tipoListado) {
       case '1'://ALUMNOS
-        $this->db->select("p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion",FALSE);
+        $this->db->select("p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, p.codpos, p.municipio, p.localidad, b.clavecct",FALSE);
         $this->db->join('s_personas AS p', 'p.idPersona = b.idPersona AND p.tipo = "Alumno"');
         $this->db->where('b.tipoBene',2);
         $this->db->where('b.idTipo',1);
       break;
       case '2'://DOCENTES
-        $this->db->select("p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion",FALSE);
+        $this->db->select("p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, p.codpos, p.municipio, p.localidad, b.clavecct",FALSE);
         $this->db->join('s_personas AS p', 'p.idPersona = b.idPersona AND p.tipo = "Docente"');
         $this->db->where('b.tipoBene',2);
         $this->db->where('b.idTipo',2);
@@ -55,13 +56,13 @@ class Mbeneficiados extends CI_Model{
         $this->db->where('b.idTipo',3);
       break;
       case '4'://PADRES DE FAMILIA
-        $this->db->select("p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion",FALSE);
+        $this->db->select("p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, p.codpos, p.municipio, p.localidad, b.clavecct",FALSE);
         $this->db->join('s_personas AS p', 'p.idPersona = b.idPersona AND p.tipo = "PadreDeFamilia"');
         $this->db->where('b.tipoBene',2);
         $this->db->where('b.idTipo',4);
       break;
     }
-
+    $this->db->where('b.idUsuario',$idUsuario);
     $this->db->where('b.estatus',1);
 
 
@@ -84,16 +85,29 @@ class Mbeneficiados extends CI_Model{
       case 'beneficiados':
         switch ($idTipoPrograma) {
           case '1'://ALUMNOS
-            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, '' AS claveCT, p.codpos",FALSE);
+            $this->db->select("p.idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, b.clavecct AS claveCT, p.codpos",FALSE);
             $this->db->from('s_personas AS p');
+            $this->db->join('s_beneficiados AS b' , 'b.idPersona = p.idPersona','LEFT');
             $this->db->where('p.tipo',"Alumno");
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->group_by('p.curp');
+            $this->db->limit(15);
             $query1 = $this->db->get()->result();
 
             $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.ap_paterno, p.ap_materno) AS nombreCompleto, '' AS correo, '' AS telefono, '' AS direccion, p.nombre, p.ap_paterno AS apellidop, p.ap_materno AS apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.ap_paterno, p.ap_materno) AS value, p.municipio, p.localidad, p.clavecct AS claveCT, p.codpos",FALSE);
             $this->db->from('siceey AS p');
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.ap_paterno, p.ap_materno) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->group_by('p.curp');
+            $this->db->limit(15);
             $query2 = $this->db->get()->result();
+            //echo "<pre>";print_r($query1);
+            foreach ($query1 as $key1 => $arr1) {
+              foreach ($query2 as $key2 => $arr2) {
+                if($arr2->curp == $arr1->curp){
+                  unset($query2[$key2]);
+                }
+              }
+            }
 
              $data = array_slice(array_merge($query2, $query1),0,15);
             $x = 1;
@@ -105,12 +119,23 @@ class Mbeneficiados extends CI_Model{
             $this->db->from('s_personas AS p');
             $this->db->where('p.tipo',"Docente");
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->group_by('p.curp');
+            $this->db->limit(15);
             $query1 = $this->db->get()->result();
 
             $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, p.clavect AS claveCT, p.codpos",FALSE);
             $this->db->from('personas_plantilla AS p');
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->group_by('p.curp');
+            $this->db->limit(15);
             $query2 = $this->db->get()->result();
+            foreach ($query1 as $key1 => $arr1) {
+              foreach ($query2 as $key2 => $arr2) {
+                if($arr2->curp == $arr1->curp){
+                  unset($query2[$key2]);
+                }
+              }
+            }
 
             $data = array_slice(array_merge($query2, $query1),0,15);
             $x = 1;
@@ -125,13 +150,23 @@ class Mbeneficiados extends CI_Model{
             $this->db->from('s_personas AS p');
             $this->db->where('p.tipo',"PadreDeFamilia");
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->group_by('p.curp');
+            $this->db->limit(15);
             $query1 = $this->db->get()->result();
 
             $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) AS nombreCompleto, p.correo, p.telefono, p.direccion, p.nombre, p.apellidop, p.apellidom, CONCAT_WS(' ', p.curp, '-', p.nombre, p.apellidop, p.apellidom) AS value, p.municipio, p.localidad, p.clavect AS claveCT, p.codpos",FALSE);
             $this->db->from('personas_plantilla AS p');
             $this->db->where("( CONCAT_WS(' ', p.nombre, p.apellidop, p.apellidom) LIKE '%{$termino}%' OR p.curp LIKE '%{$termino}%')");
+            $this->db->group_by('p.curp');
+            $this->db->limit(15);
             $query2 = $this->db->get()->result();
-
+            foreach ($query1 as $key1 => $arr1) {
+              foreach ($query2 as $key2 => $arr2) {
+                if($arr2->curp == $arr1->curp){
+                  unset($query2[$key2]);
+                }
+              }
+            }
              $data = array_slice(array_merge($query2, $query1),0,15);
             $x = 1;
           break;
@@ -205,6 +240,7 @@ class Mbeneficiados extends CI_Model{
               'codpos'=> $datos['codpos']);
             $this->db->where('idPersona',$siPersonaCurp);
             $this->db->update('s_personas', $dataPersona);
+            $datos['idPersona'] = $siPersonaCurp;
           }
 
         }
@@ -316,7 +352,7 @@ class Mbeneficiados extends CI_Model{
           /************************ SI EXISTE LA LOCALIDAD Y MUNICIPO END ***********/
 
           /*********** SI EXISTE LA LOCALIDAD Y MUNICIPO SE VERIFICA LA PERSONA ***********/
-          //if($siExisteMunicipio != '0' && $siExisteLocalidad !== '0'){//VALIDA SI TIENE MUNICIPIO Y LOCALIDAD
+          if(strlen($siExisteMunicipio) == 3 && strlen($siExisteLocalidad) == 4){//VALIDA SI TIENE MUNICIPIO Y LOCALIDAD
             $siExisteBene =  0;
             $siPersonaCurp = $this->db->query("SELECT IFNULL((SELECT idPersona FROM s_personas WHERE curp = '".$arrData['CURP']."' AND tipo = '".$tipoPersona."' LIMIT 1),0) AS idPersona")->row()->idPersona;
             //echo "PERSONA: ".$siPersonaCurp."<br>";
@@ -411,7 +447,7 @@ class Mbeneficiados extends CI_Model{
 
             }
 
-          //} FIN VALIDA SI TIENE MUNICIPIO Y LOCALIDAD
+          }// FIN VALIDA SI TIENE MUNICIPIO Y LOCALIDAD
           /*********** SI EXISTE LA LOCALIDAD Y MUNICIPO SE VERIFICA LA PERSONA END ***********/
         break;
         case '3'://ESCUELAS
@@ -596,7 +632,7 @@ class Mbeneficiados extends CI_Model{
       }
 
       if(count($arrPersonasSinMunicipio) > 0){
-        $INFO .= '<b>Registros con Municipio Incorrecto</b>
+        $INFO .= '<b>Registros con Municipio Incorrecto - NO INSERTADO</b>
         <table class="tablaEstructura table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
         <thead>
           <tr>
@@ -617,7 +653,7 @@ class Mbeneficiados extends CI_Model{
       }
 
       if(count($arrPersonasSinLocalidad) > 0){
-        $INFO .= '<b>Registros con Localidad Incorrecto</b>
+        $INFO .= '<b>Registros con Localidad Incorrecto - NO INSERTADO</b>
         <table class="tablaEstructura table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
         <thead>
           <tr>
