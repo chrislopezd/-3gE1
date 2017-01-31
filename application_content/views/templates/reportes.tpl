@@ -154,6 +154,25 @@ $.fn.extend({
 $().ready( function(){
     $('*[data-id="municipio"]').click();
     $('*[data-id="municipio"]').click();
+    $("#btnExport").click(function(event){
+        $("#btnExport").addClass('disabled ui-state-disabled').html('<i class="material-icons">print</i> Generando...');
+        var token = $.trim($("#token").val());
+        var nombre = $.trim($("#nombre").val());
+        var cct = $.trim($("#cct").val());
+        var programa = $.trim($("#programa").val());
+        var tipo = $.trim($("#tipo").val());
+        var municipio = $.trim($("#municipio").val());
+        var localidad = $('#localidad').val();
+        var trigger = $.trim($("#trigger").val());
+        var folBaj = $.trim($("#folioBajaB").val());
+        var div = $("<div><form name='formExcel' id='formExcel' method='post' action='descargarReporteExcel'><input type='hidden' name='csrf_segey_tok_name' value='"+token+"' /><input type='hidden' name='nombre' value='"+nombre+"' /><input type='hidden' name='cct' value='"+cct+"' /><input type='hidden' name='programa' value='"+programa+"' /><input type='hidden' name='tipo' value='"+tipo+"' /><input type='hidden' name='municipio' value='"+municipio+"' /><input type='hidden' name='localidad' value='"+localidad+"' /><input type='hidden' name='trigger' value='"+trigger+"' /></form></div>");
+        $('body').append(div);
+        $('body').find("#formExcel").submit();
+        $('body').find("#formExcel").remove();
+        setTimeout( function(){
+            $("#btnExport").removeClass('disabled ui-state-disabled').html('<i class="material-icons">print</i> Exportar a excel');
+        },2000);
+    });
     $("#municipio").change( function(){
       if($(this).val() != ""){
         $.ajax({
@@ -236,8 +255,5 @@ $().ready( function(){
         $("#programa").selectpicker('refresh');
     });
     $("#nombre").focus();
-    $("#btnExport").click( function(){
-        alert("En construcción...");
-    });
 });
 </script>{/literal}

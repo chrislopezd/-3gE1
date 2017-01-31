@@ -60,6 +60,7 @@ $route['ajax/cambiarContrasena'] = 'inicio/changeContrasena';
 $route['reportes'] = 'reportes';
 $route['ajax/buscarLocalidades'] = 'reportes/getLocalidades';
 $route['ajax/listadoReporte'] = 'reportes/getListadoReporte';
+$route['descargarReporteExcel'] = 'reportes/dowloadExcelReporte';
 #####END REPORTES
 
 
