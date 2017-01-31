@@ -100,6 +100,8 @@ class Reportes extends CI_Controller {
 	}
 	public function getListadoReporte(){
 		//$r = array();
+		set_time_limit(0);
+    	ini_set('memory_limit', '4048M');
 		$page = isset($_POST['page'])?$_POST['page'] : 1;
 		$limit = isset($_POST['rows'])?$_POST['rows'] : 100;
 		$sidx = isset($_POST['sidx'])?$_POST['sidx'] : 't.programa';
@@ -185,6 +187,8 @@ class Reportes extends CI_Controller {
 		echo json_encode($r);
 	}
 	public function dowloadExcelReporte(){
+		set_time_limit(0);
+    	ini_set('memory_limit', '4048M');
 		$this->load->library('excel');
 		set_time_limit(0);
 		ini_set('memory_limit', '-1');

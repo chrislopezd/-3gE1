@@ -14,7 +14,7 @@
                         <hr/>
                         <div class="toolbar">
                             <div class="col-md-6">
-                                <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm" placeholder="Buscar Beneficiado">
+                                <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm upper" placeholder="Buscar Beneficiado">
                                 <input type="hidden" name="beneCT" id="beneCT">
                                 <input type="hidden" name="beneIdPersona" id="beneIdPersona">
                                 <input type="hidden" name="personaCurp" id="personaCurp">

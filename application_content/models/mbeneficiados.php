@@ -76,11 +76,12 @@ class Mbeneficiados extends CI_Model{
     return $res;
 
   }
-
   public function autocomplete($catalogo , $termino){
     $idTipoPrograma = $this->session->userdata('sep_idTipo');
     $data = array();
     $x = 0;
+    set_time_limit(0);
+    ini_set('memory_limit', '4048M');
     switch ($catalogo) {
       case 'beneficiados':
         switch ($idTipoPrograma) {
@@ -100,7 +101,9 @@ class Mbeneficiados extends CI_Model{
             $this->db->group_by('p.curp');
             $this->db->limit(15);
             $query2 = $this->db->get()->result();
+
             //echo "<pre>";print_r($query1);
+            //print_r($query1);die();
             foreach ($query1 as $key1 => $arr1) {
               foreach ($query2 as $key2 => $arr2) {
                 if($arr2->curp == $arr1->curp){
