@@ -62,17 +62,25 @@
                             <p>Inicio</p>
                         </a>
                     </li>
+                    {if $st_idPerfil eq 2}
                     <li class="{if $active == 'beneficiados'}active{/if}">
                         <a href="beneficiados">
                             <i class="material-icons">assignment</i>
                             <p>Beneficiados</p>
                         </a>
                     </li>
+                    {/if}
                     {if $st_idPerfil eq 1}
                     <li class="{if $active == 'usuarios'}active{/if}">
                         <a href="usuarios">
                             <i class="material-icons">account_box</i>
                             <p>Usuarios</p>
+                        </a>
+                    </li>
+                    <li class="{if $active == 'reportes'}active{/if}">
+                        <a href="reportes">
+                            <i class="material-icons">insert_chart</i>
+                            <p>Reportes</p>
                         </a>
                     </li>
                     {/if}

@@ -5,16 +5,18 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-icon" data-background-color="green">
-                        <i class="material-icons">language</i>
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">home</i>
                     </div>
                     <div class="card-content">
+                         <hr/>
                         <h4 class="card-title">Bienvenido al sistema.</h4>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
+            {if $st_idPerfil eq 2}
             <div class="col-md-6">
                 <div class="card card-chart">
                     <a href="beneficiados">
@@ -26,13 +28,25 @@
                     <div class="card-content"></div>
                 </div>
             </div>
+            {/if}
             {if $st_idPerfil eq 1}
             <div class="col-md-6">
                 <div class="card card-chart">
-                    <a href="beneficiados">
-                    <div class="card-header text-center" data-background-color="green" data-header-animation="true">
+                    <a href="usuarios">
+                    <div class="card-header text-center" data-background-color="rose" data-header-animation="true">
                         <br/>
                         <h1><i class="material-icons">account_circle</i> Usuarios</h1>
+                    </div>
+                    </a>
+                    <div class="card-content"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-chart">
+                    <a href="reportes">
+                    <div class="card-header text-center" data-background-color="green" data-header-animation="true">
+                        <br/>
+                        <h1><i class="material-icons">insert_chart</i> Reportes</h1>
                     </div>
                     </a>
                     <div class="card-content"></div>

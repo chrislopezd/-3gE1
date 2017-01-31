@@ -67,6 +67,9 @@ class Beneficiados extends CI_Controller {
  	/*TPL'S*/
 
 	public function index(){
+		if($this->session->userdata('sep_idPerfilUsuario') == 1){
+			redirect('','refresh');
+		}
 		$d['token'] = $this->utilidades->generaToken();
 		//print_r($d['token']);die;
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');

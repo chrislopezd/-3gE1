@@ -8,10 +8,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
-                        <i class="material-icons">assignment</i>
+                        <h4 class="card-title"><i class="material-icons">assignment</i> Listado de beneficiarios</h4>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Listado de beneficiarios</h4>
+                        <hr/>
                         <div class="toolbar">
                             <div class="col-md-6">
                                 <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm" placeholder="Buscar Beneficiado">

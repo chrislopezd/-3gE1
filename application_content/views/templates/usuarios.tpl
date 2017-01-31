@@ -6,10 +6,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
-                        <h4 class="card-title">Listado de usuarios</h4>
+                        <h4 class="card-title"><i class="material-icons">account_box</i> Listado de usuarios</h4>
                     </div>
                     <div class="card-content">
-                    <hr/>
+                        <hr/>
                         <div class="toolbar">
                            <a href="nuevoUsuario" class="btn btn-round btn-success">
                                 <i class="material-icons">add</i>
@@ -17,7 +17,6 @@
                             </a>
                         </div>
                         <div class="material-datatables" id="listTable">
-
                         </div>
                     </div>
                    {*  <!-- end content-->*}
@@ -29,8 +28,6 @@
         {* <!-- end row -->*}
     </div>
 </div>
-
-
 <div class="modal fade" id="winModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <input type="hidden" name="id" id="id" value="0">
     <input type="hidden" name="estatus" id="estatus" value="0">

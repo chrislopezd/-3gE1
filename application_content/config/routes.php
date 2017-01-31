@@ -53,7 +53,14 @@ $route['ajax/editarUsuario'] = 'inicio/editUsuarioData';
 $route['ajax/listadoUsuarios'] = 'inicio/listUsuarios';
 $route['ajax/cambiarEstatusUsuario'] = 'inicio/delUpUsuario';
 $route['ajax/cambiarContrasena'] = 'inicio/changeContrasena';
+#######END USUARIOS
 
+
+#####REPORTES
+$route['reportes'] = 'reportes';
+$route['ajax/buscarLocalidades'] = 'reportes/getLocalidades';
+$route['ajax/listadoReporte'] = 'reportes/getListadoReporte';
+#####END REPORTES
 
 
 
