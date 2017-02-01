@@ -14,7 +14,9 @@
                         <hr/>
                         <div class="toolbar">
                             <div class="col-md-6">
-                                <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm upper" placeholder="Buscar Beneficiado">
+                                <div class="form-group label-floating has-success">
+                                <label class="control-label">Buscar beneficiado</label>
+                                <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm upper" placeholder="">
                                 <input type="hidden" name="beneCT" id="beneCT">
                                 <input type="hidden" name="beneIdPersona" id="beneIdPersona">
                                 <input type="hidden" name="personaCurp" id="personaCurp">
@@ -27,6 +29,7 @@
                                 <input type="hidden" name="personaLocalidad" id="personaLocalidad">
                                 <input type="hidden" name="personaMunicipio" id="personaMunicipio">
                                 <input type="hidden" name="codpos" id="codpos">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <button type="button" id="beneficiadoBtn" class="btn btn-round btn-success"><i class="material-icons">add_box</i> Agregar Beneficiado</button>
@@ -264,8 +267,8 @@
                 <div style="clear: both;"></div>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal">Guardar</button>
-                <button type="button" class="btn btn-warning cerrarNuevo" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="agregarNuevo" data-dismiss="modal"><i class="material-icons">save</i> Guardar</button>
+                <button type="button" class="btn btn-warning cerrarNuevo" data-dismiss="modal"><i class="material-icons">block</i> Cancelar</button>
             </div>
         </div>
     </div>
@@ -390,7 +393,8 @@ function importar(){
     function cancelarEliminar(){
         $("#idSol").val(0);
     }
-    $(document).ready(function() {
+    $(document).ready(function(){
+        $("#beneficiadoSearch").focus();
         $('.close').click(function(){
             $("#idSol").val(0);
         });

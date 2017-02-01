@@ -14,19 +14,19 @@
                         <form id="getForm">
                         <div class="row">
                             <div class="col-md-4">
-                               <div class="form-group label-floating is-empty">
+                               <div class="form-group label-floating is-empty has-success">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" name="nombre" id="nombre" autocomplete="off" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-2">
-                               <div class="form-group label-floating is-empty">
+                               <div class="form-group label-floating is-empty has-success">
                                     <label class="control-label">Clave del CCT</label>
                                     <input type="text" name="cct" id="cct" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-floating has-success">
                                     <label class="control-label">Programas</label>
                                     <select name="programa" id="programa" class="selectpicker" data-style="select-with-transition" data-size="10">
                                         <option disabled selected>Elija el programa</option>
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-floating has-success">
                                     <label class="control-label">Tipo</label>
                                     <select name="tipo" id="tipo" class="selectpicker" data-style="select-with-transition" data-size="10">
                                         <option disabled selected>Elija el tipo</option>
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-floating has-success">
                                     <label class="control-label">Municipio</label>
                                     <select name="municipio" id="municipio" class="selectpicker" data-style="select-with-transition" data-size="10">
                                         <option disabled selected>Elija el municipio</option>
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-floating has-success">
                                     <label class="control-label">Localidad</label>
                                      <select name="localidad" id="localidad" class="selectpicker" data-style="select-with-transition" data-size="10">
                                      <option disabled selected>Elija la localidad</option>

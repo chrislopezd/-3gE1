@@ -780,7 +780,7 @@ class Mbeneficiados extends CI_Model{
     $data = array();
     switch ($catalogo) {
       case 'MUNICIPIOS':
-        $this->db->select("m.MUNICIPIO, m.NOM",FALSE);
+        $this->db->select("m.MUNICIPIO, TRIM(m.NOM) AS NOM",FALSE);
         $this->db->from('catmun AS m');
         $data = $this->db->get();
         $data = $data->result_array();
@@ -799,8 +799,12 @@ class Mbeneficiados extends CI_Model{
 
         break;
       case 'LOCALIDADES':
-        $this->db->select("l.MUNICIPIO, l.LOCALIDAD, l.NOMBRELOC",FALSE);
+        $this->db->select("l.MUNICIPIO, l.LOCALIDAD, TRIM(l.NOMBRELOC) AS NOMBRELOC",FALSE);
         $this->db->from('a_itba AS l');
+        $this->db->where("l.LOCALIDAD <> '0000'");
+        $this->db->where("l.ENTIDAD = 31");
+        $this->db->where("TRIM(l.NOMBRELOC) <> 'NINGUNO'");
+        $this->db->where("l.STATUS = 1");
         $this->db->order_by('l.MUNICIPIO');
         $this->db->group_by('l.MUNICIPIO, l.LOCALIDAD');
         $data = $this->db->get();
