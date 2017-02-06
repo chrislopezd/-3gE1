@@ -94,7 +94,7 @@ hr {
                                                 <label class="control-label">Usuario
                                                     <small style="color:red">*</small>
                                                 </label>
-                                                <input name="usuario" id="usuario" maxlength="20" autocomplete="off" type="text" value="{$usuario}" class="form-control upper"  maxlength="30" />
+                                                <input name="usuario" id="usuario" maxlength="25" autocomplete="off" type="text" value="{$usuario}" class="form-control upper"  maxlength="30" />
                                                 <input name="userV" id="userV" maxlength="20" autocomplete="off" type="hidden" value="{$usuario}" class="form-control upper"  maxlength="30" />
                                             </div>
                                         </div>

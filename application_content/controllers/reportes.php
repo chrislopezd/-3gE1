@@ -78,7 +78,7 @@ class Reportes extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Reportes";
 		$d['active'] = "reportes";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		$info = $this->mreportes->getCatMunicipios();
 		$d['MUNICIPIOS'] = $info['DATOS'];
 		$info = $this->mreportes->getCatProgramas();

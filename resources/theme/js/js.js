@@ -1,25 +1,24 @@
 $().ready(function(){
-
     $(".editPass").click( function(){
         swal({
           title: 'Cambiar contraseña',
           text: '<div class="row" data-color="rose"><div class="input-group">'
-                                           +' <span class="input-group-addon"></span>'
-                                            +' <div class="form-group label-floating is-empty">'
-                                              +'  <label class="control-label">Nueva contraseña'
-                                                +'    <small style="color:red">*</small>'
-                                                +'</label>'
-                                               +' <input name="mpass" style="background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);" id="mpass" maxlength="20" type="password" class="form-control">'
-                                            +'<span class="material-input"></span><span class="material-input"></span></div>'
-                                           +'</div> <div class="input-group">'
-                                           +' <span class="input-group-addon"></span>'
-                                            +' <div class="form-group label-floating is-empty">'
-                                              +'  <label class="control-label">Repetir contraseña'
-                                                +'    <small style="color:red">*</small>'
-                                                +'</label>'
-                                               +' <input name="mpass2" id="mpass2" style="background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);" maxlength="20" type="password" class="form-control">'
-                                            +'<span class="material-input"></span><span class="material-input"></span></div>'
-                                        +'</div></div>',
+                   +' <span class="input-group-addon"></span>'
+                    +' <div class="form-group label-floating is-empty">'
+                      +'  <label class="control-label">Nueva contraseña'
+                        +'    <small style="color:red">*</small>'
+                        +'</label>'
+                       +' <input name="mpass" style="background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);" id="mpass" maxlength="20" type="password" class="form-control">'
+                    +'<span class="material-input"></span><span class="material-input"></span></div>'
+                   +'</div> <div class="input-group">'
+                   +' <span class="input-group-addon"></span>'
+                    +' <div class="form-group label-floating is-empty">'
+                      +'  <label class="control-label">Repetir contraseña'
+                        +'    <small style="color:red">*</small>'
+                        +'</label>'
+                       +' <input name="mpass2" id="mpass2" style="background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);" maxlength="20" type="password" class="form-control">'
+                    +'<span class="material-input"></span><span class="material-input"></span></div>'
+                +'</div></div>',
           allowEscapeKey: false,
           showCancelButton: true,
           confirmButtonText: 'Cambiar',
@@ -32,12 +31,12 @@ $().ready(function(){
                 var _mp1 = $.trim($("#mpass").val());
                 var _mp2 = $.trim($("#mpass2").val());
                if($.trim($("#mpass").val()).length == 0){
-                    demo.showNotificacion('top','center','error','danger','El campo <strong>Contraseña</strong> es obligatorio');
+                    demo.showNotificacion('top','center','error','danger','El campo <strong>Nueva contraseña</strong> es obligatorio');
                     $("#mpass").parent().parent().find(".label-floating").addClass("has-error");
                     return false;
                 }
                 if($.trim($("#mpass").val()).length < 3){
-                    demo.showNotificacion('top','center','error','danger','El campo <strong>Contraseña</strong> debe contener al menos 3 caracteres');
+                    demo.showNotificacion('top','center','error','danger','El campo <strong>Nueva contraseña</strong> debe contener al menos 3 caracteres');
                     $("#mpass").parent().parent().find(".label-floating").addClass("has-error");
                     return false;
                 }
@@ -77,6 +76,14 @@ $().ready(function(){
           },
           allowOutsideClick: false
         }).catch(swal.noop);
+      setTimeout( function(){
+        if($.trim($("body").find(".swal2-modal").find(".swal2-confirm").html()) == "Cambiar"){
+          $("body").find(".swal2-modal").find(".swal2-confirm").html('<i class="material-icons">autorenew</i> Cambiar');
+          $("body").find(".swal2-modal").find(".swal2-cancel").addClass("btn");
+          $("body").find(".swal2-modal").find(".swal2-cancel").html('<i class="material-icons">block</i> Cancelar');
+        }
+        //console.log($("body").find(".swal2-modal").find(".swal2-cancel").html());
+      },100);
     });
 
     $sidebar = $('.sidebar');

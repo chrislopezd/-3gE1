@@ -253,8 +253,7 @@
             e.preventDefault();*/
         });
         $('body').find(".pagination").addClass("pagination-success");
-
-        $('.card .material-datatables label').addClass('form-group');
+        $('#datatables_filter label').addClass('form-group has-success');
     });
 </script>
 

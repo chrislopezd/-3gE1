@@ -1,5 +1,4 @@
 {include file="design/header.tpl"}
-
 <input type="hidden" name="{$token.token_name}" id="token" value="{$token.token}" />
 <input type="hidden" name="tipoBene" id="tipoBene" value="{$st_idTipo}" />
 <div class="content">
@@ -10,12 +9,15 @@
                     <div class="card-header card-header-icon" data-background-color="rose">
                         <h4 class="card-title"><i class="material-icons">assignment</i> Listado de beneficiarios</h4>
                     </div>
+                     <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">{if $st_tipo eq 'Escuelas'}account_balance{else}person{/if}</i> {$st_tipo}</h4>
+                    </div>
                     <div class="card-content">
                         <hr/>
                         <div class="toolbar">
                             <div class="col-md-6">
                                 <div class="form-group label-floating has-success">
-                                <label class="control-label">Buscar beneficiado</label>
+                                <label class="control-label">Buscar beneficiario</label>
                                 <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm upper" placeholder="">
                                 <input type="hidden" name="beneCT" id="beneCT">
                                 <input type="hidden" name="beneIdPersona" id="beneIdPersona">
@@ -32,9 +34,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" id="beneficiadoBtn" class="btn btn-round btn-success"><i class="material-icons">add_box</i> Agregar Beneficiado</button>
+                                <button type="button" id="beneficiadoBtn" class="btn btn-round btn-success"><i class="material-icons">add_box</i> Agregar beneficiario</button>
 
-                                <button type="button" id="importBene" class="btn btn-round btn-warning" data-toggle="modal" data-target="#importarExcel"><i class="material-icons">add_box</i> Importar Excel</button>
+                                <button type="button" id="importBene" class="btn btn-round btn-warning" data-toggle="modal" data-target="#importarExcel"><i class="material-icons">system_update_alt</i> Importar Excel</button>
                             </div>
                            {*<a href="#" class="btn btn-round btn-success">
                                 <i class="material-icons">add_box</i>
@@ -55,7 +57,6 @@
         <!-- end row -->
     </div>
 </div>
-
 <div class="modal fade" id="eliminarBeneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <input type="hidden" name="idSol" id="idSol" value="0">
     <div class="modal-dialog modal-small ">
@@ -150,8 +151,8 @@
 
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-success" onclick="importar();">Importar Benficiarios</button>
-                <button type="button" class="btn btn-simple" data-dismiss="modal">Salir</button>
+                <button type="button" class="btn btn-success" onclick="importar();"><i class="material-icons">system_update_alt</i> Importar Benficiarios</button>
+                <button type="button" class="btn btn-simple btn-rose" data-dismiss="modal"><i class="material-icons">exit_to_app</i> Salir</button>
             </div>
         </div>
     </div>
@@ -171,7 +172,7 @@
                 <div id="resultadosINFO"></div>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-simple" data-dismiss="modal">Salir</button>
+                <button type="button" class="btn btn-simple btn-rose" data-dismiss="modal"><i class="material-icons">exit_to_app</i> Salir</button>
             </div>
         </div>
     </div>
@@ -282,8 +283,6 @@ $("#fileImport").change(function(e){
     if(_totalImg > 0){
         $('.fileinput-new').html(e.target.files[0].name);
     }else{$('.fileinput-new').html("Selecionar Archivo");}
-
-
 });
 $('.cerrarNuevo').click(function(){
     $('#beneficiadoSearch').val('');
@@ -312,7 +311,6 @@ $('.cerrarNuevo').click(function(){
     $('#localidadPersona').val('');
     $('#codposPersona').val('');
 });
-
 function importar(){
     var dataForm = new FormData();
     var _totalImg = $("#fileImport")[0].files.length;

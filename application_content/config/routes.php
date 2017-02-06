@@ -69,7 +69,7 @@ $route['descargarReporteExcel'] = 'reportes/dowloadExcelReporte';
 $route['ciclos'] = 'inicio/listCiclos';
 
 ########PROGRAMAS
-$route['beneficiados'] = 'beneficiados';
+$route['beneficiarios'] = 'beneficiados';
 $route['ajax/autocomplete/beneficiadoSearch'] = 'beneficiados/autocomplete/beneficiados';
 $route['ajax/listadoBeneficiados'] = 'beneficiados/listBeneficiados';
 $route['ajax/guardarBeneficiario'] = 'beneficiados/saveBeneficiados';

@@ -100,7 +100,7 @@
             $("#estatus").val(estatus);
             $("#winModal").find(".btn-simple").first().removeClass("btn-danger");
             $("#winModal").find(".btn-simple").first().addClass("btn-success");
-            $("#winModal").find(".btn-simple").first().html("Si, Cambiar");
+            $("#winModal").find(".btn-simple").first().html('<i class="material-icons">autorenew</i> Si, Cambiar');
             $("#winTitulo").html("Desea "+texto+" al usuario <strong>"+data[3]+"</strong>");
             e.preventDefault();
         });
@@ -114,7 +114,7 @@
             $("#winTitulo").html("Desea Eliminar al usuario <strong>"+data[3]+"</strong>");
             $("#winModal").find(".btn-simple").first().removeClass("btn-success");
             $("#winModal").find(".btn-simple").first().addClass("btn-danger");
-            $("#winModal").find(".btn-simple").first().html("Si, Eliminar");
+            $("#winModal").find(".btn-simple").first().html('<i class="material-icons">delete_forever</i> Si, Eliminar');
             e.preventDefault();
         });
         $('body').find(".pagination").addClass("pagination-success");

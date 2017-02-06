@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-content">
                          <hr/>
-                        <h4 class="card-title">Bienvenido al sistema.</h4>
+                        <h2 class="card-title">Bienvenido al sistema <strong>{$st_programa}</strong></h2>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <a href="beneficiados">
                     <div class="card-header text-center" data-background-color="rose" data-header-animation="true">
                         <br/>
-                        <h1><i class="material-icons">supervisor_account</i> Beneficiados</h1>
+                        <h1><i class="material-icons">supervisor_account</i> Beneficiarios</h1>
                     </div>
                     </a>
                     <div class="card-content"></div>

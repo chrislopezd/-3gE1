@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
-                        <h4 class="card-title"><i class="material-icons">account_box</i> Listado de usuarios</h4>
+                        <h4 class="card-title"><i class="material-icons">account_box</i> Usuarios</h4>
                     </div>
                     <div class="card-content">
                         <hr/>
@@ -41,7 +41,7 @@
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="btn btn-danger btn-simple" onclick="cambiarEstatus();">Si </button>
-                <button type="button" class="btn btn-simple" data-dismiss="modal" onclick="cancelarAccion();">No(Cancelar)</button>
+                <button type="button" class="btn btn-simple" data-dismiss="modal" onclick="cancelarAccion();"><i class="material-icons">block</i> No(Cancelar)</button>
             </div>
         </div>
     </div>

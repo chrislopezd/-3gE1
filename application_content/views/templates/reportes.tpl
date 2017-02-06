@@ -88,7 +88,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label"></label>
                                     <button type="button" id="btnExport" class="btn btn-simple btn-success">
-                                        <i class="material-icons">print</i> Exportar
+                                        <i class="material-icons">insert_drive_file</i> Exportar excel
                                         <div class="ripple-container"></div>
                                     </button>
                                 </div>

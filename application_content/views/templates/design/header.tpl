@@ -63,10 +63,10 @@
                         </a>
                     </li>
                     {if $st_idPerfil eq 2}
-                    <li class="{if $active == 'beneficiados'}active{/if}">
-                        <a href="beneficiados">
+                    <li class="{if $active == 'beneficiarios'}active{/if}">
+                        <a href="beneficiarios">
                             <i class="material-icons">assignment</i>
-                            <p>Beneficiados</p>
+                            <p>Beneficiarios</p>
                         </a>
                     </li>
                     {/if}
@@ -85,7 +85,7 @@
                     </li>
                     {/if}
                     {*
-                    <li class="{if $active == 'usuarios' || $active == 'beneficiados' || $active == 'ciclos'}active{/if}">
+                    <li class="{if $active == 'usuarios' || $active == 'beneficiarios' || $active == 'ciclos'}active{/if}">
                         <a data-toggle="collapse" href="#catalogos" aria-expanded="true">
                             <i class="material-icons">list</i>
                             <p>Catálogos
@@ -94,8 +94,8 @@
                         </a>
                         <div class="collapse" id="catalogos">
                             <ul class="nav">
-                                <li class="{if $active == 'beneficiados'}active{/if}">
-                                    <a href="beneficiados">
+                                <li class="{if $active == 'beneficiarios'}active{/if}">
+                                    <a href="beneficiarios">
                                         <i class="material-icons">supervisor_account</i>
                                         Beneficiados
                                     </a>
@@ -157,13 +157,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="inicio" class="dropdown-toggle" data-toggle="tooltip" title="Inicio">
+                            <a href="inicio" class="dropdown-toggle btn btn-simple btn-success" data-toggle="tooltip" title="Inicio">
                                 <i class="material-icons">home</i>
                                 <p class="hidden-lg hidden-md">Inicio</p>
                             </a>
                         </li>
                         <li>
-                            <a href="cerrarSession" class="dropdown-toggle" data-toggle="tooltip" title="Salir" data-toggle="dropdown">
+                            <a href="cerrarSession" class="dropdown-toggle btn btn-simple btn-rose" data-toggle="tooltip" title="Salir" data-toggle="dropdown">
                                 <i class="material-icons">exit_to_app</i>
                                 <p class="hidden-lg hidden-md">Salir</p>
                             </a>

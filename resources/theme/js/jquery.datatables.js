@@ -15362,7 +15362,7 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 				api.page( e.data.action ).draw( 'page' );
 			}
 		};
-
+		$(container).addClass("pagination-success");
 		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
 			button = buttons[i];
 

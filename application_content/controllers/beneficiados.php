@@ -80,7 +80,7 @@ class Beneficiados extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Catálogo beneficiados";
 		$d['active'] = "beneficiados";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 
 		$info = $this->mbeneficiados->getBeneficiadosListado($d['st_idTipo']);
 		$d['LISTADO'] = $info['DATOS'];

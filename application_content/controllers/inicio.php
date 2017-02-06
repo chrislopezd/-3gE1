@@ -76,7 +76,7 @@ class Inicio extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Inicio";
 		$d['active'] = "inicio";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Inicio');
 		$this->smarty->view("inicio.tpl",$d);
@@ -95,7 +95,7 @@ class Inicio extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Catálogo usuarios";
 		$d['active'] = "usuarios";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Catálogo usuarios');
 		$this->smarty->view("usuarios.tpl",$d);
@@ -120,7 +120,7 @@ class Inicio extends CI_Controller {
 		$d['url'] = 'guardarUsuario';
 		$d['bread'] = "Nuevo usuario";
 		$d['active'] = "usuarios";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		$info = $this->minicio->getCatPerfiles();
 		$d['PERFILES'] = $info['DATOS'];
 		$info = $this->minicio->getCatBeneficiados();
@@ -151,7 +151,7 @@ class Inicio extends CI_Controller {
 			$d['url'] = 'editarUsuario';
 			$d['bread'] = "Edita usuario";
 			$d['active'] = "usuarios";
-			$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+			$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 			$info = $this->minicio->getCatPerfiles();
 			$d['PERFILES'] = $info['DATOS'];
 			$info = $this->minicio->getCatBeneficiados();
@@ -171,7 +171,7 @@ class Inicio extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Catálogo beneficiados";
 		$d['active'] = "beneficiados";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Catálogo beneficiados');
 		$this->smarty->view("beneficiados.tpl",$d);
@@ -186,7 +186,7 @@ class Inicio extends CI_Controller {
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Catálogo ciclos";
 		$d['active'] = "ciclos";
-		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00') ? "" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
+		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 		//echo "<pre>"; print_r($d);die();
 		$this->smarty->assign("title", 'Catálogo ciclos');
 		$this->smarty->view("ciclos.tpl",$d);
