@@ -317,14 +317,14 @@ class Reportes extends CI_Controller {
 		$letras_excel = array("A","B","C","D","E","F","G","H","I","J");
 		$width_excel = array("25","15","25","50","35","20","45","10","30","30");
 		if($ii > 0){
-			$titulos_excel[] = "Nombre tutor";
+			$titulos_excel[] = "Nombre del tutor";
 			$letras_excel[] = "K";
 			$width_excel[] = "45";
 		}
 		foreach($titulos_excel as $mk => $v){
-			$this->excel->getActiveSheet()->getColumnDimension("{$letras_excel[$k]}")->setWidth($width_excel[$k]);
-			$this->excel->getActiveSheet()->getStyle("{$letras_excel[$k]}7")->applyFromArray($style);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($k, "7", $v);
+			$this->excel->getActiveSheet()->getColumnDimension("{$letras_excel[$mk]}")->setWidth($width_excel[$mk]);
+			$this->excel->getActiveSheet()->getStyle("{$letras_excel[$mk]}7")->applyFromArray($style);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($mk, "7", $v);
 		}
 
 
