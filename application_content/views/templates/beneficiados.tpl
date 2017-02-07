@@ -31,6 +31,9 @@
                                 <input type="hidden" name="personaLocalidad" id="personaLocalidad">
                                 <input type="hidden" name="personaMunicipio" id="personaMunicipio">
                                 <input type="hidden" name="codpos" id="codpos">
+                                <input type="hidden" name="personaNombreTuto" id="personaNombreTuto">
+                                <input type="hidden" name="personaApePatTuto" id="personaApePatTuto">
+                                <input type="hidden" name="personaApeMatTuto" id="personaApeMatTuto">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -207,18 +210,21 @@
                     <div class="form-group label-floating has-success is-empty">
                         <label class="control-label" style="width: 100%;left: 0px;">Nombre</label>
                         <input type="text" name="nombrePersona" id="nombrePersona" class="form-control upper" autofocus="" autocomplete="off">
+                        <input type="hidden" name="nombrePersonaTuto" id="nombrePersonaTuto" class="form-control upper" autofocus="" autocomplete="off">
                     <span class="material-input"></span></div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group label-floating has-success is-empty">
                         <label class="control-label" style="width: 100%;left: 0px;">Apellido Paterno</label>
                         <input type="text" name="apellidoPPersona" id="apellidoPPersona" class="form-control upper" autofocus="" autocomplete="off">
+                        <input type="hidden" name="apellidoPPersonaTuto" id="apellidoPPersonaTuto" class="form-control upper" autofocus="" autocomplete="off">
                     <span class="material-input"></span></div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group label-floating has-success is-empty">
                         <label class="control-label" style="width: 100%;left: 0px;">Apellido Materno</label>
                         <input type="text" name="apellidoMPersona" id="apellidoMPersona" class="form-control upper" autofocus="" autocomplete="off">
+                        <input type="hidden" name="apellidoMPersonaTuto" id="apellidoMPersonaTuto" class="form-control upper" autofocus="" autocomplete="off">
                     <span class="material-input"></span></div>
                 </div>
                 <div class="col-md-6">
@@ -299,11 +305,18 @@ $('.cerrarNuevo').click(function(){
     $('#personaLocalidad').val('');
     $('#codpos').val('');
 
+    $('#personaNombreTuto').val('');
+    $('#personaApePatTuto').val('');
+    $('#personaApeMatTuto').val('');
+
     $('#centroPersona').find('option').remove();
     $('#curpPersona').val('');
     $('#nombrePersona').val('');
     $('#apellidoPPersona').val('');
     $('#apellidoMPersona').val('');
+    $('#nombrePersonaTuto').val('');
+    $('#apellidoPPersonaTuto').val('');
+    $('#apellidoMPersonaTuto').val('');
     $('#correoPersona').val('');
     $('#telefonoPersona').val('');
     $('#direccionPersona').val('');
@@ -382,6 +395,9 @@ function importar(){
                     $('#personaMunicipio').val('');
                     $('#personaLocalidad').val('');
                     $('#codpos').val('');
+                    $('#personaNombreTuto').val('');
+                    $('#personaApePatTuto').val('');
+                    $('#personaApeMatTuto').val('');
                     $('.close').trigger('click');
                 }
             },
@@ -415,6 +431,9 @@ function importar(){
                     $('#personaMunicipio').val('');
                     $('#personaLocalidad').val('');
                     $('#codpos').val('');
+                    $('#personaNombreTuto').val('');
+                    $('#personaApePatTuto').val('');
+                    $('#personaApeMatTuto').val('');
                 }
             })
             .autocomplete({
@@ -459,6 +478,10 @@ function importar(){
                     $('#personaLocalidad').val(ui.item.localidad);
                     $('#codpos').val(ui.item.codpos);
 
+                    $('#personaNombreTuto').val(ui.item.nombreTuto);
+                    $('#personaApePatTuto').val(ui.item.apellidopTuto);
+                    $('#personaApeMatTuto').val(ui.item.apellidomTuto);
+
                     return false;
                 }
         });
@@ -494,6 +517,9 @@ function importar(){
                     $('#municipioPersona').val($('#personaMunicipio').val());
                     $('#localidadPersona').val($('#personaLocalidad').val());
                     $('#codposPersona').val($('#codpos').val());
+                    $('#nombrePersonaTuto').val($('#personaNombreTuto').val());
+                    $('#apellidoPPersonaTuto').val($('#personaApePatTuto').val());
+                    $('#apellidoMPersonaTuto').val($('#personaApeMatTuto').val());
 
                     $('#mostrarAgregarNuevoView').find('div').removeClass('is-empty');
 
@@ -530,20 +556,18 @@ $('#localidadPersona').change(function(){
 });
 
 $('#agregarNuevo').click(function(){
-    //
     //console.log($('#municipioPersona').val());
     if($('#municipioPersona').val() == null){
         $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar el Municipio");
         $("#mostrarDialogMensaje").click();
         return false;
     }
-    console.log($('#localidadPersona').val());
+    //console.log($('#localidadPersona').val());
     if($('#localidadPersona').val() == null){
         $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar la Localidad");
         $("#mostrarDialogMensaje").click();
         return false;
     }
-
     $('#personaCurp').val($('#curpPersona').val());
     $('#personaNombre').val($('#nombrePersona').val());
     $('#personaApePat').val($('#apellidoPPersona').val());
@@ -551,7 +575,12 @@ $('#agregarNuevo').click(function(){
     $('#personaCorreo').val($('#correoPersona').val());
     $('#personaTelefono').val($('#telefonoPersona').val());
     $('#personaDireccion').val($('#direccionPersona').val());
+    $('#personaMunicipio').val($('#municipioPersona').val());
+    $('#personaLocalidad').val($('#localidadPersona').val());
     $('#codpos').val($('#codposPersona').val());
+    $('#personaNombreTuto').val($('#nombrePersonaTuto').val());
+    $('#personaApePatTuto').val($('#apellidoPPersonaTuto').val());
+    $('#personaApeMatTuto').val($('#apellidoMPersonaTuto').val());
     funcionAgregar();
 });
 
@@ -568,10 +597,12 @@ function funcionAgregar(){
     dataForm.append('correo', $('#personaCorreo').val());
     dataForm.append('telefono', $('#personaTelefono').val());
     dataForm.append('direccion', $('#personaDireccion').val());
-    dataForm.append('localidad', $('#personaLocalidad').val());
     dataForm.append('municipio', $('#personaMunicipio').val());
+    dataForm.append('localidad', $('#personaLocalidad').val());
     dataForm.append('codpos', $('#codpos').val());
-
+    dataForm.append('nombreTuto', $('#personaNombreTuto').val());
+    dataForm.append('apellidopTuto', $('#personaApePatTuto').val());
+    dataForm.append('apellidomTuto', $('#personaApeMatTuto').val());
     $.ajax({
         url : "ajax/guardarBeneficiario",
         data : dataForm,

@@ -19,7 +19,7 @@
             {if $st_idPerfil eq 2}
             <div class="col-md-6">
                 <div class="card card-chart">
-                    <a href="beneficiados">
+                    <a href="beneficiarios">
                     <div class="card-header text-center" data-background-color="rose" data-header-animation="true">
                         <br/>
                         <h1><i class="material-icons">supervisor_account</i> Beneficiarios</h1>

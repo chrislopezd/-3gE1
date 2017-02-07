@@ -202,9 +202,7 @@ class Reportes extends CI_Controller {
 		$this->excel->getActiveSheet()->setTitle('REPORTE');
   		$this->excel->getDefaultStyle()->getFont()->setName('Helvetica');
 		$this->excel->getDefaultStyle()->getFont()->setSize(8);
-		$titulos_excel = array("Programa","Tipo","Curp","Nombre","Correo","Teléfono","Dirección","CodPos","Municipio","Localidad");
-		$letras_excel = array("A","B","C","D","E","F","G","H","I","J");
-		$width_excel = array("25","15","25","50","35","20","45","10","30","30");
+
 		$_styleArray = array('alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,),);
 		$style = array('font' => array('bold' => true,'color' => array('rgb' => 'FFFFFF'),),'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID,'color' => array('rgb' => '000000')),
 		'borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '8C8C8C'),),),);
@@ -214,11 +212,7 @@ class Reportes extends CI_Controller {
 		$styleArray6= array('font' => array('bold' => true,),'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,),);
 		$styleArray7= array('alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,),);
 		$fecha = explode(" ",$this->mreportes->now());
-		foreach($titulos_excel as $k => $v){
-			$this->excel->getActiveSheet()->getColumnDimension("{$letras_excel[$k]}")->setWidth($width_excel[$k]);
-			$this->excel->getActiveSheet()->getStyle("{$letras_excel[$k]}7")->applyFromArray($style);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($k, "7", $v);
-		}
+
 		$where = "";
 		$w = "";
 		$tipo = $_POST['tipo'];
@@ -272,11 +266,15 @@ class Reportes extends CI_Controller {
 		$objDrawing->setPath('resources/images/logon.png');
 		$objDrawing->setHeight(80);
 		$objDrawing->setWorksheet($this->excel->getActiveSheet());
+		$ii = 0;
 		if(count($valores_excel) > 0){
 			foreach($valores_excel as $k => $v){
 				$i=0;
 				foreach($v as $kk => $value){
-					if($kk != 'idSol' and $kk != "tipoBene"){
+					if($kk == "idTipo" and $value == 1){
+						$ii++;
+					}
+					if($kk != 'idSol' and $kk != "tipoBene" and $kk != "idTipo"){
 						$this->excel->getActiveSheet()->setCellValueByColumnAndRow($i,$k+ 8,$value);
 						$i++;
 					}
@@ -315,6 +313,21 @@ class Reportes extends CI_Controller {
 			$this->excel->getActiveSheet()->getStyle("E2")->getFont()->setSize(16);
 			$this->excel->getActiveSheet()->getStyle("E2")->getFont()->setItalic(true);
 		}
+		$titulos_excel = array("Programa","Tipo","Curp","Nombre","Correo","Teléfono","Dirección","CodPos","Municipio","Localidad");
+		$letras_excel = array("A","B","C","D","E","F","G","H","I","J");
+		$width_excel = array("25","15","25","50","35","20","45","10","30","30");
+		if($ii > 0){
+			$titulos_excel[] = "Nombre tutor";
+			$letras_excel[] = "K";
+			$width_excel[] = "45";
+		}
+		foreach($titulos_excel as $mk => $v){
+			$this->excel->getActiveSheet()->getColumnDimension("{$letras_excel[$k]}")->setWidth($width_excel[$k]);
+			$this->excel->getActiveSheet()->getStyle("{$letras_excel[$k]}7")->applyFromArray($style);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($k, "7", $v);
+		}
+
+
   		ob_end_clean();
   		$_nombre = "REPORTE[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xls";
 		header('Content-Type: application/vnd.ms-excel');

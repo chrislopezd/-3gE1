@@ -90,7 +90,11 @@
                 <input type="hidden" name="pDireccion" value="{$arrList['direccion']}">
                 <input type="hidden" name="pCodPos" value="{$arrList['codpos']}">
                 <input type="hidden" name="pMunicipio" value="{$arrList['municipio']}">
-                <input type="hidden" name="pLocalidad" value="{$arrList['localidad']}"></td>
+                <input type="hidden" name="pLocalidad" value="{$arrList['localidad']}">
+                <input type="hidden" name="pNombreTuto" value="{$arrList['nombre_tuto']}">
+                <input type="hidden" name="pApePatTuto" value="{$arrList['ap_paterno_tuto']}">
+                <input type="hidden" name="pApeMatTuto" value="{$arrList['ap_materno_tuto']}">
+                </td>
                 <td>{$arrList['curp']}</td>
                 <td>{$arrList['nombreCompleto']}</td>
                 <td>{$arrList['correo']}</td>
@@ -202,7 +206,9 @@
             pCodPos = $(this).closest('tr').find('input[name = "pCodPos"]').val();
             pMunicipio = $(this).closest('tr').find('input[name = "pMunicipio"]').val();
             pLocalidad = $(this).closest('tr').find('input[name = "pLocalidad"]').val();
-
+            pNombreTuto = $(this).closest('tr').find('input[name = "pNombreTuto"]').val();
+            pApePatTuto = $(this).closest('tr').find('input[name = "pApePatTuto"]').val();
+            pApeMatTuto = $(this).closest('tr').find('input[name = "pApeMatTuto"]').val();
             $('#localidadPersona').html($('#localidadPersonaBACK').html());
             $('#localidadPersona').find('option').each(function(ind, ele){
                 if($(ele).attr('data-MUN') == pMunicipio){
@@ -212,8 +218,12 @@
                     $(ele).remove();
                 }
             });
-            if(pMunicipio != ''){$('#municipioPersona').val(pMunicipio);}
-            else{$('#municipioPersona').val(null);}
+            if(pMunicipio != ''){
+                $('#municipioPersona').val(pMunicipio);
+            }
+            else{
+                $('#municipioPersona').val(null);
+            }
 
             if(pLocalidad != ''){$('#localidadPersona').val(pLocalidad);}
             else{$('#localidadPersona').val(null);}
@@ -222,10 +232,15 @@
             if(centros.length > 0){
                 $('#centroPersona').find('option').remove();
                 $('#beneCT').val(pClaveCT);
-                $.each(centros, function( index, value ) {
-                    $('#centroPersona').append('<option>'+value+'</option>');
-                });
+                if(!$.isArray(centros)){
+                    $('#centroPersona').append('<option>'+centros+'</option>');
+                }else{
+                    $.each(centros, function( index, value ) {
+                        $('#centroPersona').append('<option>'+value+'</option>');
+                    });
+                }
             }
+
             $('#curpPersona').val(pCurp);
             $('#nombrePersona').val(pNombre);
             $('#apellidoPPersona').val(pApePat);
@@ -233,6 +248,10 @@
             $('#correoPersona').val(pCorreo);
             $('#telefonoPersona').val(pTelefono);
             $('#direccionPersona').val(pDireccion);
+
+            $('#nombrePersonaTuto').val(pNombreTuto);
+            $('#apellidoPPersonaTuto').val(pApePatTuto);
+            $('#apellidoMPersonaTuto').val(pApeMatTuto);
 
             $('#codposPersona').val(pCodPos);
 

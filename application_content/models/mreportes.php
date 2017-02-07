@@ -92,6 +92,7 @@ class Mreportes extends CI_Model{
       $data = $this->db->query("SELECT t.* FROM(SELECT
                                 b.idSol,
                                 b.tipoBene,
+                                b.idTipo,
                                 u.programa,
                                 t.tipo,
                                 IFNULL(p.curp,'') AS curp,
@@ -101,7 +102,8 @@ class Mreportes extends CI_Model{
                                 IF(b.tipoBene = 1,TRIM(a.DOMICILIO),p.direccion) AS direccion,
                                 IF(b.tipoBene = 1,a.CODPOST,p.codpos) AS codpos,
                                 IF(b.tipoBene = 1, TRIM(cc.NOM), TRIM(c.NOM)) AS muninicipio,
-                                IF(b.tipoBene = 1, TRIM(ii.NOMBRELOC), TRIM(i.NOMBRELOC)) AS localidad
+                                IF(b.tipoBene = 1, TRIM(ii.NOMBRELOC), TRIM(i.NOMBRELOC)) AS localidad,
+                                IF(b.idTipo = 1, CONCAT_WS(' ',p.ap_paterno_tuto,p.ap_materno_tuto,p.nombre_tuto),'') AS nombreTutor
                               FROM s_beneficiados AS b
                               INNER JOIN s_usuarios AS u ON u.idUsuario = b.idUsuario
                               INNER JOIN s_cat_tipos AS t ON t.idTipo = b.idTipo

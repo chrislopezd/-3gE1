@@ -100,7 +100,7 @@ class Beneficiados extends CI_Controller {
 
 		$info = $this->mbeneficiados->getBeneficiadosListado($d['st_idTipo']);
 		$d['LISTADO'] = $info['DATOS'];
-
+		//echo "<pre>";print_r($d['LISTADO']);die();
 		echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("beneficiadosList.tpl",$d,TRUE)));
 	}
 	public function autocomplete($tipoBusqueda){
@@ -125,6 +125,7 @@ class Beneficiados extends CI_Controller {
 		$d['st_tipo'] = $this->session->userdata('sep_tipo');
 		$d['st_programa'] = $this->session->userdata('sep_programa');
 		$datos = $this->input->post();
+		//echo "<pre>";print_r($datos);die();
 		echo json_encode($this->mbeneficiados->saveBeneficiados($d, $datos));
 	}
 
