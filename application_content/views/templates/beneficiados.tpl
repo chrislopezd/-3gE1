@@ -10,12 +10,12 @@
                         <h4 class="card-title"><i class="material-icons">assignment</i> Listado de beneficiarios</h4>
                     </div>
                      <div class="card-header card-header-icon" data-background-color="rose">
-                        <i class="material-icons">{if $st_tipo eq 'Escuelas'}account_balance{else}person{/if}</i> {$st_tipo}</h4>
+                        <i class="material-icons">{if $st_tipo eq 'ESCUELAS'}account_balance{else}person{/if}</i> {$st_tipo}</h4>
                     </div>
                     <div class="card-content">
                         <hr/>
                         <div class="toolbar">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group label-floating has-success">
                                 <label class="control-label">Buscar beneficiario</label>
                                 <input type="text" name="beneficiadoSearch" id="beneficiadoSearch" class="form-control input-sm upper" placeholder="">
@@ -36,10 +36,15 @@
                                 <input type="hidden" name="personaApeMatTuto" id="personaApeMatTuto">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <button type="button" id="beneficiadoBtn" class="btn btn-round btn-success"><i class="material-icons">add_box</i> Agregar beneficiario</button>
 
                                 <button type="button" id="importBene" class="btn btn-round btn-warning" data-toggle="modal" data-target="#importarExcel"><i class="material-icons">system_update_alt</i> Importar Excel</button>
+                            </div>
+                            <div class="col-md-2 pull-right">
+                                <button type="button" id="btnExport" class="btn btn-simple btn-success">
+                                    <i class="material-icons">insert_drive_file</i> Exportar excel
+                                </button>
                             </div>
                            {*<a href="#" class="btn btn-round btn-success">
                                 <i class="material-icons">add_box</i>
@@ -47,17 +52,15 @@
                             </a>*}
                         </div>
                         <div style="clear: both;"></div>
-                        <div class="material-datatables" id="datosList">
-
-                        </div>
+                        <div class="material-datatables" id="datosList"></div>
                     </div>
-                    <!-- end content-->
+                    {*<!-- end content-->*}
                 </div>
-                <!--  end card  -->
+                {*<!--  end card  -->*}
             </div>
-            <!-- end col-md-12 -->
+            {*<!-- end col-md-12 -->*}
         </div>
-        <!-- end row -->
+        {*<!-- end row -->*}
     </div>
 </div>
 <div class="modal fade" id="eliminarBeneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -71,26 +74,24 @@
                 <h5>Desea eliminar a este Beneficiario? </h5>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-danger btn-simple" onclick="eliminarBeneficiario();">Si eliminar</button>
-                <button type="button" class="btn btn-simple" data-dismiss="modal" onclick="cancelarEliminar();">No(Cancelar)</button>
+                <button type="button" class="btn btn-danger btn-simple" onclick="eliminarBeneficiario();"><i class="material-icons">delete_forever</i> Si eliminar</button>
+                <button type="button" class="btn btn-simple" data-dismiss="modal" onclick="cancelarEliminar();"><i class="material-icons">block</i> No(Cancelar)</button>
             </div>
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="importarExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog  ">
         <div class="modal-content card">
             <div class="card-header card-header-icon" data-background-color="rose">
-                                        <i class="material-icons">file_upload</i>
-                                    </div>
+                <i class="material-icons">file_upload</i>
+            </div>
             <div class="modal-header" style="margin-top: -10px;margin-bottom: 10px;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
             </div>
             <div class="modal-body text-center">
                 <h5>Seleccione el archivo. </h5>
                 <span class="">Tiene que ser un archivo de Excel (.xlsx)</span><br>
-
                 <span class="btn btn-rose btn-round btn-file">
                     <span class="fileinput-new">Selecionar Archivo</span>
                     <span class="fileinput-exists"></span>
@@ -105,12 +106,12 @@
                             <th>Nombres</th>
                             <th>Apellido Paterno</th>
                             <th>Apellido Materno</th>
-                            <th>Correo Electronico</th>
-                            <th>Telefono</th>
+                            <th>Correo Electrónico</th>
+                            <th>Teléfono</th>
                             <th>Dirección</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
-                            <th>Codigo Postal</th>
+                            <th>Código Postal</th>
                         </tr>
                     {/if}
                     {if $st_idTipo == 2}
@@ -119,17 +120,17 @@
                             <th>Nombres</th>
                             <th>Apellido Paterno</th>
                             <th>Apellido Materno</th>
-                            <th>Correo Electronico</th>
-                            <th>Telefono</th>
+                            <th>Correo Electrónico</th>
+                            <th>Teléfono</th>
                             <th>Dirección</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
-                            <th>Codigo Postal</th>
+                            <th>Código Postal</th>
                         </tr>
                     {/if}
                     {if $st_idTipo == 3}
                         <tr>
-                            <th>CLAVE CT</th>
+                            <th>Clave CT</th>
                             <th>Nombre CT</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
@@ -141,12 +142,12 @@
                             <th>Nombres</th>
                             <th>Apellido Paterno</th>
                             <th>Apellido Materno</th>
-                            <th>Correo Electronico</th>
-                            <th>Telefono</th>
+                            <th>Correo Electrónico</th>
+                            <th>Teléfono</th>
                             <th>Dirección</th>
                             <th>Municipio</th>
                             <th>Localidad</th>
-                            <th>Codigo Postal</th>
+                            <th>Código Postal</th>
                         </tr>
                     {/if}
                     </thead>
@@ -187,8 +188,8 @@
     <div class="modal-dialog  ">
         <div class="modal-content card">
             <div class="card-header card-header-icon" data-background-color="rose">
-                                        <i class="material-icons">assignment</i>
-                                    </div>
+                <i class="material-icons">assignment</i>
+            </div>
             <div class="modal-header" style="margin-top: -10px;margin-bottom: 10px;">
                 <button type="button" class="close cerrarNuevo" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
             </div>
@@ -259,7 +260,6 @@
                         </select>
                     <span class="material-input"></span></div>
                 </div>
-
                 <div class="col-md-6">
                     <div class="form-group label-floating has-success is-empty">
                         <!--label class="control-label" style="width: 100%;left: 0px;">Localidad</label-->
@@ -280,7 +280,6 @@
         </div>
     </div>
 </div>
-
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
@@ -332,7 +331,6 @@ function importar(){
     }else{
         return false;
     }
-
     dataForm.append($("#token").attr('name'), $("#token").val());
     $("#fileImport").val(null);
     $('.fileinput-new').html("Subiendo archivo...");
@@ -412,6 +410,20 @@ function importar(){
         $('.close').click(function(){
             $("#idSol").val(0);
         });
+
+        $("#btnExport").click(function(event){
+            $("#btnExport").addClass('disabled ui-state-disabled').html('<i class="material-icons">insert_drive_file</i> Generando...');
+            var token = $.trim($("#token").val());
+            var div = $("<div><form name='formExcel' id='formExcel' method='post' action='descargarProgramaExcel'><input type='hidden' name='csrf_segey_tok_name' value='"+token+"' /></form></div>");
+            $('body').append(div);
+            $('body').find("#formExcel").submit();
+            $('body').find("#formExcel").remove();
+            setTimeout( function(){
+                $("#btnExport").removeClass('disabled ui-state-disabled').html('<i class="material-icons">insert_drive_file</i> Exportar excel');
+            },2000);
+        });
+
+
         $( "#beneficiadoSearch" )
             .on( "keydown", function( event ) {
                 if ( event.keyCode === $.ui.keyCode.TAB && $( this ).autocomplete( "instance" ).menu.active ) {
@@ -459,9 +471,8 @@ function importar(){
                 },
                 select: function( event, ui ) {
                     //var terms = split( this.value );
-                    console.log(ui);
+                    //console.log(ui);
                     $('#beneficiadoSearch').val(ui.item.value);
-
                     var claveCT = ui.item.claveCT;
                     var turno = ui.item.turno;
                     var idPersona = ui.item.idPersona;
@@ -477,62 +488,54 @@ function importar(){
                     $('#personaMunicipio').val(ui.item.municipio);
                     $('#personaLocalidad').val(ui.item.localidad);
                     $('#codpos').val(ui.item.codpos);
-
                     $('#personaNombreTuto').val(ui.item.nombreTuto);
                     $('#personaApePatTuto').val(ui.item.apellidopTuto);
                     $('#personaApeMatTuto').val(ui.item.apellidomTuto);
-
                     return false;
                 }
         });
         $('#beneficiadoBtn').click(function(){
-            if($('#personaCurp').val() != ''){
-                if($('#tipoBene').val() == 1 || $('#tipoBene').val() == 2 || $('#tipoBene').val() == 4){
-
-                    $('#localidadPersona').html($('#localidadPersonaBACK').html());
-                    $('#localidadPersona').find('option').each(function(ind, ele){
-                        if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
-                            $(ele).show();
-                        }
-                        else{
-                            $(ele).remove();
-                        }
-                    });
-
-                    centros = $('#beneCT').val().split(',');
-                    if(centros.length > 0){
-                        $('#centroPersona').find('option').remove();
-                        $('#beneCT').val(centros[0]);
-                        $.each(centros, function( index, value ) {
-                            $('#centroPersona').append('<option>'+value+'</option>');
-                        });
+            if((($('#tipoBene').val() == 1 || $('#tipoBene').val() == 2 || $('#tipoBene').val() == 4) && $('#personaCurp').val() != '')){
+                $('#localidadPersona').html($('#localidadPersonaBACK').html());
+                $('#localidadPersona').find('option').each(function(ind, ele){
+                    if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
+                        $(ele).show();
                     }
-                    $('#curpPersona').val($('#personaCurp').val());
-                    $('#nombrePersona').val($('#personaNombre').val());
-                    $('#apellidoPPersona').val($('#personaApePat').val());
-                    $('#apellidoMPersona').val($('#personaApeMat').val());
-                    $('#correoPersona').val($('#personaCorreo').val());
-                    $('#telefonoPersona').val($('#personaTelefono').val());
-                    $('#direccionPersona').val($('#personaDireccion').val());
-                    $('#municipioPersona').val($('#personaMunicipio').val());
-                    $('#localidadPersona').val($('#personaLocalidad').val());
-                    $('#codposPersona').val($('#codpos').val());
-                    $('#nombrePersonaTuto').val($('#personaNombreTuto').val());
-                    $('#apellidoPPersonaTuto').val($('#personaApePatTuto').val());
-                    $('#apellidoMPersonaTuto').val($('#personaApeMatTuto').val());
-
-                    $('#mostrarAgregarNuevoView').find('div').removeClass('is-empty');
-
-                    $('#mostrarAgregarNuevo').trigger('click');
-                    return false;
+                    else{
+                        $(ele).remove();
+                    }
+                });
+                centros = $('#beneCT').val().split(',');
+                if(centros.length > 0){
+                    $('#centroPersona').find('option').remove();
+                    $('#beneCT').val(centros[0]);
+                    $.each(centros, function( index, value ) {
+                        $('#centroPersona').append('<option>'+value+'</option>');
+                    });
                 }
-                funcionAgregar();
+                $('#curpPersona').val($('#personaCurp').val());
+                $('#nombrePersona').val($('#personaNombre').val());
+                $('#apellidoPPersona').val($('#personaApePat').val());
+                $('#apellidoMPersona').val($('#personaApeMat').val());
+                $('#correoPersona').val($('#personaCorreo').val());
+                $('#telefonoPersona').val($('#personaTelefono').val());
+                $('#direccionPersona').val($('#personaDireccion').val());
+                $('#municipioPersona').val($('#personaMunicipio').val());
+                $('#localidadPersona').val($('#personaLocalidad').val());
+                $('#codposPersona').val($('#codpos').val());
+                $('#nombrePersonaTuto').val($('#personaNombreTuto').val());
+                $('#apellidoPPersonaTuto').val($('#personaApePatTuto').val());
+                $('#apellidoMPersonaTuto').val($('#personaApeMatTuto').val());
+                $('#mostrarAgregarNuevoView').find('div').removeClass('is-empty');
+                $('#mostrarAgregarNuevo').trigger('click');
+                return false;
             }
-            else{
-                $('#beneficiadoSearch').focus();
+            else if($('#tipoBene').val() == 3 && $.trim($("#beneCT").val()).length == 10){
+                funcionAgregar();
+            }else{
+                $("#beneficiadoSearch").focus();
             }
         });
-
         cargarListado();
     });
 $('#centroPersona').change(function(){
@@ -589,7 +592,6 @@ function funcionAgregar(){
     dataForm.append($("#token").attr('name'), $("#token").val());
     dataForm.append('claveCT', $("#beneCT").val());
     dataForm.append('idPersona', $('#beneIdPersona').val());
-
     dataForm.append('curp', $('#personaCurp').val());
     dataForm.append('nombre', $('#personaNombre').val());
     dataForm.append('apellidop', $('#personaApePat').val());

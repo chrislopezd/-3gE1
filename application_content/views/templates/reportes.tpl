@@ -155,7 +155,7 @@ $().ready( function(){
     $('*[data-id="municipio"]').click();
     $('*[data-id="municipio"]').click();
     $("#btnExport").click(function(event){
-        $("#btnExport").addClass('disabled ui-state-disabled').html('<i class="material-icons">print</i> Generando...');
+        $("#btnExport").addClass('disabled ui-state-disabled').html('<i class="material-icons">insert_drive_file</i> Generando...');
         var token = $.trim($("#token").val());
         var nombre = $.trim($("#nombre").val());
         var cct = $.trim($("#cct").val());
@@ -170,7 +170,7 @@ $().ready( function(){
         $('body').find("#formExcel").submit();
         $('body').find("#formExcel").remove();
         setTimeout( function(){
-            $("#btnExport").removeClass('disabled ui-state-disabled').html('<i class="material-icons">print</i> Exportar a excel');
+            $("#btnExport").removeClass('disabled ui-state-disabled').html('<i class="material-icons">insert_drive_file</i> Exportar excel');
         },2000);
     });
     $("#municipio").change( function(){

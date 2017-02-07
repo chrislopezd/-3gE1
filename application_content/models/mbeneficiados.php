@@ -65,7 +65,6 @@ class Mbeneficiados extends CI_Model{
     $this->db->where('b.idUsuario',$idUsuario);
     $this->db->where('b.estatus',1);
 
-
     $query = $this->db->get();
     $tmp = $query->num_rows();
     if ($tmp > 0){
@@ -692,8 +691,8 @@ class Mbeneficiados extends CI_Model{
         <thead>
           <tr>
               <th>#</th>
-              <th>CLAVE CT</th>
-              <th>NOMBRE CT</th>
+              <th>Clave CT</th>
+              <th>Nombre CT</th>
           </tr>';
         foreach ($arrCentrosNuevas as $key => $arrData) {
           $INFO .= '<tr>
@@ -711,8 +710,8 @@ class Mbeneficiados extends CI_Model{
         <thead>
           <tr>
               <th>#</th>
-              <th>CLAVE CT</th>
-              <th>NOMBRE CT</th>
+              <th>Clave CT</th>
+              <th>Nombre CT</th>
           </tr>';
         foreach ($arrCentrosRepetidas as $key => $arrData) {
           $INFO .= '<tr>
@@ -729,8 +728,8 @@ class Mbeneficiados extends CI_Model{
         <thead>
           <tr>
               <th>#</th>
-              <th>CLAVE CT</th>
-              <th>NOMBRE CT</th>
+              <th>Clave CT</th>
+              <th>Nombre CT</th>
           </tr>';
         foreach ($arrCentrosYaBeneficiario as $key => $arrData) {
           $INFO .= '<tr>
@@ -747,8 +746,8 @@ class Mbeneficiados extends CI_Model{
         <thead>
           <tr>
               <th>#</th>
-              <th>CLAVE CT</th>
-              <th>NOMBRE CT</th>
+              <th>Clave CT</th>
+              <th>Nombre CT</th>
           </tr>';
         foreach ($arrCentrosSinMunicipio as $key => $arrData) {
           $INFO .= '<tr>
@@ -765,8 +764,8 @@ class Mbeneficiados extends CI_Model{
         <thead>
           <tr>
               <th>#</th>
-              <th>CLAVE CT</th>
-              <th>NOMBRE CT</th>
+              <th>Clave CT</th>
+              <th>Nombre CT</th>
           </tr>';
         foreach ($arrCentrosSinLocalidad as $key => $arrData) {
           $INFO .= '<tr>
@@ -829,9 +828,56 @@ class Mbeneficiados extends CI_Model{
         }
         break;
     }
-
-
   }
-
+  public function getBeneficiadosReporte($tipoListado){
+    $res = array('STATUS' => FALSE, 'DATOS' => array());
+    $idUsuario = $this->session->userdata('sep_idUsuario');
+    #$this->db->select("b.*",FALSE);
+    $this->db->from("s_beneficiados AS b");
+    $this->db->join('s_usuarios AS u', 'u.idUsuario = b.idUsuario');
+    switch ($tipoListado) {
+      case '1'://ALUMNOS
+        $this->db->select("u.observaciones AS programa,p.curp,p.nombre,p.apellidop,p.apellidom,p.correo,p.telefono,p.direccion,IFNULL(TRIM(m.NOM),'') AS municipio,IFNULL(TRIM(i.NOMBRELOC),'') AS localidad,p.codpos,CONCAT_WS(' ',p.nombre_tuto,p.ap_paterno_tuto,p.ap_materno_tuto) AS tutor",FALSE);
+        $this->db->join('s_personas AS p', 'p.idPersona = b.idPersona AND p.tipo = "Alumno"');
+        $this->db->join('catmun AS m', 'm.MUNICIPIO = p.municipio',LEFT);
+        $this->db->join('a_itba AS i', 'i.MUNICIPIO = p.municipio AND p.localidad = i.LOCALIDAD',LEFT);
+        $this->db->where('b.tipoBene',2);
+        $this->db->where('b.idTipo',1);
+      break;
+      case '2'://DOCENTES
+        $this->db->select("u.observaciones AS programa,p.curp,p.nombre,p.apellidop,p.apellidom,p.correo,p.telefono,p.direccion,IFNULL(TRIM(m.NOM),'') AS municipio,IFNULL(TRIM(i.NOMBRELOC),'') AS localidad,p.codpos",FALSE);
+        $this->db->join('s_personas AS p', 'p.idPersona = b.idPersona AND p.tipo = "Docente"');
+        $this->db->join('catmun AS m', 'm.MUNICIPIO = p.municipio',LEFT);
+        $this->db->join('a_itba AS i', 'i.MUNICIPIO = p.municipio AND p.localidad = i.LOCALIDAD',LEFT);
+        $this->db->where('b.tipoBene',2);
+        $this->db->where('b.idTipo',2);
+      break;
+      case '3'://ESCUELAS
+        $this->db->select("u.observaciones AS programa,b.clavecct,CASE WHEN a.TURNO = '100' THEN 'MATUTINO' WHEN a.TURNO = '120' THEN 'MAT Y VESP' WHEN a.TURNO = '123' THEN 'MAT, VESP Y NOCT' WHEN a.TURNO = '130' THEN 'MAT Y NOCT' WHEN a.TURNO = '200' THEN 'VESP Y NOCT' WHEN a.TURNO = '230' THEN 'VESPERTINO' WHEN a.TURNO = '300' THEN 'NOCTURNO' WHEN a.TURNO = '400' THEN 'DISCONTINUO' WHEN a.TURNO = '800' THEN 'DISCONTINUO' END AS turno,TRIM(a.NOMBRECT) AS nombrect,a.DOMICILIO AS domicilio,a.ZONAESCOLA AS zona,TRIM(m.NOM) AS municipio,TRIM(i.NOMBRELOC) AS localidad,a.CODPOST AS codpos",FALSE);
+        $this->db->join('a_ctba AS a', 'a.CLAVECCT = b.clavecct');
+        $this->db->join('catmun AS m', 'm.MUNICIPIO = a.MUNICIPIO');
+        $this->db->join('a_itba AS i', 'i.MUNICIPIO = a.MUNICIPIO AND a.LOCALIDAD = i.LOCALIDAD');
+        $this->db->where('b.tipoBene',1);
+        $this->db->where('b.idTipo',3);
+      break;
+      case '4'://PADRES DE FAMILIA
+        $this->db->select("u.observaciones AS programa,p.curp,p.nombre,p.apellidop,p.apellidom,p.correo,p.telefono,p.direccion,IFNULL(TRIM(m.NOM),'') AS municipio,IFNULL(TRIM(i.NOMBRELOC),'') AS localidad,p.codpos",FALSE);
+        $this->db->join('s_personas AS p', 'p.idPersona = b.idPersona AND p.tipo = "PadreDeFamilia"');
+        $this->db->join('catmun AS m', 'm.MUNICIPIO = p.municipio',LEFT);
+        $this->db->join('a_itba AS i', 'i.MUNICIPIO = p.municipio AND p.localidad = i.LOCALIDAD',LEFT);
+        $this->db->where('b.tipoBene',2);
+        $this->db->where('b.idTipo',4);
+      break;
+    }
+    $this->db->where('b.idUsuario',$idUsuario);
+    $this->db->where('b.estatus',1);
+    $query = $this->db->get();
+    $tmp = $query->num_rows();
+    if ($tmp > 0){
+      $res["STATUS"] = TRUE;
+      $res['DATOS'] = $query->result_array();
+    }
+    return $res;
+  }
 }
 ?>

@@ -326,8 +326,6 @@ class Reportes extends CI_Controller {
 			$this->excel->getActiveSheet()->getStyle("{$letras_excel[$mk]}7")->applyFromArray($style);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($mk, "7", $v);
 		}
-
-
   		ob_end_clean();
   		$_nombre = "REPORTE[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xls";
 		header('Content-Type: application/vnd.ms-excel');

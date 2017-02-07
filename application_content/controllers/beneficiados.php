@@ -117,7 +117,6 @@ class Beneficiados extends CI_Controller {
 				break;
 		}
 	}
-
 	public function saveBeneficiados(){
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
 		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
@@ -148,18 +147,19 @@ class Beneficiados extends CI_Controller {
 
 		if(in_array($_FILES['fileCSV']['type'],$mimes)){
 			if ($_FILES["fileCSV"]["error"] > 0) {
-			} else {
+			}else{
 				$nombre = explode('.', $_FILES["fileCSV"]["name"]);
 				$ext = strtolower( end($nombre) );
 			}
-		} else {
+		}else{
 			echo json_encode(array('error' => true, 'HTML' =>'El formato del archivo no es correcto.'));
 			die();
 		}
 
 		$file = $_FILES["fileCSV"]["tmp_name"];
-		if(empty($file)){return FALSE;}
-
+		if(empty($file)){
+			return FALSE;
+		}
 		$estructura = array('CLAVECCT', 'TURNO', 'GRADO', 'GRUPO', 'TIPO DE GRUPO');
 		$cct = $turno = $nivelGrado = $lastInsert = '';
 		switch ($ext) {
@@ -167,7 +167,7 @@ class Beneficiados extends CI_Controller {
 			case "xls":
 				echo json_encode(array('error' => true, 'HTML' =>'<h2>Por el momento este tipo de archivo no se acepta , guarde en version Office 2007 en adelante \'XLSX\'</h2>'));
 				die();
-				break;
+			break;
 			case 'xlsx':
 				//include 'simplexlsx.class.php';
 				$this->load->library('SimpleExcel');
@@ -218,16 +218,129 @@ class Beneficiados extends CI_Controller {
 						$c++;
 					}
 				}
-
 				//echo "<pre>";print_r($arrayData);
 				echo json_encode($this->mbeneficiados->importBeneficiarios($d , $arrayData));
-
-				break;
+			break;
 			default:
 				echo json_encode(array('error' => true, 'HTML' =>'<h2>Por el momento este tipo de archivo no se acepta , guarde en version Office 2007 en adelante \'XLSX\'</h2>'));
-				break;
+			break;
+		}
+	}
+	public function downloadProgramasExcel(){
+		set_time_limit(0);
+    	ini_set('memory_limit', '4048M');
+		$this->load->library('excel');
+		set_time_limit(0);
+		ini_set('memory_limit', '-1');
+		$this->excel->getProperties()->setCreator("SISTEMAS")
+				->setLastModifiedBy("SISTEMAS SEGEY")
+				->setTitle("REPORTE")
+				->setSubject("REPORTE")
+				->setDescription("REPORTE")
+				->setKeywords("office 2007 openxml php")
+				->setCategory("Archivo");
+		$this->excel->getActiveSheet()->setTitle('REPORTE BENEFICIARIOS');
+  		$this->excel->getDefaultStyle()->getFont()->setName('Helvetica');
+		$this->excel->getDefaultStyle()->getFont()->setSize(8);
+		$_styleArray = array('alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,),);
+		$style = array('font' => array('bold' => true,'color' => array('rgb' => 'FFFFFF'),),'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID,'color' => array('rgb' => '000000')),
+		'borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '8C8C8C'),),),);
+		$styleArray2 = array('font' => array('normal' => true,),'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,),
+		'borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '8C8C8C'),),),);
+		$styleArray5 = array('borders' => array('bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '8C8C8C'),),),);
+		$styleArray6= array('font' => array('bold' => true,),'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,),);
+		$styleArray7= array('alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,),);
+		$fecha = explode(" ",$this->mbeneficiados->now());
+		$idTipo = $this->session->userdata('sep_idTipo');
+		$titulos_excel = array();
+		$letras_excel = array();
+		$width_excel = array();
+		switch ($idTipo) {
+	      case '1'://ALUMNOS
+	       	$titulos_excel = array("Programa","CURP","Nombres","Apellido Paterno","Apellido Materno","Correo Electrónico","Teléfono","Dirección","Municipio","Localidad","Código Postal","Tutor");
+	       	$letras_excel = array("A","B","C","D","E","F","G","H","I","J","K","L");
+	       	$width_excel = array("20","25","25","20","20","35","20","45","35","35","15","45");
+	      break;
+	      case '2'://DOCENTES
+	      	$titulos_excel = array("Programa","CURP","Nombres","Apellido Paterno","Apellido Materno","Correo Electrónico","Teléfono","Dirección","Municipio","Localidad","Código Postal");
+	       	$letras_excel = array("A","B","C","D","E","F","G","H","I","J","K");
+	       	$width_excel = array("20","25","25","20","20","35","20","45","35","35","15");
+	      break;
+	      case '3'://ESCUELAS
+			$titulos_excel = array("Programa","Clave CT","Turno","Nombre CT","Dirección","Zona","Municipio","Localidad","Código Postal");
+	      	$letras_excel = array("A","B","C","D","E","F","G","H","I");
+	       	$width_excel = array("20","20","20","35","45","10","35","35","15");
+	      break;
+	      case '4'://PADRES DE FAMILIA
+	      	$titulos_excel = array("Programa","CURP","Nombres","Apellido Paterno","Apellido Materno","Correo Electrónico","Teléfono","Dirección","Municipio","Localidad","Código Postal");
+	       	$letras_excel = array("A","B","C","D","E","F","G","H","I","J","K");
+	       	$width_excel = array("20","25","25","20","20","35","20","45","35","35","15");
+	      break;
+	    }
+		foreach($titulos_excel as $mk => $v){
+			$this->excel->getActiveSheet()->getColumnDimension("{$letras_excel[$mk]}")->setWidth($width_excel[$mk]);
+			$this->excel->getActiveSheet()->getStyle("{$letras_excel[$mk]}1")->applyFromArray($style);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($mk, "1", $v);
+		}
+		$info = $this->mbeneficiados->getBeneficiadosReporte($idTipo);
+		$valores_excel = $info['DATOS'];
+		/*$objDrawing = new PHPExcel_Worksheet_Drawing();
+		$objDrawing->setName('Logo');
+		$objDrawing->setDescription('Logo');
+		$objDrawing->setPath('resources/images/logon.png');
+		$objDrawing->setHeight(80);
+		$objDrawing->setWorksheet($this->excel->getActiveSheet());*/
+		$ii = 0;
+		if(count($valores_excel) > 0){
+			foreach($valores_excel as $k => $v){
+				$i=0;
+				foreach($v as $kk => $value){
+					$this->excel->getActiveSheet()->setCellValueByColumnAndRow($i,$k+ 2,$value);
+					$i++;
+				}
+			}
+			/*CONFIGURACION EXTRA*/
+			$this->excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+			$this->excel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER);
+			$this->excel->getActiveSheet()->getPageMargins()->setTop(1);
+			$this->excel->getActiveSheet()->getPageMargins()->setRight(0.75);
+			$this->excel->getActiveSheet()->getPageMargins()->setLeft(0.75);
+			$this->excel->getActiveSheet()->getPageMargins()->setBottom(1);
+			/*MARGENES DE IMPRESION*/
+			$sheet = $this->excel->setActiveSheetIndex(0);
+			$pageMargins = $sheet->getPageMargins();
+			$margin = 0.5 / 2.54;
+			$pageMargins->setTop($margin);
+			$pageMargins->setBottom($margin);
+			$pageMargins->setLeft(0.5);
+			$pageMargins->setRight($margin);
+			/*TITULO 1*/
+			/*
+			$this->excel->getActiveSheet()->mergeCells('E2:J2');//MERGE
+			$this->excel->getActiveSheet()->setCellValue("E2", 'REPORTE BENEFICIARIOS');
+			$this->excel->getActiveSheet()->getStyle("E2")->applyFromArray($styleArray6);
+			$this->excel->getActiveSheet()->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->excel->getActiveSheet()->getStyle('E2')->getFont()->setColor(new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_GRAY));
+			$this->excel->getActiveSheet()->getStyle("E2")->getFont()->setSize(16);
+			$this->excel->getActiveSheet()->getStyle("E2")->getFont()->setItalic(true);*/
+		}
+		else{
+			$this->excel->getActiveSheet()->mergeCells('E2:I2');//MERGE
+			$this->excel->getActiveSheet()->setCellValue("E2", 'NO HAY REGISTROS');
+			$this->excel->getActiveSheet()->getStyle("E2")->applyFromArray($styleArray6);
+			$this->excel->getActiveSheet()->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->excel->getActiveSheet()->getStyle('E2')->getFont()->setColor(new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_GRAY));
+			$this->excel->getActiveSheet()->getStyle("E2")->getFont()->setSize(16);
+			$this->excel->getActiveSheet()->getStyle("E2")->getFont()->setItalic(true);
 		}
 
+  		ob_end_clean();
+  		$_nombre = "REPORTE_BENEFICIARIOS[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xls";
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="'.$_nombre.'"');
+		header('Cache-Control: max-age=0');
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		$objWriter->save('php://output');
 	}
 }
 ?>
