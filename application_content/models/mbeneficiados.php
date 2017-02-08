@@ -919,10 +919,118 @@ class Mbeneficiados extends CI_Model{
       $res["STATUS"] = TRUE;
       $res['DATOS'] = $query->result_array();
     }
-
     return $res;
-
   }
+
+  public function saveBeneficiadosMasivo($session, $datos){
+    $this->db->trans_start();
+    $idTipoPrograma = $this->session->userdata('sep_idTipo');
+
+    $tipoPersona = "";
+    switch ($session['st_idTipo']) {
+      case '1'://ALUMNOS
+        $tipoPersona = "Alumno";break;
+      case '2'://DOCENTES
+        $tipoPersona = "Docente";break;
+      case '4'://PADRES DE FAMILIA
+        $tipoPersona = "PadreDeFamilia";break;
+    }
+
+    switch ($session['st_idTipo']) {
+      case '1'://ALUMNOS
+      case '2'://DOCENTES
+      case '4'://PADRES DE FAMILIA
+        if(/*($datos['idPersona'] == 0 || $datos['idPersona'] == '') && */$datos['curp'] != ''){
+          $siPersonaCurp = $this->db->query("SELECT IFNULL((SELECT idPersona FROM s_personas WHERE curp = '".$datos['curp']."' AND tipo = '".$tipoPersona."' LIMIT 1),0) AS idPersona")->row()->idPersona;
+
+          if($siPersonaCurp == 0){//NO EXISTE EN PERSONA CON EL MISMO TIPO
+            $dataPersona = array(
+              'tipo'=> $tipoPersona,
+              'curp'=> $datos['curp'],
+              'estatus' => 1,
+              'localidad' => $datos['localidad'],
+              'municipio' => $datos['municipio'],
+              'nombre'=> $datos['nombre'],
+              'apellidop'=> $datos['apellidop'],
+              'apellidom'=> $datos['apellidom'],
+              'correo'=> $datos['correo'],
+              'telefono'=> $datos['telefono'],
+              'direccion'=> $datos['direccion'],
+              'codpos'=> $datos['codpos'],
+              'nombre_tuto'=> $datos['nombreTuto'],
+              'ap_paterno_tuto'=> $datos['apellidopTuto'],
+              'ap_materno_tuto'=> $datos['apellidomTuto']);
+            $this->db->insert('s_personas', $dataPersona);
+            $datos['idPersona'] = $this->db->insert_id();
+          }
+          else{
+            $dataPersona = array(
+              'estatus' => 1,
+              'localidad' => $datos['localidad'],
+              'municipio' => $datos['municipio'],
+              'nombre'=> $datos['nombre'],
+              'apellidop'=> $datos['apellidop'],
+              'apellidom'=> $datos['apellidom'],
+              'correo'=> $datos['correo'],
+              'telefono'=> $datos['telefono'],
+              'direccion'=> $datos['direccion'],
+              'codpos'=> $datos['codpos'],
+              'nombre_tuto'=> $datos['nombreTuto'],
+              'ap_paterno_tuto'=> $datos['apellidopTuto'],
+              'ap_materno_tuto'=> $datos['apellidomTuto']);
+            $this->db->where('idPersona',$siPersonaCurp);
+            $this->db->update('s_personas', $dataPersona);
+            $datos['idPersona'] = $siPersonaCurp;
+          }
+
+        }
+      break;
+      case '3'://ESCUELAS
+        //$tipoBene = 1;
+      break;
+    }
+
+
+    if(($datos['idPersona'] != '' && $datos['idPersona'] != '0') || $datos['claveCT'] != ''){
+      $tipoBene = 1;
+      switch ($session['st_idTipo']) {
+
+            case '1'://ALUMNOS
+            case '2'://DOCENTES
+            case '4'://PADRES DE FAMILIA
+              $tipoBene = 2;
+            break;
+            case '3'://ESCUELAS
+              $tipoBene = 1;
+            break;
+      }
+      foreach ($datos['claveCT'] as $key => $v){
+        $this->db->query("
+            INSERT INTO s_beneficiados (
+              idUsuario,
+              idTipo,
+              idCiclo,
+              idPersona,
+              tipoBene,
+              clavecct,
+              fechaRegistro,
+              estatus)
+            VALUES (
+              ".$session['st_idUsuario'].",
+              ".$session['st_idTipo'].",
+              ".$this->getCiclo(1).",
+              ".($datos['idPersona'] != '' && $datos['idPersona'] > 0 ? $datos['idPersona'] : 0).",
+              ".$tipoBene.",
+              ".($v != '' ? "'".$v."'" : "''").",
+              '".$this->now()."' ,
+              1)
+            ON DUPLICATE KEY UPDATE estatus = 1;");
+      }
+    }
+    $this->db->trans_complete();
+    return array('error'=>false,'HTML'=>'Exito');
+  }
+
 
 
 }

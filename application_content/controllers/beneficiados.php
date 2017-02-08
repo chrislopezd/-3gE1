@@ -356,5 +356,14 @@ class Beneficiados extends CI_Controller {
 		//echo "<pre>";print_r($d['LISTADO']);die();
 		echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoEscuelas.tpl",$d,TRUE)));
 	}
+	public function saveBeneficiadosMasivo(){
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		$datos = $this->input->post();
+		echo json_encode($this->mbeneficiados->saveBeneficiadosMasivo($d, $datos));
+	}
 }
 ?>

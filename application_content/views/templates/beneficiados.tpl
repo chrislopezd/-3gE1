@@ -341,10 +341,7 @@
     </div>
 </div>
 
-
-
-<!-- notice modal -->
- <button style="display: none" type="button" id="showModalLoad" class="btn btn-white btn-round btn-just-icon" data-toggle="modal" data-target="#loadModal"></button>
+<button style="display: none" type="button" id="showModalLoad" class="btn btn-white btn-round btn-just-icon" data-toggle="modal" data-target="#loadModal" data-backdrop="static" data-keyboard="false"></button>
 <div class="modal" id="loadModal">
     <div class="modal-dialog modal-notice">
         <div class="modal-content">
@@ -355,31 +352,17 @@
             <div class="modal-body" id="listaFiltro" style="min-height:200px;">
                 <div class="instruction">
                     <div class="loader">
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="lading"></div>
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="lading"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-simple btn-success" data-dismiss="modal"><i class="material-icons">add_box</i> Agregar beneficiario</button>
-                <button type="button" class="btn btn-simple btn-rose" data-dismiss="modal"><i class="material-icons">block</i> Cancelar</button>
+                <button type="button" class="btn btn-simple btn-success" id="btnAddBene"><i class="material-icons">add_box</i> Agregar beneficiario</button>
+                <button type="button" class="btn btn-simple btn-rose" id="btnExitBene" data-dismiss="modal"><i class="material-icons">block</i> Cancelar</button>
             </div>
         </div>
     </div>
 </div>
-<!-- end notice modal -->
-
-
-
-
-
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
@@ -506,7 +489,63 @@ function importar(){
     function cancelarEliminar(){
         $("#idSol").val(0);
     }
+    function addBeneMasivo(marray){
+        var dataForm = new FormData();
+        dataForm.append($("#token").attr('name'), $("#token").val());
+        $(marray).each( function(i,e){
+            dataForm.append('claveCT[]',e);
+        });
+        $.ajax({
+            url : "ajax/guardarBeneficiarioMasivo",
+            data : dataForm,
+            processData: false,
+            contentType: false,
+            cache: false,
+            dataType : "json", type: "POST",
+            beforeSend: function(){$('#loadData').show();},
+            success: function(data){
+                if(data.error){
+                    $('#loadData').hide();
+                    $("#btnAddBene").removeClass("disabled");
+                }
+                else{
+                    cargarListado();
+                    $("#btnExitBene").click();
+                    $("#btnAddBene").removeClass("disabled");
+                    $('#loadData').hide();
+                }
+            },
+            error: function (){$('#loadData').hide();$("#btnAddBene").removeClass("disabled");}
+        });
+    }
     $(document).ready(function(){
+        $("#btnAddBene").click( function(){
+            if($(this).hasClass("disabled")){
+                return false;
+            }
+            if($(".mIcheck:checked").length == 0){
+                demo.showNotificacion('top','center','error','danger','<strong>Debe seleccionar la menos un registro.</strong>');
+                return false;
+            }
+            $(this).addClass("disabled");
+            var _mArray = [];
+            $("#tbodyList").find("TR").each( function(){
+                var _mt = 0;
+                $(this).find("TD").each( function(ii,ee){
+                    if($(this).find(".mIcheck").prop('checked') && ii == 0){
+                        _mt++;
+                    }
+                    if(_mt > 0 && ii == 1){
+                        _mArray.push($.trim($(ee).html()));
+                        return false;
+                    }
+                });
+            });
+           // console.log(_mArray);return false;
+            if(_mArray.length > 0){
+                addBeneMasivo(_mArray);
+            }
+        });
         if(_mTipo == '3'){
             $('*[data-id="municipioF"]').click();
             $('*[data-id="municipioF"]').click();
@@ -530,7 +569,10 @@ function importar(){
                 cargarFiltro();
             }else{
                 $("#loadModal").find("modal-header button").click();
-                demo.showNotificacion('top','center','error','danger','Debe al menos elegir un filtro');
+                demo.showNotificacion('top','center','error','danger','<strong>Debe elegir un filtro.</strong>');
+                if($.trim($("#zonaF").val()).length  == 0){
+                    $("#zonaF").focus();
+                }
                 return false;
             }
         });

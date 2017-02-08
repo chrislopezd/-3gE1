@@ -76,8 +76,8 @@ $route['ajax/guardarBeneficiario'] = 'beneficiados/saveBeneficiados';
 $route['ajax/eliminarBeneficiario'] = 'beneficiados/deleteBeneficiado';
 $route['ajax/importarBeneficiarios'] = 'beneficiados/importBeneficiarios';
 $route['descargarProgramaExcel'] = 'beneficiados/downloadProgramasExcel';
-
 $route['ajax/listadoFiltro'] = 'beneficiados/loadListadoFiltro';
+$route['ajax/guardarBeneficiarioMasivo'] = 'beneficiados/saveBeneficiadosMasivo';
 
 ########END PROGRAMAS
 

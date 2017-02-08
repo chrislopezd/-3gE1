@@ -200,6 +200,7 @@ th {
         </table>
         <div class="bg tablescroll">
             <table class="table table-bordered table-striped">
+                <tbody id="tbodyList">
                 {foreach from=$LISTADO key=key item=v}
                 <tr>
                     <td style="width:60px !important;">
@@ -217,6 +218,7 @@ th {
                     <td style="width: 20%">{$v['localidad']}</th>
                 </tr>
                 {/foreach}
+                </tbody>
             </table>
         </div>
     </table>
