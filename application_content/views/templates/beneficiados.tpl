@@ -51,8 +51,68 @@
                                 Nuevo beneficiario
                             </a>*}
                         </div>
+                        <div class="toolbar">
+                            <form id="getFormF">
+                            <div class="col-md-2">
+                               <div class="form-group label-floating is-empty has-success">
+                                    <label class="control-label">Zona</label>
+                                    <input type="text" name="zonaF" id="zonaF" class="form-control upper" maxlength="3">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating has-success">
+                                    <label class="control-label">Municipio</label>
+                                    <select name="municipioF" id="municipioF" class="selectpicker" data-style="select-with-transition" data-size="10">
+                                        <option disabled selected>Elija el municipio</option>
+                                      {foreach from=$MUNICIPIOSF key=k item=res}
+                                        <option value="{$res['MUNICIPIO']}">{$res['NOM']}</option>
+                                      {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating has-success">
+                                    <label class="control-label">Localidad</label>
+                                     <select name="localidadF" id="localidadF" class="selectpicker" data-style="select-with-transition" data-size="10">
+                                     <option disabled selected>Elija la localidad</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Buscar</label>
+                                    <button type="button" id="btnFilter" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Limpiar</label>
+                                    <button type="button" id="btnClean" class="btn btn-white btn-round btn-just-icon" >
+                                        <i class="material-icons">refresh</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+
                         <div style="clear: both;"></div>
-                        <div class="material-datatables" id="datosList"></div>
+                        <div class="material-datatables" id="datosList" style="min-height:300px;">
+                            <div class="loader">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="lading"></div>
+                            </div>
+                        </div>
                     </div>
                     {*<!-- end content-->*}
                 </div>
@@ -280,9 +340,50 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- notice modal -->
+ <button style="display: none" type="button" id="showModalLoad" class="btn btn-white btn-round btn-just-icon" data-toggle="modal" data-target="#loadModal"></button>
+<div class="modal" id="loadModal">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+                <h5 class="modal-title" id="myModalLabel">Listado</h5>
+            </div>
+            <div class="modal-body" id="listaFiltro" style="min-height:200px;">
+                <div class="instruction">
+                    <div class="loader">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="lading"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-simple btn-success" data-dismiss="modal"><i class="material-icons">add_box</i> Agregar beneficiario</button>
+                <button type="button" class="btn btn-simple btn-rose" data-dismiss="modal"><i class="material-icons">block</i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end notice modal -->
+
+
+
+
+
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
+var _mTipo = {/literal}'{$st_idTipo}'{literal};
 $("#fileImport").change(function(e){
     var _totalImg = $("#fileImport")[0].files.length;
     if(_totalImg > 0){
@@ -406,11 +507,75 @@ function importar(){
         $("#idSol").val(0);
     }
     $(document).ready(function(){
-        $("#beneficiadoSearch").focus();
+        if(_mTipo == '3'){
+            $('*[data-id="municipioF"]').click();
+            $('*[data-id="municipioF"]').click();
+            $("#zonaF").focus();
+        }else{
+            $("#beneficiadoSearch").focus();
+        }
         $('.close').click(function(){
             $("#idSol").val(0);
         });
-
+        $("#btnFilter").click( function(){
+            var _tt = 0;
+            if($.trim($("#zonaF").val()).length == 0){
+                _tt++;
+            }
+            if($("#municipioF").val() == ""){
+                _tt++;
+            }
+            if(_tt == 0){
+                $("#showModalLoad").click();
+                cargarFiltro();
+            }else{
+                $("#loadModal").find("modal-header button").click();
+                demo.showNotificacion('top','center','error','danger','Debe al menos elegir un filtro');
+                return false;
+            }
+        });
+        $("#zonaF").onEnter(function(){
+            $("#btnFilter").click();
+        });
+        $("#loadModal").on("hidden.bs.modal",function (){
+            $("#listaFiltro").html('<div class="instruction"><div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="lading"></div></div></div>');
+        });
+        $("#btnClean").click( function(){
+            $("#getFormF")[0].reset();
+            $("#localidadF").html('<option disabled selected>Elija la localidad</option>');
+            $("#localidadF").selectpicker('refresh');
+            $("#municipioF").selectpicker('refresh');
+        });
+        $("#municipioF").change( function(){
+          if($(this).val() != ""){
+            $.ajax({
+              url : "ajax/buscarLocalidades",
+              data : {
+                'municipio' : $('#municipioF').val(),
+                'csrf_segey_tok_name' : function(){ return ($('#token').val() != "") ? $('#token').val() : "";}
+              },
+              dataType : "json", type: "POST",
+              beforeSend: function(){
+              },
+              success: function(data){
+                if(data.error){
+                  $("#localidadF").html('<option>Intente más tarde.</option>');
+                }
+                else{
+                  $("#localidadF").html(data.HTML);
+                }
+                $("#localidadF").selectpicker('refresh');
+              },
+              error: function (){
+                $('#localidadF').html('<option>Intente más tarde.</option>');
+                $("#localidadF").selectpicker('refresh');
+              }
+            });
+          }else{
+            $("#localidadF").html('<option disabled selected>Elija la localidad</option>');
+            $("#localidadF").selectpicker('refresh');
+          }
+        });
         $("#btnExport").click(function(event){
             $("#btnExport").addClass('disabled ui-state-disabled').html('<i class="material-icons">insert_drive_file</i> Generando...');
             var token = $.trim($("#token").val());
@@ -639,30 +804,55 @@ function funcionAgregar(){
         error: function (){$('#loadData').hide();}
     });
 }
-    function cargarListado(){
-        var dataForm = new FormData();
-        dataForm.append($("#token").attr('name'), $("#token").val());
-
-        $.ajax({
-            url : "ajax/listadoBeneficiados",
-            data : dataForm,
-            processData: false,
-            contentType: false,
-            cache: false,
-            dataType : "json", type: "POST",
-            beforeSend: function(){$('#loadData').show();},
-            success: function(data){
-                if(data.error){
-                    $('#loadData').hide();
-                }
-                else{
-                    $('#loadData').hide();
-                    $('#datosList').html(data.HTML);
-                }
-            },
-            error: function (){$('#loadData').hide();}
-        });
-    }
+function cargarListado(){
+    var dataForm = new FormData();
+    dataForm.append($("#token").attr('name'), $("#token").val());
+    $.ajax({
+        url : "ajax/listadoBeneficiados",
+        data : dataForm,
+        processData: false,
+        contentType: false,
+        cache: false,
+        dataType : "json", type: "POST",
+        beforeSend: function(){$('#loadData').show();},
+        success: function(data){
+            if(data.error){
+                $('#loadData').hide();
+            }
+            else{
+                $('#loadData').hide();
+                $('#datosList').html(data.HTML);
+            }
+        },
+        error: function (){$('#loadData').hide();}
+    });
+}
+function cargarFiltro(){
+    var dataForm = new FormData();
+    dataForm.append($("#token").attr('name'), $("#token").val());
+    dataForm.append('z', $.trim($("#zonaF").val()));
+    dataForm.append('m', $("#municipioF").val());
+    dataForm.append('l', $("#localidadF").val());
+    $.ajax({
+        url : "ajax/listadoFiltro",
+        data : dataForm,
+        processData: false,
+        contentType: false,
+        cache: false,
+        dataType : "json", type: "POST",
+        beforeSend: function(){$('#loadData').show();},
+        success: function(data){
+            if(data.error){
+                $('#loadData').hide();
+            }
+            else{
+                $('#loadData').hide();
+                $('#listaFiltro').html(data.HTML);
+            }
+        },
+        error: function (){$('#loadData').hide();}
+    });
+}
 </script>
 <style type="text/css">
     .ui-menu{

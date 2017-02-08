@@ -21,8 +21,11 @@
     {if $st_idTipo == 3}
         <tr>
             <th>#</th>
-            <th>CLAVE CT</th>
-            <th>NOMBRE CT</th>
+            <th>Clave CT</th>
+            <th>Turno</th>
+            <th>Nombre CT</th>
+            <th>Municipio</th>
+            <th>Localidad</th>
             <th class="disabled-sorting text-right">Acciones</th>
         </tr>
     {/if}
@@ -59,8 +62,11 @@
     {if $st_idTipo == 3}
         <tr>
             <th>#</th>
-            <th>CLAVE CT</th>
-            <th>NOMBRE CT</th>
+            <th>Clave CT</th>
+            <th>Turno</th>
+            <th>Nombre CT</th>
+            <th>Municipio</th>
+            <th>Localidad</th>
             <th class="disabled-sorting text-right">Acciones</th>
         </tr>
     {/if}
@@ -128,7 +134,10 @@
             <tr>
                 <td>{$key +1}</td>
                 <td>{$arrList['CLAVECCT']}</td>
+                <td>{$arrList['turno']}</td>
                 <td>{$arrList['NOMBRECT']}</td>
+                <td>{$arrList['municipio']}</td>
+                <td>{$arrList['localidad']}</td>
                 <td class="td-actions text-right">
                     <button type="button" rel="tooltip" data-toggle="modal" data-target="#eliminarBeneModal" class="btn btn-danger btn-round remove" data-idSol = "{$arrList['idSol']}">
                         <i class="material-icons">close</i>

@@ -16,13 +16,13 @@
                             <div class="col-md-4">
                                <div class="form-group label-floating is-empty has-success">
                                     <label class="control-label">Nombre</label>
-                                    <input type="text" name="nombre" id="nombre" autocomplete="off" class="form-control">
+                                    <input type="text" name="nombre" id="nombre" autocomplete="off" class="form-control upper">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                <div class="form-group label-floating is-empty has-success">
                                     <label class="control-label">Clave del CCT</label>
-                                    <input type="text" name="cct" id="cct" class="form-control">
+                                    <input type="text" name="cct" id="cct" class="form-control upper" maxlength="10">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -130,27 +130,6 @@
 <script src="{$raiz}resources/plugs/jquery.jqGrid.min.js"></script>
 <link href="{$raiz}resources/plugs/ui.jqgrid.css" rel="stylesheet" />{literal}
 <script type="text/javascript">
-(function($) {
-$.fn.extend({
-    onEnter: function(fn) {
-        if($.isFunction(fn)){
-            this.each(function() {
-                $(this).keypress(function(e){
-                    if(e.which == 13){
-                        e.preventDefault();
-                        return fn.call(this,e);
-                    }
-                });
-                $(this).bind('onEnter',fn)
-            });
-        }
-        else{
-            $(this).trigger('onEnter');
-        }
-        return this;
-    }
-});
-})(jQuery);
 $().ready( function(){
     $('*[data-id="municipio"]').click();
     $('*[data-id="municipio"]').click();

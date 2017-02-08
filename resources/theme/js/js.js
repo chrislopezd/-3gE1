@@ -1,3 +1,24 @@
+(function($) {
+$.fn.extend({
+    onEnter: function(fn) {
+        if($.isFunction(fn)){
+            this.each(function() {
+                $(this).keypress(function(e){
+                    if(e.which == 13){
+                        e.preventDefault();
+                        return fn.call(this,e);
+                    }
+                });
+                $(this).bind('onEnter',fn)
+            });
+        }
+        else{
+            $(this).trigger('onEnter');
+        }
+        return this;
+    }
+});
+})(jQuery);
 $().ready(function(){
     $(".editPass").click( function(){
         swal({

@@ -30,7 +30,6 @@ class Mbeneficiados extends CI_Model{
       return ($tipo == 1) ? 1 : array("idciclo" => 1, "curso" => "");
     }
   }
-
   public function getBeneficiadosListado($tipoListado){
     $res = array('STATUS' => FALSE, 'DATOS' => array());
     $idUsuario = $this->session->userdata('sep_idUsuario');
@@ -50,8 +49,10 @@ class Mbeneficiados extends CI_Model{
         $this->db->where('b.idTipo',2);
       break;
       case '3'://ESCUELAS
-        $this->db->select("a.CLAVECCT, a.NOMBRECT",FALSE);
+        $this->db->select("a.CLAVECCT, TRIM(a.NOMBRECT) AS NOMBRECT,CASE WHEN a.TURNO = '100' THEN 'MATUTINO' WHEN a.TURNO = '120' THEN 'MAT Y VESP' WHEN a.TURNO = '123' THEN 'MAT, VESP Y NOCT' WHEN a.TURNO = '130' THEN 'MAT Y NOCT' WHEN a.TURNO = '200' THEN 'VESP Y NOCT' WHEN a.TURNO = '230' THEN 'VESPERTINO' WHEN a.TURNO = '300' THEN 'NOCTURNO' WHEN a.TURNO = '400' THEN 'DISCONTINUO' WHEN a.TURNO = '800' THEN 'DISCONTINUO' END AS turno,TRIM(m.NOM) AS municipio,TRIM(i.NOMBRELOC) AS localidad",FALSE);
         $this->db->join('a_ctba AS a', 'a.CLAVECCT = b.clavecct');
+        $this->db->join('catmun AS m', 'm.MUNICIPIO = a.MUNICIPIO');
+        $this->db->join('a_itba AS i', 'i.MUNICIPIO = a.MUNICIPIO AND a.LOCALIDAD = i.LOCALIDAD');
         $this->db->where('b.tipoBene',1);
         $this->db->where('b.idTipo',3);
       break;
@@ -879,5 +880,50 @@ class Mbeneficiados extends CI_Model{
     }
     return $res;
   }
+
+  public function getListadoFiltro($tipoListado,$post){
+    $res = array('STATUS' => FALSE, 'DATOS' => array());
+    $idUsuario = $this->session->userdata('sep_idUsuario');
+    switch ($tipoListado) {
+      case '1'://ALUMNOS
+
+      break;
+      case '2'://DOCENTES
+      break;
+      case '3'://ESCUELAS
+        $this->db->select("a.CLAVECCT, TRIM(a.NOMBRECT) AS NOMBRECT,CASE WHEN a.TURNO = '100' THEN 'MATUTINO' WHEN a.TURNO = '120' THEN 'MAT Y VESP' WHEN a.TURNO = '123' THEN 'MAT, VESP Y NOCT' WHEN a.TURNO = '130' THEN 'MAT Y NOCT' WHEN a.TURNO = '200' THEN 'VESP Y NOCT' WHEN a.TURNO = '230' THEN 'VESPERTINO' WHEN a.TURNO = '300' THEN 'NOCTURNO' WHEN a.TURNO = '400' THEN 'DISCONTINUO' WHEN a.TURNO = '800' THEN 'DISCONTINUO' END AS turno,TRIM(m.NOM) AS municipio,TRIM(i.NOMBRELOC) AS localidad,a.ZONAESCOLA AS zona",FALSE);
+        $this->db->from('a_ctba AS a', 'a.CLAVECCT = b.clavecct');
+        $this->db->join('catmun AS m', 'm.MUNICIPIO = a.MUNICIPIO');
+        $this->db->join('a_itba AS i', 'i.MUNICIPIO = a.MUNICIPIO AND a.LOCALIDAD = i.LOCALIDAD');
+        $this->db->where('a.STATUS IN(1,4)');
+        if($post['z'] != ""){
+          if(strlen(trim($post['z'])) < 3){
+            $post['z'] = sprintf('%03d', trim($post['z']));
+          }
+          $this->db->where('a.ZONAESCOLA',trim($post['z']));
+        }
+        if($post['m'] != "null"){
+          $this->db->where('a.MUNICIPIO',$post['m']);
+        }
+        if($post['l'] != "null"){
+          $this->db->where('a.LOCALIDAD',$post['l']);
+        }
+      break;
+      case '4'://PADRES DE FAMILIA
+      break;
+    }
+
+    $query = $this->db->get();
+    $tmp = $query->num_rows();
+    if ($tmp > 0){
+      $res["STATUS"] = TRUE;
+      $res['DATOS'] = $query->result_array();
+    }
+
+    return $res;
+
+  }
+
+
 }
 ?>

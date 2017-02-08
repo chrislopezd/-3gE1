@@ -66,7 +66,7 @@ $route['descargarReporteExcel'] = 'reportes/dowloadExcelReporte';
 
 
 //$route['beneficiados'] = 'inicio/listBeneficiados';
-$route['ciclos'] = 'inicio/listCiclos';
+$route['ciclos'] = 'inicio/beneficiados';
 
 ########PROGRAMAS
 $route['beneficiarios'] = 'beneficiados';
@@ -76,6 +76,8 @@ $route['ajax/guardarBeneficiario'] = 'beneficiados/saveBeneficiados';
 $route['ajax/eliminarBeneficiario'] = 'beneficiados/deleteBeneficiado';
 $route['ajax/importarBeneficiarios'] = 'beneficiados/importBeneficiarios';
 $route['descargarProgramaExcel'] = 'beneficiados/downloadProgramasExcel';
+
+$route['ajax/listadoFiltro'] = 'beneficiados/loadListadoFiltro';
 
 ########END PROGRAMAS
 

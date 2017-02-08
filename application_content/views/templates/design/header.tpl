@@ -97,7 +97,7 @@
                                 <li class="{if $active == 'beneficiarios'}active{/if}">
                                     <a href="beneficiarios">
                                         <i class="material-icons">supervisor_account</i>
-                                        Beneficiados
+                                        Beneficiarios
                                     </a>
                                 </li>
                                 <li class="{if $active == 'usuarios'}active{/if}">

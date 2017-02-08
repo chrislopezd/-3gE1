@@ -8,6 +8,7 @@ class Beneficiados extends CI_Controller {
 		$this->smarty->assign("title", 'Sistema');
 		$this->load->model('mgenerico');
 		$this->load->model('mbeneficiados');
+		$this->load->model('mreportes');
 		$this->load->helper('url');
 		$this->load->helper('string');
 		$logged = $this->session->userdata('sep_logged_in');
@@ -65,7 +66,6 @@ class Beneficiados extends CI_Controller {
  	}
  	/*END FUNCIONES*/
  	/*TPL'S*/
-
 	public function index(){
 		if($this->session->userdata('sep_idPerfilUsuario') == 1){
 			redirect('','refresh');
@@ -79,7 +79,7 @@ class Beneficiados extends CI_Controller {
 		$d['st_programa'] = $this->session->userdata('sep_programa');
 		//echo $d['st_idPerfil'];die();
 		$d['bread'] = "Catálogo beneficiados";
-		$d['active'] = "beneficiados";
+		$d['active'] = "beneficiarios";
 		$d['st_fechaUA'] = ($this->session->userdata('sep_UltimoAcceso') == '0000-00-00 00:00:00' || $this->session->userdata('sep_UltimoAcceso') == '') ? "N/D" : "".$this->FormatoFechaHoraFrase($this->session->userdata('sep_UltimoAcceso'));
 
 		$info = $this->mbeneficiados->getBeneficiadosListado($d['st_idTipo']);
@@ -87,7 +87,8 @@ class Beneficiados extends CI_Controller {
 
 		$d['MUNICIPIOS'] = $this->mbeneficiados->getCatalogo('MUNICIPIOS','SELECT');
 		$d['LOCALIDADES'] = $this->mbeneficiados->getCatalogo('LOCALIDADES','SELECT');
-		//echo "<pre>"; print_r($d);die();
+		$info = $this->mreportes->getCatMunicipios();
+		$d['MUNICIPIOSF'] = $info['DATOS'];
 		$this->smarty->assign("title", 'Catálogo beneficiados');
 		$this->smarty->view("beneficiados.tpl",$d);
 	}
@@ -341,6 +342,19 @@ class Beneficiados extends CI_Controller {
 		header('Cache-Control: max-age=0');
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 		$objWriter->save('php://output');
+	}
+	public function loadListadoFiltro(){
+		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
+		$d['st_idPerfil'] = $this->session->userdata('sep_idPerfilUsuario');
+		$d['st_idTipo'] = $this->session->userdata('sep_idTipo');
+		$d['st_tipo'] = $this->session->userdata('sep_tipo');
+		$d['st_programa'] = $this->session->userdata('sep_programa');
+		$mpost = $this->input->post();
+		//echo "<pre>";print_r($mpost);die();
+		$info = $this->mbeneficiados->getListadoFiltro($d['st_idTipo'],$mpost);
+		$d['LISTADO'] = $info['DATOS'];
+		//echo "<pre>";print_r($d['LISTADO']);die();
+		echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoEscuelas.tpl",$d,TRUE)));
 	}
 }
 ?>
