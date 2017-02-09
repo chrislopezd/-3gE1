@@ -116,7 +116,23 @@
         {/if}
         {if $st_idTipo == 2}
             <tr>
-                <td>{$key +1}</td>
+                <td>{$key +1}
+                <input type="hidden" name="pIdPersona" value="{$arrList['idPersona']}">
+                <input type="hidden" name="pCurp" value="{$arrList['curp']}">
+                <input type="hidden" name="pClaveCT" value="{$arrList['clavecct']}">
+                <input type="hidden" name="pNombre" value="{$arrList['nombre']}">
+                <input type="hidden" name="pApePat" value="{$arrList['apellidop']}">
+                <input type="hidden" name="pApeMat" value="{$arrList['apellidom']}">
+                <input type="hidden" name="pCorreo" value="{$arrList['correo']}">
+                <input type="hidden" name="pTelefono" value="{$arrList['telefono']}">
+                <input type="hidden" name="pDireccion" value="{$arrList['direccion']}">
+                <input type="hidden" name="pCodPos" value="{$arrList['codpos']}">
+                <input type="hidden" name="pMunicipio" value="{$arrList['municipio']}">
+                <input type="hidden" name="pLocalidad" value="{$arrList['localidad']}">
+                <input type="hidden" name="pNombreTuto" value="{$arrList['nombre_tuto']}">
+                <input type="hidden" name="pApePatTuto" value="{$arrList['ap_paterno_tuto']}">
+                <input type="hidden" name="pApeMatTuto" value="{$arrList['ap_materno_tuto']}">
+                </td>
                 <td>{$arrList['curp']}</td>
                 <td>{$arrList['nombreCompleto']}</td>
                 <td>{$arrList['correo']}</td>
@@ -147,7 +163,23 @@
         {/if}
         {if $st_idTipo == 4}
             <tr>
-                <td>{$key +1}</td>
+                <td>{$key +1}
+                <input type="hidden" name="pIdPersona" value="{$arrList['idPersona']}">
+                <input type="hidden" name="pCurp" value="{$arrList['curp']}">
+                <input type="hidden" name="pClaveCT" value="{$arrList['clavecct']}">
+                <input type="hidden" name="pNombre" value="{$arrList['nombre']}">
+                <input type="hidden" name="pApePat" value="{$arrList['apellidop']}">
+                <input type="hidden" name="pApeMat" value="{$arrList['apellidom']}">
+                <input type="hidden" name="pCorreo" value="{$arrList['correo']}">
+                <input type="hidden" name="pTelefono" value="{$arrList['telefono']}">
+                <input type="hidden" name="pDireccion" value="{$arrList['direccion']}">
+                <input type="hidden" name="pCodPos" value="{$arrList['codpos']}">
+                <input type="hidden" name="pMunicipio" value="{$arrList['municipio']}">
+                <input type="hidden" name="pLocalidad" value="{$arrList['localidad']}">
+                <input type="hidden" name="pNombreTuto" value="{$arrList['nombre_tuto']}">
+                <input type="hidden" name="pApePatTuto" value="{$arrList['ap_paterno_tuto']}">
+                <input type="hidden" name="pApeMatTuto" value="{$arrList['ap_materno_tuto']}">
+                </td>
                 <td>{$arrList['curp']}</td>
                 <td>{$arrList['nombreCompleto']}</td>
                 <td>{$arrList['correo']}</td>
@@ -233,10 +265,12 @@
             else{
                 $('#municipioPersona').val(null);
             }
-
-            if(pLocalidad != ''){$('#localidadPersona').val(pLocalidad);}
-            else{$('#localidadPersona').val(null);}
-
+            if(pLocalidad != ''){
+                $('#localidadPersona').val(pLocalidad);
+            }
+            else{
+                $('#localidadPersona').val(null);
+            }
             centros = pClaveCT;
             if(centros.length > 0){
                 $('#centroPersona').find('option').remove();
@@ -249,7 +283,6 @@
                     });
                 }
             }
-
             $('#curpPersona').val(pCurp);
             $('#nombrePersona').val(pNombre);
             $('#apellidoPPersona').val(pApePat);
@@ -257,22 +290,16 @@
             $('#correoPersona').val(pCorreo);
             $('#telefonoPersona').val(pTelefono);
             $('#direccionPersona').val(pDireccion);
-
             $('#nombrePersonaTuto').val(pNombreTuto);
             $('#apellidoPPersonaTuto').val(pApePatTuto);
             $('#apellidoMPersonaTuto').val(pApeMatTuto);
-
             $('#codposPersona').val(pCodPos);
-
             $('#mostrarAgregarNuevoView').find('div').removeClass('is-empty');
-
             $('#mostrarAgregarNuevo').trigger('click');
             return false;
-
             //var data = table.row($tr).data();
             //alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
         });
-
         // Delete a record
         table.on('click', '.remove', function(e) {
             $("#idSol").val($(this).attr('data-idSol'));

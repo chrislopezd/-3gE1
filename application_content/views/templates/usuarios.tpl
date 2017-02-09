@@ -16,7 +16,18 @@
                                 Nuevo usuario
                             </a>
                         </div>
-                        <div class="material-datatables" id="listTable">
+                        <div class="material-datatables" id="listTable" style="min-height:300px;">
+                            <div class="loader">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="lading"></div>
+                            </div>
                         </div>
                     </div>
                    {*  <!-- end content-->*}

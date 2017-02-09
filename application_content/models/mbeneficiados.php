@@ -345,12 +345,12 @@ class Mbeneficiados extends CI_Model{
         case '4'://PADRES DE FAMILIA
           /************************ SI EXISTE LA LOCALIDAD Y MUNICIPO ***********/
           $siExisteLocalidad = 0;
-          $siExisteMunicipio = $this->db->query("SELECT IFNULL((SELECT MUNICIPIO FROM catmun WHERE TRIM(NOM) = '".$arrData['MUN']."' LIMIT 1),0) AS MUNICIPIO")->row()->MUNICIPIO;
+          $siExisteMunicipio = $this->db->query("SELECT IFNULL((SELECT MUNICIPIO FROM catmun WHERE TRIM(NOM) = '".strtoupper($arrData['MUN'])."' LIMIT 1),0) AS MUNICIPIO")->row()->MUNICIPIO;
           if($siExisteMunicipio === '0'){//VER SI EXISTE EL MUNICIPIO CON EL TEXTO
             $arrPersonasSinMunicipio[] = $arrData;
           }
           else{
-            $siExisteLocalidad = $this->db->query("SELECT IFNULL((SELECT LOCALIDAD FROM a_itba WHERE TRIM(NOMBRELOC) = '".$arrData['LOCA']."' AND MUNICIPIO = '".$siExisteMunicipio."' LIMIT 1),0) AS LOCALIDAD")->row()->LOCALIDAD;
+            $siExisteLocalidad = $this->db->query("SELECT IFNULL((SELECT LOCALIDAD FROM a_itba WHERE TRIM(NOMBRELOC) = '".strtoupper($arrData['LOCA'])."' AND MUNICIPIO = '".$siExisteMunicipio."' AND LOCALIDAD <> '0000' AND TRIM(NOMBRELOC) <> 'NINGUNO' LIMIT 1),0) AS LOCALIDAD")->row()->LOCALIDAD;
             if($siExisteLocalidad === '0'){//VER SI EXISTE LA LOCALIDAD CON EL TEXTO
               $arrPersonasSinLocalidad[] = $arrData;
             }
@@ -558,7 +558,6 @@ class Mbeneficiados extends CI_Model{
                 ON DUPLICATE KEY UPDATE estatus = 1;");
 
             }
-
           //} FIN VALIDA SI TIENE MUNICIPIO Y LOCALIDAD
           /*********** SI EXISTE LA LOCALIDAD Y MUNICIPO SE VERIFICA LA PERSONA END ***********/
         break;
@@ -886,9 +885,28 @@ class Mbeneficiados extends CI_Model{
     $idUsuario = $this->session->userdata('sep_idUsuario');
     switch ($tipoListado) {
       case '1'://ALUMNOS
-
+            $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ',p.ap_paterno, p.ap_materno,p.nombre) AS nombreCompleto, '' AS correo, '' AS telefono, '' AS direccion, p.nombre, p.ap_paterno AS apellidop, p.ap_materno AS apellidom,  p.municipio, p.localidad, p.clavecct AS claveCT, p.codpos,p.nombre_tuto AS nombreTuto, p.ap_paterno_tuto AS apellidopTuto, p.ap_materno_tuto AS apellidomTuto,p.grado,p.grupo",FALSE);
+            $this->db->from('siceey AS p');
+            if(trim($post['c']) != ""){
+              $this->db->where('p.clavecct',trim($post['c']));
+            }
+            if($post['g'] != "null"){
+              $this->db->where('p.grado',$post['g']);
+            }
+            if($post['gg'] != "null"){
+              $this->db->where('p.grupo',$post['gg']);
+            }
+            $this->db->order_by("p.grado,p.grupo,nombreCompleto");
       break;
       case '2'://DOCENTES
+           $this->db->select("0 AS idPersona, p.curp, CONCAT_WS(' ',p.apellidop,p.apellidom,p.nombre) AS nombreCompleto,correo, telefono, direccion, p.nombre, p.apellidop,p.apellidom,p.municipio,p.localidad,p.clavect AS claveCT, p.codpos,'' AS nombreTuto, '' AS apellidopTuto,'' AS apellidomTuto",FALSE);
+            $this->db->from('personas_plantilla AS p');
+            if(trim($post['c']) != "" && $post['s'] == 0){
+              $this->db->where('p.clavect',trim($post['c']));
+            }
+            if($post['s'] == 1){
+              $this->db->where('p.clavect = ""');
+            }
       break;
       case '3'://ESCUELAS
         $this->db->select("a.CLAVECCT, TRIM(a.NOMBRECT) AS NOMBRECT,CASE WHEN a.TURNO = '100' THEN 'MATUTINO' WHEN a.TURNO = '120' THEN 'MAT Y VESP' WHEN a.TURNO = '123' THEN 'MAT, VESP Y NOCT' WHEN a.TURNO = '130' THEN 'MAT Y NOCT' WHEN a.TURNO = '200' THEN 'VESP Y NOCT' WHEN a.TURNO = '230' THEN 'VESPERTINO' WHEN a.TURNO = '300' THEN 'NOCTURNO' WHEN a.TURNO = '400' THEN 'DISCONTINUO' WHEN a.TURNO = '800' THEN 'DISCONTINUO' END AS turno,TRIM(m.NOM) AS municipio,TRIM(i.NOMBRELOC) AS localidad,a.ZONAESCOLA AS zona",FALSE);
@@ -896,7 +914,7 @@ class Mbeneficiados extends CI_Model{
         $this->db->join('catmun AS m', 'm.MUNICIPIO = a.MUNICIPIO');
         $this->db->join('a_itba AS i', 'i.MUNICIPIO = a.MUNICIPIO AND a.LOCALIDAD = i.LOCALIDAD');
         $this->db->where('a.STATUS IN(1,4)');
-        if($post['z'] != ""){
+        if(trim($post['z']) != ""){
           if(strlen(trim($post['z'])) < 3){
             $post['z'] = sprintf('%03d', trim($post['z']));
           }
@@ -923,6 +941,7 @@ class Mbeneficiados extends CI_Model{
   }
 
   public function saveBeneficiadosMasivo($session, $datos){
+    try{
     $this->db->trans_start();
     $idTipoPrograma = $this->session->userdata('sep_idTipo');
 
@@ -935,62 +954,92 @@ class Mbeneficiados extends CI_Model{
       case '4'://PADRES DE FAMILIA
         $tipoPersona = "PadreDeFamilia";break;
     }
+    if($datos['t'] == 1){
+      $this->db->select("'' AS idPersona, p.curp, CONCAT_WS(' ',p.ap_paterno, p.ap_materno,p.nombre) AS nombreCompleto, '' AS correo, '' AS telefono, '' AS direccion, p.nombre, p.ap_paterno AS apellidop, p.ap_materno AS apellidom,  p.municipio, p.localidad, p.clavecct AS claveCT, p.codpos,p.nombre_tuto AS nombreTuto, p.ap_paterno_tuto AS apellidopTuto, p.ap_materno_tuto AS apellidomTuto,p.grado,p.grupo",FALSE);
+      $this->db->from('siceey AS p');
+      $this->db->where_in("p.curp",$datos['curp']);
+    }
+     if($datos['t'] == 2){
+      $this->db->select("'' AS idPersona,p.curp,CONCAT_WS(' ',p.apellidop,p.apellidom,p.nombre) AS nombreCompleto,correo, telefono, direccion, p.nombre, p.apellidop,p.apellidom,p.municipio,p.localidad,p.clavect AS claveCT, p.codpos,'' AS nombreTuto, '' AS apellidopTuto,'' AS apellidomTuto",FALSE);
+      $this->db->from('personas_plantilla AS p');
+      $this->db->where_in("p.curp",$datos['curp']);
+    }
 
     switch ($session['st_idTipo']) {
       case '1'://ALUMNOS
       case '2'://DOCENTES
       case '4'://PADRES DE FAMILIA
-        if(/*($datos['idPersona'] == 0 || $datos['idPersona'] == '') && */$datos['curp'] != ''){
-          $siPersonaCurp = $this->db->query("SELECT IFNULL((SELECT idPersona FROM s_personas WHERE curp = '".$datos['curp']."' AND tipo = '".$tipoPersona."' LIMIT 1),0) AS idPersona")->row()->idPersona;
+          $query = $this->db->get();
+          $resdatos = $query->result_array();
+          foreach ($resdatos as $key => $d) {
+          $siPersonaCurp = $this->db->query("SELECT IFNULL((SELECT idPersona FROM s_personas WHERE curp = '".$d['curp']."' AND tipo = '".$tipoPersona."' LIMIT 1),0) AS idPersona")->row()->idPersona;
 
           if($siPersonaCurp == 0){//NO EXISTE EN PERSONA CON EL MISMO TIPO
             $dataPersona = array(
               'tipo'=> $tipoPersona,
-              'curp'=> $datos['curp'],
+              'curp'=> $d['curp'],
               'estatus' => 1,
-              'localidad' => $datos['localidad'],
-              'municipio' => $datos['municipio'],
-              'nombre'=> $datos['nombre'],
-              'apellidop'=> $datos['apellidop'],
-              'apellidom'=> $datos['apellidom'],
-              'correo'=> $datos['correo'],
-              'telefono'=> $datos['telefono'],
-              'direccion'=> $datos['direccion'],
-              'codpos'=> $datos['codpos'],
-              'nombre_tuto'=> $datos['nombreTuto'],
-              'ap_paterno_tuto'=> $datos['apellidopTuto'],
-              'ap_materno_tuto'=> $datos['apellidomTuto']);
+              'localidad' => $d['localidad'],
+              'municipio' => $d['municipio'],
+              'nombre'=> $d['nombre'],
+              'apellidop'=> $d['apellidop'],
+              'apellidom'=> $d['apellidom'],
+              'correo'=> $d['correo'],
+              'telefono'=> $d['telefono'],
+              'direccion'=> $d['direccion'],
+              'codpos'=> $d['codpos'],
+              'nombre_tuto'=> $d['nombreTuto'],
+              'ap_paterno_tuto'=> $d['apellidopTuto'],
+              'ap_materno_tuto'=> $d['apellidomTuto']);
             $this->db->insert('s_personas', $dataPersona);
             $datos['idPersona'] = $this->db->insert_id();
           }
           else{
             $dataPersona = array(
               'estatus' => 1,
-              'localidad' => $datos['localidad'],
-              'municipio' => $datos['municipio'],
-              'nombre'=> $datos['nombre'],
-              'apellidop'=> $datos['apellidop'],
-              'apellidom'=> $datos['apellidom'],
-              'correo'=> $datos['correo'],
-              'telefono'=> $datos['telefono'],
-              'direccion'=> $datos['direccion'],
-              'codpos'=> $datos['codpos'],
-              'nombre_tuto'=> $datos['nombreTuto'],
-              'ap_paterno_tuto'=> $datos['apellidopTuto'],
-              'ap_materno_tuto'=> $datos['apellidomTuto']);
+              'localidad' => $d['localidad'],
+              'municipio' => $d['municipio'],
+              'nombre'=> $d['nombre'],
+              'apellidop'=> $d['apellidop'],
+              'apellidom'=> $d['apellidom'],
+              'correo'=> $d['correo'],
+              'telefono'=> $d['telefono'],
+              'direccion'=> $d['direccion'],
+              'codpos'=> $d['codpos'],
+              'nombre_tuto'=> $d['nombreTuto'],
+              'ap_paterno_tuto'=> $d['apellidopTuto'],
+              'ap_materno_tuto'=> $d['apellidomTuto']);
             $this->db->where('idPersona',$siPersonaCurp);
             $this->db->update('s_personas', $dataPersona);
             $datos['idPersona'] = $siPersonaCurp;
           }
-
+          $this->db->query("
+              INSERT INTO s_beneficiados (
+                idUsuario,
+                idTipo,
+                idCiclo,
+                idPersona,
+                tipoBene,
+                clavecct,
+                fechaRegistro,
+                estatus)
+              VALUES (
+                ".$session['st_idUsuario'].",
+                ".$session['st_idTipo'].",
+                ".$this->getCiclo(1).",
+                ".($datos['idPersona'] != '' && $datos['idPersona'] > 0 ? $datos['idPersona'] : 0).",
+                2,
+                ".($d['claveCT'] != '' ? "'".$d['claveCT']."'" : "''").",
+                '".$this->now()."' ,
+                1)
+              ON DUPLICATE KEY UPDATE estatus = 1;");
         }
+
       break;
       case '3'://ESCUELAS
         //$tipoBene = 1;
       break;
     }
-
-
     if(($datos['idPersona'] != '' && $datos['idPersona'] != '0') || $datos['claveCT'] != ''){
       $tipoBene = 1;
       switch ($session['st_idTipo']) {
@@ -1004,34 +1053,50 @@ class Mbeneficiados extends CI_Model{
               $tipoBene = 1;
             break;
       }
-      foreach ($datos['claveCT'] as $key => $v){
-        $this->db->query("
-            INSERT INTO s_beneficiados (
-              idUsuario,
-              idTipo,
-              idCiclo,
-              idPersona,
-              tipoBene,
-              clavecct,
-              fechaRegistro,
-              estatus)
-            VALUES (
-              ".$session['st_idUsuario'].",
-              ".$session['st_idTipo'].",
-              ".$this->getCiclo(1).",
-              ".($datos['idPersona'] != '' && $datos['idPersona'] > 0 ? $datos['idPersona'] : 0).",
-              ".$tipoBene.",
-              ".($v != '' ? "'".$v."'" : "''").",
-              '".$this->now()."' ,
-              1)
-            ON DUPLICATE KEY UPDATE estatus = 1;");
+      if($datos['t'] == 3){
+        foreach ($datos['claveCT'] as $key => $v){
+          $this->db->query("
+              INSERT INTO s_beneficiados (
+                idUsuario,
+                idTipo,
+                idCiclo,
+                idPersona,
+                tipoBene,
+                clavecct,
+                fechaRegistro,
+                estatus)
+              VALUES (
+                ".$session['st_idUsuario'].",
+                ".$session['st_idTipo'].",
+                ".$this->getCiclo(1).",
+                ".($datos['idPersona'] != '' && $datos['idPersona'] > 0 ? $datos['idPersona'] : 0).",
+                ".$tipoBene.",
+                ".($v != '' ? "'".$v."'" : "''").",
+                '".$this->now()."' ,
+                1)
+              ON DUPLICATE KEY UPDATE estatus = 1;");
+        }
       }
     }
-    $this->db->trans_complete();
-    return array('error'=>false,'HTML'=>'Exito');
+      $this->db->trans_complete();
+      return array('error'=>false,'HTML'=>'Exito');
+    }catch(Exception $ex){
+      $this->db->trans_rollback();
+      return array('error'=>true,'HTML'=>'Error');
+    }
   }
-
-
-
+  public function searchCCT($term){
+    $data = array();
+    $this->db->select("a.CLAVECCT AS id, CONCAT(a.CLAVECCT, ' - ', TRIM(a.NOMBRECT)) AS value,TRIM(a.NOMBRECT) AS nombre",FALSE);
+    $this->db->from('a_ctba AS a');
+    $this->db->like('a.CLAVECCT',$term);
+    $this->db->or_like('a.NOMBRECT',$term);
+    $this->db->limit("10");
+    $query = $this->db->get();
+    if ($query->num_rows() > 0){
+      $data =  $query->result_array();
+    }
+    return $data;
+  }
 }
 ?>

@@ -53,6 +53,53 @@
                         </div>
                         <div class="toolbar">
                             <form id="getFormF">
+                            {if $st_idTipo == 1 || $st_idTipo == 2}
+                             <div class="col-md-4">
+                               <div class="form-group label-floating is-empty has-success">
+                                    <label class="control-label">Clave o Nombre CT</label>
+                                    <input type="text" name="cctF" id="cctF" class="form-control upper">
+                                    <input type="hidden" name="cctFF" id="cctFF" class="form-control upper" maxlength="10">
+                                    <input type="hidden" name="nombreFF" id="nombreFF" class="form-control upper">
+                                </div>
+                            </div>
+                            {/if}
+                            {if $st_idTipo == 1}
+                            <div class="col-md-2">
+                                <div class="form-group label-floating has-success">
+                                    <label class="control-label">Grado</label>
+                                    <select name="gradoF" id="gradoF" class="selectpicker" data-style="select-with-transition" data-size="10">
+                                        <option disabled selected>Elija el grado</option>
+                                      {foreach from=$GRADOS key=k item=res}
+                                        <option>{$res}</option>
+                                      {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group label-floating has-success">
+                                    <label class="control-label">Grupo</label>
+                                    <select name="grupoF" id="grupoF" class="selectpicker" data-style="select-with-transition" data-size="10">
+                                        <option disabled selected>Elija el grupo</option>
+                                      {foreach from=$GRUPOS key=k item=res}
+                                        <option>{$res}</option>
+                                      {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            {/if}
+                            {if $st_idTipo == 2}
+                            <div class="col-md-2">
+                                <div class="form-group label-floating has-success">
+                                    <label class="control-label">Sin Clave CT</label>
+                                    <div class="checkbox checkbox-inline">
+                                        <label>
+                                            <input type="checkbox" name="miCheck" id="miCheck">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {if $st_idTipo == 3}
                             <div class="col-md-2">
                                <div class="form-group label-floating is-empty has-success">
                                     <label class="control-label">Zona</label>
@@ -78,6 +125,8 @@
                                     </select>
                                 </div>
                             </div>
+                            {/if}
+                            {if $st_idTipo == 1 || $st_idTipo == 2 || $st_idTipo == 3}
                             <div class="col-md-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Buscar</label>
@@ -96,9 +145,9 @@
                                     </button>
                                 </div>
                             </div>
+                            {/if}
                             </form>
                         </div>
-
                         <div style="clear: both;"></div>
                         <div class="material-datatables" id="datosList" style="min-height:300px;">
                             <div class="loader">
@@ -155,8 +204,9 @@
                 <span class="btn btn-rose btn-round btn-file">
                     <span class="fileinput-new">Selecionar Archivo</span>
                     <span class="fileinput-exists"></span>
-                    <input type="hidden" value="" name="..."><input type="file" name="" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileImport">
-                <div class="ripple-container"></div></span><br>
+                    <input type="hidden" value="" name="...">
+                    <input type="file" name="" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" id="fileImport">
+                <div class="ripple-container"></div></span><br/>
                 <b>El primer registro debe de contener los titulos de cada columna. El archivo debe de tener la siguiente estructura:</b>
                 <table class="tablaEstructura table table-striped table-hover" cellspacing="0" width="100%" style="width:100%">
                     <tbody>
@@ -212,7 +262,6 @@
                     {/if}
                     </thead>
                 </table>
-
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="btn btn-success" onclick="importar();"><i class="material-icons">system_update_alt</i> Importar Benficiarios</button>
@@ -226,8 +275,8 @@
     <div class="modal-dialog  ">
         <div class="modal-content card">
             <div class="card-header card-header-icon" data-background-color="rose">
-                                        <i class="material-icons">file_upload</i>
-                                    </div>
+                <i class="material-icons">file_upload</i>
+            </div>
             <div class="modal-header" style="margin-top: -10px;margin-bottom: 10px;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
             </div>
@@ -241,11 +290,9 @@
         </div>
     </div>
 </div>
-
-
 <button style="display: none" id="mostrarAgregarNuevo" data-toggle="modal" data-target="#mostrarAgregarNuevoView"></button>
 <div class="modal fade" id="mostrarAgregarNuevoView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog  ">
+    <div class="modal-dialog">
         <div class="modal-content card">
             <div class="card-header card-header-icon" data-background-color="rose">
                 <i class="material-icons">assignment</i>
@@ -257,7 +304,7 @@
                 <h5>Datos: </h5>
                 <div class="col-md-6">
                     <div class="form-group label-floating has-success is-empty">
-                        <!--label class="control-label" style="width: 100%;left: 0px;">Clve CT</label-->
+                        {*<!--label class="control-label" style="width: 100%;left: 0px;">Clve CT</label-->*}
                         <select name="centroPersona" id="centroPersona" class="form-control upper" autofocus="" autocomplete="off"></select>
                     <span class="material-input"></span></div>
                 </div>
@@ -314,7 +361,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group label-floating has-success is-empty">
-                        <!--label class="control-label" style="width: 100%;left: 0px;">Municipio</label-->
+                        {*<!--label class="control-label" style="width: 100%;left: 0px;">Municipio</label-->*}
                         <select name="municipioPersona" id="municipioPersona" class="form-control upper" autofocus="" autocomplete="off">
                             {$MUNICIPIOS}
                         </select>
@@ -322,7 +369,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group label-floating has-success is-empty">
-                        <!--label class="control-label" style="width: 100%;left: 0px;">Localidad</label-->
+                        {*<!--label class="control-label" style="width: 100%;left: 0px;">Localidad</label-->*}
                         <select name="localidadPersona" id="localidadPersona" class="form-control upper" autofocus="" autocomplete="off">
                             {$LOCALIDADES}
                         </select>
@@ -366,83 +413,83 @@
 {include file="design/footer.tpl"}
 {literal}
 <script type="text/javascript">
-var _mTipo = {/literal}'{$st_idTipo}'{literal};
-$("#fileImport").change(function(e){
-    var _totalImg = $("#fileImport")[0].files.length;
-    if(_totalImg > 0){
-        $('.fileinput-new').html(e.target.files[0].name);
-    }else{$('.fileinput-new').html("Selecionar Archivo");}
-});
-$('.cerrarNuevo').click(function(){
-    $('#beneficiadoSearch').val('');
-    $('#beneCT').val('');
-    $('#beneIdPersona').val('');
-    $('#personaCurp').val('');
-    $('#personaNombre').val('');
-    $('#personaApePat').val('');
-    $('#personaApeMat').val('');
-    $('#personaCorreo').val('');
-    $('#personaTelefono').val('');
-    $('#personaDireccion').val('');
-    $('#personaMunicipio').val('');
-    $('#personaLocalidad').val('');
-    $('#codpos').val('');
-
-    $('#personaNombreTuto').val('');
-    $('#personaApePatTuto').val('');
-    $('#personaApeMatTuto').val('');
-
-    $('#centroPersona').find('option').remove();
-    $('#curpPersona').val('');
-    $('#nombrePersona').val('');
-    $('#apellidoPPersona').val('');
-    $('#apellidoMPersona').val('');
-    $('#nombrePersonaTuto').val('');
-    $('#apellidoPPersonaTuto').val('');
-    $('#apellidoMPersonaTuto').val('');
-    $('#correoPersona').val('');
-    $('#telefonoPersona').val('');
-    $('#direccionPersona').val('');
-    $('#municipioPersona').val('');
-    $('#localidadPersona').val('');
-    $('#codposPersona').val('');
-});
-function importar(){
-    var dataForm = new FormData();
-    var _totalImg = $("#fileImport")[0].files.length;
-    if(_totalImg == 1){
-        dataForm.append('fileCSV', $('#fileImport')[0].files[0]);
-    }else{
-        return false;
-    }
-    dataForm.append($("#token").attr('name'), $("#token").val());
-    $("#fileImport").val(null);
-    $('.fileinput-new').html("Subiendo archivo...");
-
-    $.ajax({
-        url : "ajax/importarBeneficiarios",
-        data : dataForm,
-        processData: false,
-        contentType: false,
-        cache: false,
-        dataType : "json", type: "POST",
-        beforeSend: function(){$('#loadData').show();},
-        success: function(data){
-            if(data.error){
-                //$('#products').append('Intente mas Tarde.');
-            }
-            else{
-                //mensaje('La Acción se realizo correctamente.');
-                cargarListado();
-                $('.fileinput-new').html("Selecionar Archivo");
-                $('#resultadosINFO').html(data.INFO);
-                $('#mostrarResultados').trigger('click');
-            }
-        },
-        error: function (){/*$(element).next('div').html('Intente mas Tarde.');*/}
+    var _mTipo = {/literal}'{$st_idTipo}'{literal};
+    $("#fileImport").change(function(e){
+        var _totalImg = $("#fileImport")[0].files.length;
+        if(_totalImg > 0){
+            $('.fileinput-new').html(e.target.files[0].name);
+        }else{
+            $('.fileinput-new').html("Selecionar Archivo");
+        }
     });
-}
-
+    $('.cerrarNuevo').click(function(){
+        $('#beneficiadoSearch').val('');
+        $('#beneCT').val('');
+        $('#beneIdPersona').val('');
+        $('#personaCurp').val('');
+        $('#personaNombre').val('');
+        $('#personaApePat').val('');
+        $('#personaApeMat').val('');
+        $('#personaCorreo').val('');
+        $('#personaTelefono').val('');
+        $('#personaDireccion').val('');
+        $('#personaMunicipio').val('');
+        $('#personaLocalidad').val('');
+        $('#codpos').val('');
+        $('#personaNombreTuto').val('');
+        $('#personaApePatTuto').val('');
+        $('#personaApeMatTuto').val('');
+        $('#centroPersona').find('option').remove();
+        $('#curpPersona').val('');
+        $('#nombrePersona').val('');
+        $('#apellidoPPersona').val('');
+        $('#apellidoMPersona').val('');
+        $('#nombrePersonaTuto').val('');
+        $('#apellidoPPersonaTuto').val('');
+        $('#apellidoMPersonaTuto').val('');
+        $('#correoPersona').val('');
+        $('#telefonoPersona').val('');
+        $('#direccionPersona').val('');
+        $('#municipioPersona').val('');
+        $('#localidadPersona').val('');
+        $('#codposPersona').val('');
+    });
+    function importar(){
+        var dataForm = new FormData();
+        var _totalImg = $("#fileImport")[0].files.length;
+        if(_totalImg == 1){
+            dataForm.append('fileCSV', $('#fileImport')[0].files[0]);
+        }else{
+            return false;
+        }
+        dataForm.append($("#token").attr('name'), $("#token").val());
+        $("#fileImport").val(null);
+        $('.fileinput-new').html("Subiendo archivo...");
+        $.ajax({
+            url : "ajax/importarBeneficiarios",
+            data : dataForm,
+            processData: false,
+            contentType: false,
+            cache: false,
+            dataType : "json", type: "POST",
+            beforeSend: function(){$('#loadData').show();},
+            success: function(data){
+                if(data.error){
+                    //$('#products').append('Intente mas Tarde.');
+                    demo.showNotificacion('top','center','error','danger',data.HTML);
+                    $('.fileinput-new').html("Selecionar Archivo");
+                }
+                else{
+                    //mensaje('La Acción se realizo correctamente.');
+                    cargarListado();
+                    $('.fileinput-new').html("Selecionar Archivo");
+                    $('#resultadosINFO').html(data.INFO);
+                    $('#mostrarResultados').trigger('click');
+                }
+            },
+            error: function (){/*$(element).next('div').html('Intente mas Tarde.');*/}
+        });
+    }
     function eliminarBeneficiario(){
         var dataForm = new FormData();
         dataForm.append($("#token").attr('name'), $("#token").val());
@@ -492,8 +539,14 @@ function importar(){
     function addBeneMasivo(marray){
         var dataForm = new FormData();
         dataForm.append($("#token").attr('name'), $("#token").val());
+        dataForm.append('t', _mTipo);
         $(marray).each( function(i,e){
-            dataForm.append('claveCT[]',e);
+            if(_mTipo == 1 || _mTipo == 2){
+                dataForm.append('curp[]',e);
+            }
+            if(_mTipo == 3){
+                dataForm.append('claveCT[]',e);
+            }
         });
         $.ajax({
             url : "ajax/guardarBeneficiarioMasivo",
@@ -524,7 +577,7 @@ function importar(){
                 return false;
             }
             if($(".mIcheck:checked").length == 0){
-                demo.showNotificacion('top','center','error','danger','<strong>Debe seleccionar la menos un registro.</strong>');
+                demo.showNotificacion('top','center','error','danger','<strong>Debe seleccionar al menos un registro.</strong>');
                 return false;
             }
             $(this).addClass("disabled");
@@ -546,11 +599,17 @@ function importar(){
                 addBeneMasivo(_mArray);
             }
         });
+        if(_mTipo == '1' || _mTipo == '2'){
+            setTimeout( function(){
+                $("#cctF").focus();
+            },10);
+        }
         if(_mTipo == '3'){
             $('*[data-id="municipioF"]').click();
             $('*[data-id="municipioF"]').click();
             $("#zonaF").focus();
-        }else{
+        }
+        else{
             $("#beneficiadoSearch").focus();
         }
         $('.close').click(function(){
@@ -558,35 +617,72 @@ function importar(){
         });
         $("#btnFilter").click( function(){
             var _tt = 0;
-            if($.trim($("#zonaF").val()).length == 0){
-                _tt++;
-            }
-            if($("#municipioF").val() == ""){
-                _tt++;
-            }
-            if(_tt == 0){
-                $("#showModalLoad").click();
-                cargarFiltro();
-            }else{
-                $("#loadModal").find("modal-header button").click();
-                demo.showNotificacion('top','center','error','danger','<strong>Debe elegir un filtro.</strong>');
-                if($.trim($("#zonaF").val()).length  == 0){
-                    $("#zonaF").focus();
+            if(_mTipo == 1 || _mTipo == 2){
+                if($.trim($("#cctFF").val()).length == 0){
+                    _tt++;
                 }
-                return false;
+                if(_mTipo == 2){
+                    if($("#miCheck").prop("checked")){
+                        _tt = 0;
+                    }
+                }
+                if(_tt == 0){
+                    $("#showModalLoad").click();
+                    $("#loadModal").find("#myModalLabel").html("Listado "+$("#cctFF").val()+" - "+$("#nombreFF").val());
+                    cargarFiltro();
+                }else{
+                    $("#loadModal").find("modal-header button").click();
+                    demo.showNotificacion('top','center','error','danger','<strong>Debe elegir un filtro.</strong>');
+                    if($.trim($("#cctF").val()).length  == 0){
+                        $("#cctF").focus();
+                    }
+                    return false;
+                }
+            }
+            if(_mTipo == 3){
+                if($.trim($("#zonaF").val()).length == 0){
+                    _tt++;
+                }
+                if($("#municipioF").val() == ""){
+                    _tt++;
+                }
+                if(_tt == 0){
+                    $("#showModalLoad").click();
+                    cargarFiltro();
+                }else{
+                    $("#loadModal").find("modal-header button").click();
+                    demo.showNotificacion('top','center','error','danger','<strong>Debe elegir un filtro.</strong>');
+                    if($.trim($("#zonaF").val()).length  == 0){
+                        $("#zonaF").focus();
+                    }
+                    return false;
+                }
             }
         });
-        $("#zonaF").onEnter(function(){
+        $("#zonaF,#cctF").onEnter(function(){
             $("#btnFilter").click();
         });
         $("#loadModal").on("hidden.bs.modal",function (){
             $("#listaFiltro").html('<div class="instruction"><div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="lading"></div></div></div>');
+            $("#loadModal").find("#myModalLabel").html("Listado");
         });
         $("#btnClean").click( function(){
             $("#getFormF")[0].reset();
-            $("#localidadF").html('<option disabled selected>Elija la localidad</option>');
-            $("#localidadF").selectpicker('refresh');
-            $("#municipioF").selectpicker('refresh');
+            if(_mTipo == 1){
+                $("#gradoF").selectpicker('refresh');
+                $("#grupoF").selectpicker('refresh');
+                $("#cctFF").val('');
+                $("#nombreFF").val('');
+            }
+            if(_mTipo == 2){
+                $("#cctFF").val('');
+                $("#nombreFF").val('');
+            }
+            if(_mTipo == 3){
+                $("#localidadF").html('<option disabled selected>Elija la localidad</option>');
+                $("#localidadF").selectpicker('refresh');
+                $("#municipioF").selectpicker('refresh');
+            }
         });
         $("#municipioF").change( function(){
           if($(this).val() != ""){
@@ -630,6 +726,16 @@ function importar(){
             },2000);
         });
 
+        $("#cctF").autocomplete({
+            source: "ajax/buscarCCT",
+            minLength: 3,
+            select: function(event,ui){
+                $("#cctF").val(ui.item.value);
+                $("#cctFF").val(ui.item.id);
+                $("#nombreFF").val(ui.item.nombre);
+                return false;
+            }
+        });
 
         $( "#beneficiadoSearch" )
             .on( "keydown", function( event ) {
@@ -745,156 +851,169 @@ function importar(){
         });
         cargarListado();
     });
-$('#centroPersona').change(function(){
-    $('#beneCT').val($('#centroPersona').val());
-});
-$('#municipioPersona').change(function(){
-    $('#personaMunicipio').val($('#municipioPersona').val());
-    $('#localidadPersona').html($('#localidadPersonaBACK').html());
-    $('#localidadPersona').find('option').each(function(ind, ele){
-        if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
-            $(ele).show();
+    $('#centroPersona').change(function(){
+        $('#beneCT').val($('#centroPersona').val());
+    });
+    $('#municipioPersona').change(function(){
+        $('#personaMunicipio').val($('#municipioPersona').val());
+        $('#localidadPersona').html($('#localidadPersonaBACK').html());
+        $('#localidadPersona').find('option').each(function(ind, ele){
+            if($(ele).attr('data-MUN') == $('#personaMunicipio').val()){
+                $(ele).show();
+            }
+            else{
+                $(ele).remove();
+            }
+        });
+        $('#localidadPersona').val(null);
+    });
+    $('#localidadPersona').change(function(){
+        $('#personaLocalidad').val($('#localidadPersona').val());
+    });
+    $('#agregarNuevo').click(function(){
+        //console.log($('#municipioPersona').val());
+        if($('#municipioPersona').val() == null){
+            demo.showNotificacion('top','center','error','danger','Favor de seleccionar el <strong>Municipio</strong>');
+            /*$("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar el Municipio");
+            $("#mostrarDialogMensaje").click();*/
+            return false;
         }
-        else{
-            $(ele).remove();
+        //console.log($('#localidadPersona').val());
+        if($('#localidadPersona').val() == null){
+            demo.showNotificacion('top','center','error','danger','Favor de seleccionar la <strong>Localidad</strong>');
+           /* $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar la Localidad");
+            $("#mostrarDialogMensaje").click();*/
+            return false;
         }
+        $('#personaCurp').val($('#curpPersona').val());
+        $('#personaNombre').val($('#nombrePersona').val());
+        $('#personaApePat').val($('#apellidoPPersona').val());
+        $('#personaApeMat').val($('#apellidoMPersona').val());
+        $('#personaCorreo').val($('#correoPersona').val());
+        $('#personaTelefono').val($('#telefonoPersona').val());
+        $('#personaDireccion').val($('#direccionPersona').val());
+        $('#personaMunicipio').val($('#municipioPersona').val());
+        $('#personaLocalidad').val($('#localidadPersona').val());
+        $('#codpos').val($('#codposPersona').val());
+        $('#personaNombreTuto').val($('#nombrePersonaTuto').val());
+        $('#personaApePatTuto').val($('#apellidoPPersonaTuto').val());
+        $('#personaApeMatTuto').val($('#apellidoMPersonaTuto').val());
+        funcionAgregar();
     });
-    $('#localidadPersona').val(null);
-});
-$('#localidadPersona').change(function(){
-    $('#personaLocalidad').val($('#localidadPersona').val());
-});
-
-$('#agregarNuevo').click(function(){
-    //console.log($('#municipioPersona').val());
-    if($('#municipioPersona').val() == null){
-        $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar el Municipio");
-        $("#mostrarDialogMensaje").click();
-        return false;
+    function funcionAgregar(){
+        var dataForm = new FormData();
+        dataForm.append($("#token").attr('name'), $("#token").val());
+        dataForm.append('claveCT', $("#beneCT").val());
+        dataForm.append('idPersona', $('#beneIdPersona').val());
+        dataForm.append('curp', $('#personaCurp').val());
+        dataForm.append('nombre', $('#personaNombre').val());
+        dataForm.append('apellidop', $('#personaApePat').val());
+        dataForm.append('apellidom', $('#personaApeMat').val());
+        dataForm.append('correo', $('#personaCorreo').val());
+        dataForm.append('telefono', $('#personaTelefono').val());
+        dataForm.append('direccion', $('#personaDireccion').val());
+        dataForm.append('municipio', $('#personaMunicipio').val());
+        dataForm.append('localidad', $('#personaLocalidad').val());
+        dataForm.append('codpos', $('#codpos').val());
+        dataForm.append('nombreTuto', $('#personaNombreTuto').val());
+        dataForm.append('apellidopTuto', $('#personaApePatTuto').val());
+        dataForm.append('apellidomTuto', $('#personaApeMatTuto').val());
+        $.ajax({
+            url : "ajax/guardarBeneficiario",
+            data : dataForm,
+            processData: false,
+            contentType: false,
+            cache: false,
+            dataType : "json", type: "POST",
+            beforeSend: function(){$('#loadData').show();},
+            success: function(data){
+                if(data.error){
+                    $('#loadData').hide();
+                }
+                else{
+                    cargarListado();
+                    $('.cerrarNuevo').trigger('click');
+                    $('#loadData').hide();
+                    $('#beneficiadoSearch').val('');
+                    $('#beneCT').val('');
+                    $('#beneIdPersona').val('');
+                    $('#personaCurp').val('');
+                    $('#personaNombre').val('');
+                    $('#personaApePat').val('');
+                    $('#personaApeMat').val('');
+                    $('#personaCorreo').val('');
+                    $('#personaTelefono').val('');
+                    $('#personaDireccion').val('');
+                    $('#personaMunicipio').val('');
+                    $('#personaLocalidad').val('');
+                    $('#codpos').val('');
+                }
+            },
+            error: function (){$('#loadData').hide();}
+        });
     }
-    //console.log($('#localidadPersona').val());
-    if($('#localidadPersona').val() == null){
-        $("#dialogMensaje").find("#textoDialog").html("Favor de seleccionar la Localidad");
-        $("#mostrarDialogMensaje").click();
-        return false;
+    function cargarListado(){
+        var dataForm = new FormData();
+        dataForm.append($("#token").attr('name'), $("#token").val());
+        $.ajax({
+            url : "ajax/listadoBeneficiados",
+            data : dataForm,
+            processData: false,
+            contentType: false,
+            cache: false,
+            dataType : "json", type: "POST",
+            beforeSend: function(){$('#loadData').show();},
+            success: function(data){
+                if(data.error){
+                    $('#loadData').hide();
+                }
+                else{
+                    $('#loadData').hide();
+                    $('#datosList').html(data.HTML);
+                }
+            },
+            error: function (){$('#loadData').hide();}
+        });
     }
-    $('#personaCurp').val($('#curpPersona').val());
-    $('#personaNombre').val($('#nombrePersona').val());
-    $('#personaApePat').val($('#apellidoPPersona').val());
-    $('#personaApeMat').val($('#apellidoMPersona').val());
-    $('#personaCorreo').val($('#correoPersona').val());
-    $('#personaTelefono').val($('#telefonoPersona').val());
-    $('#personaDireccion').val($('#direccionPersona').val());
-    $('#personaMunicipio').val($('#municipioPersona').val());
-    $('#personaLocalidad').val($('#localidadPersona').val());
-    $('#codpos').val($('#codposPersona').val());
-    $('#personaNombreTuto').val($('#nombrePersonaTuto').val());
-    $('#personaApePatTuto').val($('#apellidoPPersonaTuto').val());
-    $('#personaApeMatTuto').val($('#apellidoMPersonaTuto').val());
-    funcionAgregar();
-});
-
-function funcionAgregar(){
-    var dataForm = new FormData();
-    dataForm.append($("#token").attr('name'), $("#token").val());
-    dataForm.append('claveCT', $("#beneCT").val());
-    dataForm.append('idPersona', $('#beneIdPersona').val());
-    dataForm.append('curp', $('#personaCurp').val());
-    dataForm.append('nombre', $('#personaNombre').val());
-    dataForm.append('apellidop', $('#personaApePat').val());
-    dataForm.append('apellidom', $('#personaApeMat').val());
-    dataForm.append('correo', $('#personaCorreo').val());
-    dataForm.append('telefono', $('#personaTelefono').val());
-    dataForm.append('direccion', $('#personaDireccion').val());
-    dataForm.append('municipio', $('#personaMunicipio').val());
-    dataForm.append('localidad', $('#personaLocalidad').val());
-    dataForm.append('codpos', $('#codpos').val());
-    dataForm.append('nombreTuto', $('#personaNombreTuto').val());
-    dataForm.append('apellidopTuto', $('#personaApePatTuto').val());
-    dataForm.append('apellidomTuto', $('#personaApeMatTuto').val());
-    $.ajax({
-        url : "ajax/guardarBeneficiario",
-        data : dataForm,
-        processData: false,
-        contentType: false,
-        cache: false,
-        dataType : "json", type: "POST",
-        beforeSend: function(){$('#loadData').show();},
-        success: function(data){
-            if(data.error){
-                $('#loadData').hide();
-            }
-            else{
-                cargarListado();
-                $('.cerrarNuevo').trigger('click');
-                $('#loadData').hide();
-                $('#beneficiadoSearch').val('');
-                $('#beneCT').val('');
-                $('#beneIdPersona').val('');
-                $('#personaCurp').val('');
-                $('#personaNombre').val('');
-                $('#personaApePat').val('');
-                $('#personaApeMat').val('');
-                $('#personaCorreo').val('');
-                $('#personaTelefono').val('');
-                $('#personaDireccion').val('');
-                $('#personaMunicipio').val('');
-                $('#personaLocalidad').val('');
-                $('#codpos').val('');
-            }
-        },
-        error: function (){$('#loadData').hide();}
-    });
-}
-function cargarListado(){
-    var dataForm = new FormData();
-    dataForm.append($("#token").attr('name'), $("#token").val());
-    $.ajax({
-        url : "ajax/listadoBeneficiados",
-        data : dataForm,
-        processData: false,
-        contentType: false,
-        cache: false,
-        dataType : "json", type: "POST",
-        beforeSend: function(){$('#loadData').show();},
-        success: function(data){
-            if(data.error){
-                $('#loadData').hide();
-            }
-            else{
-                $('#loadData').hide();
-                $('#datosList').html(data.HTML);
-            }
-        },
-        error: function (){$('#loadData').hide();}
-    });
-}
-function cargarFiltro(){
-    var dataForm = new FormData();
-    dataForm.append($("#token").attr('name'), $("#token").val());
-    dataForm.append('z', $.trim($("#zonaF").val()));
-    dataForm.append('m', $("#municipioF").val());
-    dataForm.append('l', $("#localidadF").val());
-    $.ajax({
-        url : "ajax/listadoFiltro",
-        data : dataForm,
-        processData: false,
-        contentType: false,
-        cache: false,
-        dataType : "json", type: "POST",
-        beforeSend: function(){$('#loadData').show();},
-        success: function(data){
-            if(data.error){
-                $('#loadData').hide();
-            }
-            else{
-                $('#loadData').hide();
-                $('#listaFiltro').html(data.HTML);
-            }
-        },
-        error: function (){$('#loadData').hide();}
-    });
-}
+    function cargarFiltro(){
+        var dataForm = new FormData();
+        dataForm.append($("#token").attr('name'), $("#token").val());
+        dataForm.append('t', _mTipo);
+        if(_mTipo == 1){
+            dataForm.append('c', $.trim($("#cctFF").val()));
+            dataForm.append('g', $("#gradoF").val());
+            dataForm.append('gg', $("#grupoF").val());
+        }
+        if(_mTipo == 2){
+            dataForm.append('c', $.trim($("#cctFF").val()));
+            var sinCT = ($("#miCheck").prop("checked")) ? 1 : 0;
+            dataForm.append('s', sinCT);
+        }
+        if(_mTipo == 3){
+            dataForm.append('z', $.trim($("#zonaF").val()));
+            dataForm.append('m', $("#municipioF").val());
+            dataForm.append('l', $("#localidadF").val());
+        }
+        $.ajax({
+            url : "ajax/listadoFiltro",
+            data : dataForm,
+            processData: false,
+            contentType: false,
+            cache: false,
+            dataType : "json", type: "POST",
+            beforeSend: function(){$('#loadData').show();},
+            success: function(data){
+                if(data.error){
+                    $('#loadData').hide();
+                }
+                else{
+                    $('#loadData').hide();
+                    $('#listaFiltro').html(data.HTML);
+                }
+            },
+            error: function (){$('#loadData').hide();}
+        });
+    }
 </script>
 <style type="text/css">
     .ui-menu{

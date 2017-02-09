@@ -89,6 +89,8 @@ class Beneficiados extends CI_Controller {
 		$d['LOCALIDADES'] = $this->mbeneficiados->getCatalogo('LOCALIDADES','SELECT');
 		$info = $this->mreportes->getCatMunicipios();
 		$d['MUNICIPIOSF'] = $info['DATOS'];
+		$d['GRADOS'] = array(1,2,3,4,5,6);
+		$d['GRUPOS'] = array('A','B','C','D','E','F','G');
 		$this->smarty->assign("title", 'Catálogo beneficiados');
 		$this->smarty->view("beneficiados.tpl",$d);
 	}
@@ -145,7 +147,7 @@ class Beneficiados extends CI_Controller {
 
 		$mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		$HTML = $nombre = $ext = "";
-
+		//echo $_FILES['fileCSV']['type'];die();
 		if(in_array($_FILES['fileCSV']['type'],$mimes)){
 			if ($_FILES["fileCSV"]["error"] > 0) {
 			}else{
@@ -336,11 +338,12 @@ class Beneficiados extends CI_Controller {
 		}
 
   		ob_end_clean();
-  		$_nombre = "REPORTE_BENEFICIARIOS[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xls";
-		header('Content-Type: application/vnd.ms-excel');
+  		$_nombre = "REPORTE_BENEFICIARIOS[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xlsx";
+  		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		//header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment;filename="'.$_nombre.'"');
 		header('Cache-Control: max-age=0');
-		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel,'Excel2007');//'Excel5'
 		$objWriter->save('php://output');
 	}
 	public function loadListadoFiltro(){
@@ -350,11 +353,20 @@ class Beneficiados extends CI_Controller {
 		$d['st_tipo'] = $this->session->userdata('sep_tipo');
 		$d['st_programa'] = $this->session->userdata('sep_programa');
 		$mpost = $this->input->post();
+		$tipo = $this->input->post("t");
 		//echo "<pre>";print_r($mpost);die();
 		$info = $this->mbeneficiados->getListadoFiltro($d['st_idTipo'],$mpost);
 		$d['LISTADO'] = $info['DATOS'];
 		//echo "<pre>";print_r($d['LISTADO']);die();
-		echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoEscuelas.tpl",$d,TRUE)));
+		if($tipo == 1){
+			echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoAlumnos.tpl",$d,TRUE)));
+		}
+		if($tipo == 2){
+			echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoDocentes.tpl",$d,TRUE)));
+		}
+		if($tipo == 3){
+			echo json_encode(array('error'=>false, 'HTML' => $this->smarty->view("load/listadoEscuelas.tpl",$d,TRUE)));
+		}
 	}
 	public function saveBeneficiadosMasivo(){
 		$d['st_idUsuario'] = $this->session->userdata('sep_idUsuario');
@@ -364,6 +376,14 @@ class Beneficiados extends CI_Controller {
 		$d['st_programa'] = $this->session->userdata('sep_programa');
 		$datos = $this->input->post();
 		echo json_encode($this->mbeneficiados->saveBeneficiadosMasivo($d, $datos));
+	}
+	public function searchCCT(){
+		$busquedaTotal = array();
+		if (isset($_GET['term']) and strlen($_GET['term']) >= 3){
+			$q = strtoupper($_GET['term']);
+			$busquedaTotal = $this->mbeneficiados->searchCCT($q);
+		}
+		echo json_encode($busquedaTotal);
 	}
 }
 ?>

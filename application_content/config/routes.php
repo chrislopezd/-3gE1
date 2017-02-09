@@ -78,7 +78,7 @@ $route['ajax/importarBeneficiarios'] = 'beneficiados/importBeneficiarios';
 $route['descargarProgramaExcel'] = 'beneficiados/downloadProgramasExcel';
 $route['ajax/listadoFiltro'] = 'beneficiados/loadListadoFiltro';
 $route['ajax/guardarBeneficiarioMasivo'] = 'beneficiados/saveBeneficiadosMasivo';
-
+$route['ajax/buscarCCT'] = 'beneficiados/searchCCT';
 ########END PROGRAMAS
 
 ########LOGIN
