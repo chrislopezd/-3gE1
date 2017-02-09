@@ -327,11 +327,12 @@ class Reportes extends CI_Controller {
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($mk, "7", $v);
 		}
   		ob_end_clean();
-  		$_nombre = "REPORTE[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xls";
-		header('Content-Type: application/vnd.ms-excel');
+  		$_nombre = "REPORTE[ ".str_replace("/","_",$this->fechaPhp($fecha[0]))." ".str_replace(":","_",$fecha[1])." ].xlsx";
+		//header('Content-Type: application/vnd.ms-excel');
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$_nombre.'"');
 		header('Cache-Control: max-age=0');
-		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');//Excel5
 		$objWriter->save('php://output');
 	}
 }
