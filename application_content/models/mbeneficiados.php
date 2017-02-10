@@ -21,7 +21,6 @@ class Mbeneficiados extends CI_Model{
       return $fr[2]."-".$fr[1]."-".$fr[0];
     }
   }
-
   public function getCiclo($tipo = 1){
     $data = $this->db->query("SELECT idciclo,curso FROM s_cat_ciclos WHERE status = 1 ORDER BY idciclo DESC LIMIT 1")->row();
     if(count($data) > 0){
@@ -903,6 +902,9 @@ class Mbeneficiados extends CI_Model{
             $this->db->from('personas_plantilla AS p');
             if(trim($post['c']) != "" && $post['s'] == 0){
               $this->db->where('p.clavect',trim($post['c']));
+            }
+            if(trim($post['nc']) != ""){
+              $this->db->where("(  CONCAT_WS(' ',p.apellidop,p.apellidom,p.nombre) LIKE '%".$post['nc']."%' OR CONCAT_WS(' ',p.nombre,p.apellidop,p.apellidom) LIKE '%".$post['nc']."%' OR p.curp LIKE '%".$post['nc']."%')");
             }
             if($post['s'] == 1){
               $this->db->where('p.clavect = ""');

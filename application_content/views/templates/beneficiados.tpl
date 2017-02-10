@@ -88,7 +88,13 @@
                             </div>
                             {/if}
                             {if $st_idTipo == 2}
-                            <div class="col-md-2">
+                            <div class="col-md-3">
+                                <div class="form-group label-floating has-success">
+                                    <label class="control-label">Nombre o CURP</label>
+                                    <input type="text" name="NoCF" id="NoCF" class="form-control upper">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
                                 <div class="form-group label-floating has-success">
                                     <label class="control-label">Sin Clave CT</label>
                                     <div class="checkbox checkbox-inline">
@@ -624,6 +630,9 @@
                 if(_mTipo == 2){
                     if($("#miCheck").prop("checked")){
                         _tt = 0;
+                        if($.trim($("#NoCF").val()).length == 0){
+                            _tt++;
+                        }
                     }
                 }
                 if(_tt == 0){
@@ -633,7 +642,9 @@
                 }else{
                     $("#loadModal").find("modal-header button").click();
                     demo.showNotificacion('top','center','error','danger','<strong>Debe elegir un filtro.</strong>');
-                    if($.trim($("#cctF").val()).length  == 0){
+                    if(_mTipo == 2 && $("#miCheck").prop("checked")){
+                        $("#NoCF").focus();
+                    }else if($.trim($("#cctF").val()).length  == 0){
                         $("#cctF").focus();
                     }
                     return false;
@@ -988,6 +999,7 @@
             dataForm.append('c', $.trim($("#cctFF").val()));
             var sinCT = ($("#miCheck").prop("checked")) ? 1 : 0;
             dataForm.append('s', sinCT);
+            dataForm.append('nc', $.trim($("#NoCF").val()));
         }
         if(_mTipo == 3){
             dataForm.append('z', $.trim($("#zonaF").val()));
